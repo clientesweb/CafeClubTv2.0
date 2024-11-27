@@ -4,7 +4,7 @@ export default function ParrillaDeProgramas() {
         {
             title: "Programa 1",
             time: "10:00 AM",
-            image: 'https://via.placeholder.com/2048x1152?text=Programa+1',
+            image: 'images/JUAN BORJA_20241122_105637_0000.png',
             link: '/programa-1'
         },
         {
