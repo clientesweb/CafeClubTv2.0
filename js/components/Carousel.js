@@ -13,127 +13,88 @@ export default function Hero() {
 
     // Crear HTML del HERO
     hero.innerHTML = `
-        <style>
-            .hero-container {
-                width: 100%;
-                height: 100vh;
-                position: relative;
-                overflow: hidden;
-            }
-            .hero-slide {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                opacity: 0;
-                transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-            }
-            .hero-slide.active {
-                opacity: 1;
-            }
-            .hero-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center;
-            }
-            .hero-content {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 2rem;
-                background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-                color: white;
-                text-align: center;
-                transform: translateY(20px);
-                opacity: 0;
-                transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-            }
-            .hero-slide.active .hero-content {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            .hero-indicators {
-                position: absolute;
-                top: 1rem;
-                left: 0;
-                right: 0;
-                display: flex;
-                justify-content: center;
-                gap: 0.5rem;
-            }
-            .indicator {
-                width: calc(20% - 0.4rem);
-                height: 0.25rem;
-                background-color: rgba(255,255,255,0.5);
-                border: none;
-                padding: 0;
-                transition: all 0.3s ease;
-            }
-            .indicator.active {
-                background-color: #ef4444;
-            }
-            @media (min-aspect-ratio: 9/16) {
-                .hero-image {
-                    width: auto;
-                    height: 100%;
-                    left: 50%;
-                    transform: translateX(-50%);
-                }
-            }
-        </style>
-        <div class="hero-container">
-            ${images.map((src, index) => `
-                <div class="hero-slide ${index === 0 ? 'active' : ''}">
-                    <img 
-                        src="${src}" 
-                        alt="Hero Image ${index + 1}" 
-                        class="hero-image"
-                    >
-                    <div class="hero-content">
-                        <h1 class="text-4xl md:text-6xl font-bold mb-4">Descubre el Mundo del Café</h1>
-                        <p class="text-lg md:text-xl mb-8">Explora historias, sabores y experiencias únicas en Café Club TV</p>
-                        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                            Comienza tu Viaje
-                        </button>
+        <div class="relative w-full h-screen overflow-hidden">
+            <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out">
+                ${images.map((src, index) => `
+                    <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
+                        <img 
+                            data-src="${src}" 
+                            alt="Hero Image ${index + 1}" 
+                            class="w-full h-full object-cover absolute top-0 left-0 lazy-load opacity-0 transition-all duration-1000 transform scale-110"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black opacity-75"></div>
                     </div>
-                </div>
-            `).join('')}
-            <div class="hero-indicators">
+                `).join('')}
+            </div>
+            <div class="absolute inset-0 flex flex-col justify-end items-center text-white z-10 pb-20 px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-center transition-all duration-700 transform translate-y-10 opacity-0">Descubre el Mundo del Café</h1>
+                <p class="text-lg md:text-xl mb-8 text-center max-w-2xl transition-all duration-700 delay-200 transform translate-y-10 opacity-0">Explora historias, sabores y experiencias únicas en Café Club TV</p>
+                <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                    Comienza tu Viaje
+                </button>
+            </div>
+            <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
                 ${images.map((_, index) => `
-                    <button class="indicator ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
+                    <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
                 `).join('')}
             </div>
         </div>
     `;
 
-    const slides = hero.querySelectorAll('.hero-slide');
+    const slideContainer = hero.querySelector('.flex');
+    const slides = hero.querySelectorAll('.lazy-load');
     const indicators = hero.querySelectorAll('.indicator');
+    const heroTitle = hero.querySelector('h1');
+    const heroDescription = hero.querySelector('p');
+
+    function loadSlideImage(index) {
+        const slide = slides[index].parentNode;
+        const img = slides[index];
+
+        if (!img.src) {
+            img.src = img.getAttribute('data-src');
+            img.onload = () => {
+                img.classList.remove('opacity-0', 'scale-110');
+                heroTitle.classList.remove('translate-y-10', 'opacity-0');
+                heroDescription.classList.remove('translate-y-10', 'opacity-0');
+            };
+        } else {
+            img.classList.remove('opacity-0', 'scale-110');
+            heroTitle.classList.remove('translate-y-10', 'opacity-0');
+            heroDescription.classList.remove('translate-y-10', 'opacity-0');
+        }
+    }
 
     function showSlide(index) {
         if (isTransitioning) return;
         isTransitioning = true;
 
-        const currentSlide = slides[currentSlide];
-        const nextSlide = slides[index];
-
-        currentSlide.classList.remove('active');
-        nextSlide.classList.add('active');
-
-        updateIndicators(index);
-
-        setTimeout(() => {
-            isTransitioning = false;
-        }, 500);
+        const previousSlide = slides[currentSlide];
+        previousSlide.classList.add('opacity-0', 'scale-110');
 
         currentSlide = index;
+        slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        loadSlideImage(currentSlide);
+        updateIndicators();
+
+        heroTitle.classList.add('translate-y-10', 'opacity-0');
+        heroDescription.classList.add('translate-y-10', 'opacity-0');
+
+        setTimeout(() => {
+            heroTitle.classList.remove('translate-y-10', 'opacity-0');
+            setTimeout(() => {
+                heroDescription.classList.remove('translate-y-10', 'opacity-0');
+            }, 200);
+            isTransitioning = false;
+        }, 500);
     }
 
-    function updateIndicators(activeIndex) {
+    function updateIndicators() {
         indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === activeIndex);
+            indicator.classList.toggle('bg-red-600', index === currentSlide);
+            indicator.classList.toggle('w-8', index === currentSlide);
+            indicator.classList.toggle('w-2', index !== currentSlide);
         });
     }
 
@@ -175,19 +136,19 @@ export default function Hero() {
     window.addEventListener('scroll', () => {
         const scrollPosition = window.pageYOffset;
         slides.forEach((slide) => {
-            const image = slide.querySelector('.hero-image');
-            image.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+            slide.style.transform = `translateY(${scrollPosition * 0.5}px)`;
         });
     });
 
+    // Iniciar con la primera imagen
+    loadSlideImage(0);
+
     // Añadir interactividad al botón
-    const exploreButtons = hero.querySelectorAll('button:not(.indicator)');
-    exploreButtons.forEach(button => {
-        button.addEventListener('mouseenter', () => {
-            button.classList.add('animate-pulse');
-        });
-        button.addEventListener('mouseleave', () => {
-            button.classList.remove('animate-pulse');
-        });
+    const exploreButton = hero.querySelector('button');
+    exploreButton.addEventListener('mouseenter', () => {
+        exploreButton.classList.add('animate-pulse');
+    });
+    exploreButton.addEventListener('mouseleave', () => {
+        exploreButton.classList.remove('animate-pulse');
     });
 }
