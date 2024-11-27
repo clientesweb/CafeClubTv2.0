@@ -15,17 +15,11 @@ export default function Sponsors() {
             <div class="overflow-hidden relative">
                 <div class="flex items-center justify-start space-x-8 transition-transform duration-300 ease-in-out transform" id="sponsorSlider">
                     ${sponsorsData.map(sponsor => `
-                        <div class="sponsor-card min-w-[180px] h-32 bg-white rounded-lg shadow-md flex items-center justify-center p-4 transition-transform duration-300 hover:scale-110 transform">
+                        <div class="sponsor-card min-w-[180px] h-32 bg-[#2F2F2F] rounded-lg shadow-xl flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105 transform hover:shadow-2xl">
                             <img src="${sponsor.logo}" alt="${sponsor.name}" class="max-w-full max-h-full object-contain">
                         </div>
                     `).join('')}
                 </div>
-                <button id="prevButton" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-[#8B0000] p-2 rounded-full hover:bg-[#8B0000] hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
-                    &lt;
-                </button>
-                <button id="nextButton" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-[#8B0000] p-2 rounded-full hover:bg-[#8B0000] hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
-                    &gt;
-                </button>
             </div>
         </section>
     `;
@@ -44,30 +38,12 @@ export default function Sponsors() {
         sponsorSlider.style.transform = `translateX(-${currentPosition}px)`;
     }
 
-    // Deslizar a la posición anterior
-    function slidePrev() {
-        currentPosition -= slideWidth;
-        if (currentPosition < 0) {
-            currentPosition = sponsorSlider.scrollWidth - sponsorSlider.clientWidth; // Regresa al final
-        }
-        sponsorSlider.style.transform = `translateX(-${currentPosition}px)`;
-    }
-
     // Iniciar el desplazamiento automático
     function startSliding() {
         setInterval(() => {
             requestAnimationFrame(slideNext);
         }, intervalTime);
     }
-
-    // Controladores de eventos para los botones
-    document.getElementById('prevButton').addEventListener('click', () => {
-        requestAnimationFrame(slidePrev);
-    });
-
-    document.getElementById('nextButton').addEventListener('click', () => {
-        requestAnimationFrame(slideNext);
-    });
 
     // Iniciar el desplazamiento automático
     startSliding();
