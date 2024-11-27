@@ -52,24 +52,3 @@ if ('windowControlsOverlay' in navigator) {
         document.documentElement.style.setProperty('--window-controls-overlay-height', `${newOverlayHeight}px`);
     });
 }
-export default function addSnowfall() {
-    const snowfallContainer = document.createElement('div');
-    snowfallContainer.classList.add('snowfall');
-    document.body.appendChild(snowfallContainer);
-
-    // Número de copos de nieve
-    const snowflakeCount = 50; 
-
-    for (let i = 0; i < snowflakeCount; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        
-        // Distribución aleatoria de los copos
-        const size = Math.random() * (2 - 0.5) + 0.5; // Tamaño aleatorio entre 0.5 y 2
-        snowflake.style.fontSize = `${size}rem`;
-        snowflake.style.left = `${Math.random() * 100}%`; // Posición aleatoria en el eje X
-
-        // Añadir el copo de nieve al contenedor de nieve
-        snowfallContainer.appendChild(snowflake);
-    }
-}
