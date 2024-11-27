@@ -17,7 +17,7 @@ export default async function Shorts() {
     const PLAYLIST_ID = 'PLZ_v3bWMqpjFa0xI11mahmOCxPk_1TK2s'; // Sustituye por tu ID de playlist
 
     try {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=10&key=${API_KEY}`);
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=50&key=${API_KEY}`);
 
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -32,7 +32,10 @@ export default async function Shorts() {
             return;
         }
 
-        shortsContainer.innerHTML = shortsData.map(short => `
+        // Selecciona los últimos 5 shorts
+        const latestShorts = shortsData.slice(-5);
+
+        shortsContainer.innerHTML = latestShorts.map(short => `
             <div class="flex-none w-56 aspect-[9/16] rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl duration-300">
                 <iframe
                     src="https://www.youtube.com/embed/${short.snippet.resourceId.videoId}"
