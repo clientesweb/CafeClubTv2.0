@@ -13,7 +13,7 @@ export default function Hero() {
 
     // Crear HTML del HERO
     hero.innerHTML = `
-        <div class="relative w-full h-screen overflow-hidden">
+        <div class="relative w-full h-[60vh] overflow-hidden">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out">
                 ${images.map((src, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
@@ -26,9 +26,9 @@ export default function Hero() {
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute inset-0 flex flex-col justify-end items-center text-white z-10 pb-20 px-4">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-center transition-all duration-700 transform translate-y-10 opacity-0">Descubre el Mundo del Café</h1>
-                <p class="text-lg md:text-xl mb-8 text-center max-w-2xl transition-all duration-700 delay-200 transform translate-y-10 opacity-0">Explora historias, sabores y experiencias únicas en Café Club TV</p>
+            <div class="absolute inset-0 flex flex-col justify-end items-center text-white z-10 pb-12 px-4">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-center transition-all duration-700 transform translate-y-10 opacity-0">Descubre el Mundo del Café</h1>
+                <p class="text-lg md:text-xl mb-6 text-center max-w-2xl transition-all duration-700 delay-200 transform translate-y-10 opacity-0">Explora historias, sabores y experiencias únicas en Café Club TV</p>
                 <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                     Comienza tu Viaje
                 </button>
@@ -48,7 +48,6 @@ export default function Hero() {
     const heroDescription = hero.querySelector('p');
 
     function loadSlideImage(index) {
-        const slide = slides[index].parentNode;
         const img = slides[index];
 
         if (!img.src) {
@@ -57,32 +56,11 @@ export default function Hero() {
                 img.classList.remove('opacity-0', 'scale-110');
                 heroTitle.classList.remove('translate-y-10', 'opacity-0');
                 heroDescription.classList.remove('translate-y-10', 'opacity-0');
-                adjustImageSize(img);
             };
         } else {
             img.classList.remove('opacity-0', 'scale-110');
             heroTitle.classList.remove('translate-y-10', 'opacity-0');
             heroDescription.classList.remove('translate-y-10', 'opacity-0');
-            adjustImageSize(img);
-        }
-    }
-
-    function adjustImageSize(img) {
-        const containerAspectRatio = hero.offsetWidth / hero.offsetHeight;
-        const imageAspectRatio = 1080 / 1920; // Aspect ratio of the original image
-
-        if (containerAspectRatio > imageAspectRatio) {
-            img.style.width = '100%';
-            img.style.height = 'auto';
-            img.style.top = '50%';
-            img.style.left = '0';
-            img.style.transform = 'translateY(-50%)';
-        } else {
-            img.style.width = 'auto';
-            img.style.height = '100%';
-            img.style.top = '0';
-            img.style.left = '50%';
-            img.style.transform = 'translateX(-50%)';
         }
     }
 
@@ -90,23 +68,16 @@ export default function Hero() {
         if (isTransitioning) return;
         isTransitioning = true;
 
-        const previousSlide = slides[currentSlide];
-        previousSlide.classList.add('opacity-0', 'scale-110');
-
+        slides[currentSlide].classList.add('opacity-0', 'scale-110');
         currentSlide = index;
         slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
         
         loadSlideImage(currentSlide);
         updateIndicators();
 
-        heroTitle.classList.add('translate-y-10', 'opacity-0');
-        heroDescription.classList.add('translate-y-10', 'opacity-0');
-
         setTimeout(() => {
             heroTitle.classList.remove('translate-y-10', 'opacity-0');
-            setTimeout(() => {
-                heroDescription.classList.remove('translate-y-10', 'opacity-0');
-            }, 200);
+            heroDescription.classList.remove('translate-y-10', 'opacity-0');
             isTransitioning = false;
         }, 500);
     }
@@ -126,58 +97,16 @@ export default function Hero() {
         });
     });
 
-    // Navegación con gestos táctiles
-    let touchStartX = 0;
-    let touchEndX = 0;
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.pageYOffset;
+        slides.forEach((slide) => {
+            slide.style.transform = `translateY(${scrollPosition * 0.2}px)`; // Reducir el efecto de parallax
+        });
+    });
 
-    hero.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
-
-    hero.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, false);
-
-    function handleSwipe() {
-        if (touchStartX - touchEndX > 50) {
-            showSlide((currentSlide + 1) % images.length);
-        }
-        if (touchEndX - touchStartX > 50) {
-            showSlide((currentSlide - 1 + images.length) % images.length);
-        }
-    }
-
-    // Auto-desplazamiento cada 5 segundos
     setInterval(() => {
         showSlide((currentSlide + 1) % images.length);
     }, 5000);
 
-    // Añadir efecto de parallax al hacer scroll
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.pageYOffset;
-        slides.forEach((slide) => {
-            slide.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-        });
-    });
-
-    // Iniciar con la primera imagen
     loadSlideImage(0);
-
-    // Añadir interactividad al botón
-    const exploreButton = hero.querySelector('button');
-    exploreButton.addEventListener('mouseenter', () => {
-        exploreButton.classList.add('animate-pulse');
-    });
-    exploreButton.addEventListener('mouseleave', () => {
-        exploreButton.classList.remove('animate-pulse');
-    });
-
-    // Ajustar tamaño de imagen al cambiar el tamaño de la ventana
-    window.addEventListener('resize', () => {
-        slides.forEach((slide, index) => {
-            adjustImageSize(slide);
-        });
-    });
 }
-
