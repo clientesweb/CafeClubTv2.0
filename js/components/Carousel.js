@@ -1,12 +1,11 @@
 export default function Hero() {
     const hero = document.getElementById('hero');
     const images = [
-        'https://www.cafeclubtv.com/images/image1.jpg',
-        'https://www.cafeclubtv.com/images/image2%20(1).jpg',
-        'https://www.cafeclubtv.com/images/image3.jpg',
-        'https://www.cafeclubtv.com/images/image4.jpg',
-        'https://www.cafeclubtv.com/images/image5.jpg',
-        'https://www.cafeclubtv.com/images/image6.jpg'
+        'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1080&h=1920&q=80', // Café en taza
+        'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1080&h=1920&q=80', // Granos de café
+        'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1080&h=1920&q=80', // Barista preparando café
+        'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1080&h=1920&q=80', // Plantación de café
+        'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1080&h=1920&q=80', // Latte art
     ];
 
     let currentSlide = 0;
@@ -27,16 +26,16 @@ export default function Hero() {
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute inset-0 flex flex-col justify-center items-center text-white z-10">
-                <h1 class="text-5xl md:text-7xl font-bold mb-4 text-center transition-all duration-700 transform translate-y-10 opacity-0">Bienvenido a Café Club TV</h1>
-                <p class="text-xl md:text-2xl mb-8 text-center max-w-2xl transition-all duration-700 delay-200 transform translate-y-10 opacity-0">Descubre el mundo del café a través de nuestras historias y experiencias únicas</p>
+            <div class="absolute inset-0 flex flex-col justify-end items-center text-white z-10 pb-20 px-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-center transition-all duration-700 transform translate-y-10 opacity-0">Descubre el Mundo del Café</h1>
+                <p class="text-lg md:text-xl mb-8 text-center max-w-2xl transition-all duration-700 delay-200 transform translate-y-10 opacity-0">Explora historias, sabores y experiencias únicas en Café Club TV</p>
                 <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                    Explorar Ahora
+                    Comienza tu Viaje
                 </button>
             </div>
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3">
+            <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
                 ${images.map((_, index) => `
-                    <button class="indicator w-3 h-3 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600' : ''}" data-index="${index}"></button>
+                    <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
                 `).join('')}
             </div>
         </div>
@@ -48,7 +47,6 @@ export default function Hero() {
     const heroTitle = hero.querySelector('h1');
     const heroDescription = hero.querySelector('p');
 
-    // Función para cargar imágenes con lazy loading y animación
     function loadSlideImage(index) {
         const slide = slides[index].parentNode;
         const img = slides[index];
@@ -67,7 +65,6 @@ export default function Hero() {
         }
     }
 
-    // Mostrar slide actual con efecto de transición
     function showSlide(index) {
         if (isTransitioning) return;
         isTransitioning = true;
@@ -93,11 +90,11 @@ export default function Hero() {
         }, 500);
     }
 
-    // Actualizar indicadores
     function updateIndicators() {
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('bg-red-600', index === currentSlide);
-            indicator.classList.toggle('bg-white', index !== currentSlide);
+            indicator.classList.toggle('w-8', index === currentSlide);
+            indicator.classList.toggle('w-2', index !== currentSlide);
         });
     }
 
@@ -108,10 +105,32 @@ export default function Hero() {
         });
     });
 
-    // Auto-desplazamiento cada 7 segundos
+    // Navegación con gestos táctiles
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    hero.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    hero.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+        if (touchStartX - touchEndX > 50) {
+            showSlide((currentSlide + 1) % images.length);
+        }
+        if (touchEndX - touchStartX > 50) {
+            showSlide((currentSlide - 1 + images.length) % images.length);
+        }
+    }
+
+    // Auto-desplazamiento cada 5 segundos
     setInterval(() => {
         showSlide((currentSlide + 1) % images.length);
-    }, 7000);
+    }, 5000);
 
     // Añadir efecto de parallax al hacer scroll
     window.addEventListener('scroll', () => {
