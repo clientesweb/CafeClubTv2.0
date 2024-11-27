@@ -41,19 +41,19 @@ export default function Header() {
           <!-- Botón Instalar App alineado a la izquierda -->
           ${isInstallable ? `
             <div class="flex justify-start w-1/4">
-              <button id="install-button" class="bg-[#8B0000] text-white rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-[#700000]">
-                Instalar App
+              <button id="install-button" class="flex items-center bg-[#8B0000] text-white rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-[#700000]">
+                <i class="fas fa-download mr-2"></i> Instalar App
               </button>
             </div>
           ` : ''}
 
           <!-- Logo centrado al medio -->
           <div class="flex justify-center w-1/2">
-            <img src="https://www.cafeclubtv.com/images/logi.svg" alt="Logo de Cafe Club TV" class="h-16 w-16 transition-transform duration-300 hover:scale-105">
+            <img src="https://www.cafeclubtv.com/images/logi.svg" alt="Logo de Cafe Club TV" class="h-20 w-20 transition-transform duration-300 hover:scale-110">
           </div>
 
           <!-- Iconos de redes sociales alineados a la derecha -->
-          <div class="flex gap-6 text-gray-600 w-1/4 justify-end">
+          <div class="flex gap-6 text-gray-600 w-1/4 justify-end pr-6">
             <a href="#" class="hover:text-[#8B0000]" aria-label="Síguenos en Facebook">
               <i class="fab fa-facebook-f"></i>
             </a>
