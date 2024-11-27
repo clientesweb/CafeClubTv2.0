@@ -31,6 +31,10 @@ export default function Hero() {
 
     hero.innerHTML = `
         <div class="relative w-full h-[60vh] overflow-hidden">
+            <!-- Decorado navideño -->
+            <div class="absolute inset-0 bg-red-600 opacity-30 z-0" style="background-image: url('https://www.example.com/your-christmas-background.png'); background-size: cover;"></div>
+            
+            <!-- Contenedor de imágenes del slider -->
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="slide-container">
                 ${images.map((src, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
@@ -43,12 +47,16 @@ export default function Hero() {
                     </div>
                 `).join('')}
             </div>
+
+            <!-- Texto del hero -->
             <div class="absolute top-1/2 left-0 transform -translate-y-1/2 pl-4 z-10 flex flex-col items-start text-white text-left" id="hero-text">
                 <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[0]}</h1>
                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
                     ${buttons[0]}
                 </button>
             </div>
+
+            <!-- Indicadores de las imágenes -->
             <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
                 ${images.map((_, index) => `
                     <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
