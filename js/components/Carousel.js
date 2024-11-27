@@ -29,23 +29,8 @@ export default function Hero() {
     let startX = 0;
     let endX = 0;
 
-    // Aquí colocamos la decoración fuera del hero, cubriendo la pantalla completa
-    const christmasDecoration = `
-        <div class="absolute top-0 left-0 right-0 bottom-0 z-20 pointer-events-none">
-            <!-- Fondo Navideño en los bordes fuera del hero -->
-            <div class="absolute top-0 left-0 right-0 bottom-0 bg-cover bg-no-repeat" style="background-image: url('images/navidad.png'); opacity: 0.3;"></div>
-            <!-- Animación de copos de nieve fuera del hero -->
-            <div class="absolute top-0 left-0 w-full h-full flex justify-between items-start">
-                <img src="images/snowflakes.gif" alt="Snowflakes" class="snowflake-animation" />
-            </div>
-        </div>
-    `;
-
     hero.innerHTML = `
-        <!-- Decoración navideña fuera del hero -->
-        ${christmasDecoration}
-
-        <div class="relative w-full h-[60vh] overflow-hidden" id="hero-container">
+        <div class="relative w-full h-[60vh] overflow-hidden">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="slide-container">
                 ${images.map((src, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
