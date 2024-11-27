@@ -41,7 +41,7 @@ export default function Header() {
           <!-- Botón Instalar App alineado a la izquierda -->
           ${isInstallable ? `
             <div class="flex justify-start w-1/4">
-              <button id="install-button" class="flex items-center bg-[#8B0000] text-white rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-[#700000]">
+              <button id="install-button" class="flex items-center bg-[#8B0000] text-white rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-[#700000]">
                 <i class="fas fa-download mr-2"></i> Instalar App
               </button>
             </div>
