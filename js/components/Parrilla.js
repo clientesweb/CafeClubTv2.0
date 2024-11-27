@@ -39,7 +39,7 @@ export default function ParrillaDeProgramas() {
     let endX = 0;
 
     parrilla.innerHTML = `
-        <div class="relative w-full h-[45vh] lg:h-[60vh] overflow-hidden">
+        <div class="relative w-full h-[650px] overflow-hidden">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="program-container">
                 ${programas.map((programa, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
@@ -50,7 +50,7 @@ export default function ParrillaDeProgramas() {
                         >
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black opacity-75"></div>
                         <div class="absolute bottom-4 left-0 right-0 text-white text-center px-4 z-10">
-                            <h1 class="text-2xl sm:text-4xl font-bold mb-4">${programa.title}</h1>
+                            <h1 class="text-xl sm:text-3xl font-bold mb-4">${programa.title}</h1>
                             <p class="text-lg mb-6">${programa.time}</p>
                             <a href="${programa.link}">
                                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
@@ -72,7 +72,6 @@ export default function ParrillaDeProgramas() {
     const programContainer = parrilla.querySelector('#program-container');
     const slides = parrilla.querySelectorAll('.lazy-load');
     const indicators = parrilla.querySelectorAll('.indicator');
-    const parrillaText = parrilla.querySelector('#parrilla-text');
 
     function loadProgramImage(index) {
         const img = slides[index];
