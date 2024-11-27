@@ -52,39 +52,3 @@ html {
         height: 60vh; /* Ajuste para pantallas grandes */
     }
 }
-/* Estilos para el borde navideño en el Hero */
-.christmas-border {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none; /* No afecta la interacción */
-    border: 5px dashed rgba(255, 0, 0, 0.7);
-    border-radius: 10px;
-    background: linear-gradient(135deg, rgba(0, 255, 0, 0.3) 25%, rgba(255, 0, 0, 0.3) 75%);
-}
-
-/* Animación de copos de nieve */
-#snowflakes {
-    position: absolute;
-    top: -10px;
-    left: 0;
-    right: 0;
-    bottom: -10px;
-    pointer-events: none;
-    z-index: 2;
-    background: url('https://cdn.pixabay.com/photo/2016/12/29/04/16/snow-1938096_960_720.png') repeat;
-    background-size: 100px 100px;
-    opacity: 0.6;
-    animation: snow 5s linear infinite;
-}
-
-@keyframes snow {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 1000px 1000px;
-    }
-}
