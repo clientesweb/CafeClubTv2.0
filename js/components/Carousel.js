@@ -43,7 +43,7 @@ export default function Hero() {
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute bottom-4 left-0 right-0 flex flex-col items-start text-white text-left px-4 z-10" id="hero-text">
+            <div class="absolute top-1/2 left-0 transform -translate-y-1/2 pl-4 z-10 flex flex-col items-start text-white text-left" id="hero-text">
                 <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[0]}</h1>
                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
                     ${buttons[0]}
@@ -56,7 +56,7 @@ export default function Hero() {
             </div>
         </div>
 
-        <!-- Banner Promocional -->
+        <!-- Banner Promocional con las mismas medidas de Parrilla.js -->
         <div class="relative w-full h-[50vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
             <div class="absolute inset-0 bg-black/50 flex justify-center items-center">
                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
