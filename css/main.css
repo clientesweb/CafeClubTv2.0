@@ -52,95 +52,39 @@ html {
         height: 60vh; /* Ajuste para pantallas grandes */
     }
 }
-/* Contenedor del Hero */
-#hero {
-    position: relative;
-    overflow: hidden;
-    height: 100vh; /* Ajusta la altura según tus necesidades */
-}
-
-/* Decoración en los bordes del Hero */
-#hero::before,
-#hero::after {
-    content: '';
+/* Estilos para el borde navideño en el Hero */
+.christmas-border {
     position: absolute;
-    z-index: 10;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3" fill="white" /></svg>') no-repeat center center;
-    width: 100%;
-    height: 20px;
     top: 0;
-}
-
-/* Bordes superiores y laterales del Hero */
-#hero::before {
-    top: 0;
-    background-position: center top;
-    opacity: 0.5; /* Para un toque sutil */
-}
-
-#hero::after {
-    bottom: 0;
-    background-position: center bottom;
-    opacity: 0.5;
-}
-
-/* Agregar decoraciones sutiles en los bordes del Hero */
-#hero .top-border,
-#hero .bottom-border {
-    position: absolute;
     left: 0;
     right: 0;
-    width: 100%;
-    height: 20px;
-    z-index: 5;
-    pointer-events: none;  /* Para evitar interferir con los clics */
+    bottom: 0;
+    pointer-events: none; /* No afecta la interacción */
+    border: 5px dashed rgba(255, 0, 0, 0.7);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.3) 25%, rgba(255, 0, 0, 0.3) 75%);
 }
 
-/* Copos de nieve cayendo sutilmente */
-.snowfall {
+/* Animación de copos de nieve */
+#snowflakes {
     position: absolute;
-    top: 0;
-    left: 50%;
-    z-index: 20;
-    width: 100%;
-    height: 100%;
+    top: -10px;
+    left: 0;
+    right: 0;
+    bottom: -10px;
     pointer-events: none;
-    animation: snowflakes 10s linear infinite;
+    z-index: 2;
+    background: url('https://cdn.pixabay.com/photo/2016/12/29/04/16/snow-1938096_960_720.png') repeat;
+    background-size: 100px 100px;
+    opacity: 0.6;
+    animation: snow 5s linear infinite;
 }
 
-.snowflake {
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    opacity: 0.8;
-    font-size: 1rem;
-    color: white;
-    z-index: 10;
-    animation: snowflake-animation 10s linear infinite;
-}
-
-/* Animación de los copos de nieve */
-@keyframes snowflakes {
+@keyframes snow {
     0% {
-        transform: translateX(-50%);
+        background-position: 0 0;
     }
     100% {
-        transform: translateX(50%) translateY(100vh);
-    }
-}
-
-/* Animación de los copos de nieve */
-@keyframes snowflake-animation {
-    0% {
-        opacity: 0.8;
-        transform: translateY(-10px);
-    }
-    50% {
-        opacity: 1;
-        transform: translateY(50px);
-    }
-    100% {
-        opacity: 0.8;
-        transform: translateY(100px);
+        background-position: 1000px 1000px;
     }
 }
