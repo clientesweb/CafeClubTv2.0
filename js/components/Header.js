@@ -38,13 +38,22 @@ export default function Header() {
     header.innerHTML = `
       <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
         <div class="container mx-auto flex items-center justify-between py-4">
+          <!-- Botón Instalar App alineado a la izquierda -->
+          ${isInstallable ? `
+            <div class="flex justify-start w-1/4">
+              <button id="install-button" class="bg-[#8B0000] text-white rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-[#700000]">
+                Instalar App
+              </button>
+            </div>
+          ` : ''}
+
           <!-- Logo centrado al medio -->
-          <div class="flex justify-center w-full">
+          <div class="flex justify-center w-1/2">
             <img src="https://www.cafeclubtv.com/images/logi.svg" alt="Logo de Cafe Club TV" class="h-16 w-16 transition-transform duration-300 hover:scale-105">
           </div>
 
           <!-- Iconos de redes sociales alineados a la derecha -->
-          <div class="flex gap-6 text-gray-600">
+          <div class="flex gap-6 text-gray-600 w-1/4 justify-end">
             <a href="#" class="hover:text-[#8B0000]" aria-label="Síguenos en Facebook">
               <i class="fab fa-facebook-f"></i>
             </a>
@@ -58,15 +67,6 @@ export default function Header() {
               <i class="fab fa-youtube"></i>
             </a>
           </div>
-
-          <!-- Botón Instalar App alineado a la izquierda -->
-          ${isInstallable ? `
-            <div class="flex justify-start w-full">
-              <button id="install-button" class="bg-[#8B0000] text-white rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-[#700000]">
-                Instalar App
-              </button>
-            </div>
-          ` : ''}
         </div>
       </header>
     `;
