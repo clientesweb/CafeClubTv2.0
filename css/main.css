@@ -52,3 +52,16 @@ html {
         height: 60vh; /* Ajuste para pantallas grandes */
     }
 }
+.snowflake-animation {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    animation: snowfall 10s linear infinite;
+}
+
+@keyframes snowfall {
+    0% {
+        top: -100px;
+        left: 50
