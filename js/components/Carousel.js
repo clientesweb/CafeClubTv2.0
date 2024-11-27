@@ -57,7 +57,7 @@ export default function Hero() {
         </div>
 
         <!-- Banner Promocional con las mismas medidas de Parrilla.js -->
-        <div class="relative w-full h-[50vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
+        <div class="relative w-full h-[30vh] md:h-[40vh] lg:h-[30vh] xl:h-[30vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
             <div class="absolute inset-0 bg-black/50 flex justify-center items-center">
                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
                     JUEGA
