@@ -13,88 +13,128 @@ export default function Hero() {
 
     // Crear HTML del HERO
     hero.innerHTML = `
-        <div class="relative w-full h-screen overflow-hidden">
-            <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out">
+        <style>
+            .hero-container {
+                width: 100vw;
+                height: 100vh;
+                position: relative;
+                overflow: hidden;
+            }
+            .hero-slide {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .hero-image {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .hero-content {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 2rem;
+                background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+                color: white;
+                text-align: center;
+            }
+            .hero-indicators {
+                position: absolute;
+                top: 1rem;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            .indicator {
+                width: 2rem;
+                height: 0.25rem;
+                background-color: rgba(255,255,255,0.5);
+                border: none;
+                padding: 0;
+                transition: all 0.3s ease;
+            }
+            .indicator.active {
+                background-color: #ef4444;
+            }
+            @media (max-aspect-ratio: 9/16) {
+                .hero-image {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+            @media (min-aspect-ratio: 9/16) {
+                .hero-image {
+                    width: auto;
+                    height: 100%;
+                }
+            }
+        </style>
+        <div class="hero-container">
+            <div class="hero-slides">
                 ${images.map((src, index) => `
-                    <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
+                    <div class="hero-slide ${index === 0 ? 'active' : ''}" style="opacity: ${index === 0 ? 1 : 0}">
                         <img 
-                            data-src="${src}" 
+                            src="${src}" 
                             alt="Hero Image ${index + 1}" 
-                            class="w-full h-full object-cover absolute top-0 left-0 lazy-load opacity-0 transition-all duration-1000 transform scale-110"
+                            class="hero-image"
                         >
-                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black opacity-75"></div>
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute inset-0 flex flex-col justify-end items-center text-white z-10 pb-20 px-4">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-center transition-all duration-700 transform translate-y-10 opacity-0">Descubre el Mundo del Café</h1>
-                <p class="text-lg md:text-xl mb-8 text-center max-w-2xl transition-all duration-700 delay-200 transform translate-y-10 opacity-0">Explora historias, sabores y experiencias únicas en Café Club TV</p>
+            <div class="hero-content">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Descubre el Mundo del Café</h1>
+                <p class="text-lg md:text-xl mb-8">Explora historias, sabores y experiencias únicas en Café Club TV</p>
                 <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                     Comienza tu Viaje
                 </button>
             </div>
-            <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
+            <div class="hero-indicators">
                 ${images.map((_, index) => `
-                    <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
+                    <button class="indicator ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
                 `).join('')}
             </div>
         </div>
     `;
 
-    const slideContainer = hero.querySelector('.flex');
-    const slides = hero.querySelectorAll('.lazy-load');
+    const slides = hero.querySelectorAll('.hero-slide');
     const indicators = hero.querySelectorAll('.indicator');
-    const heroTitle = hero.querySelector('h1');
-    const heroDescription = hero.querySelector('p');
-
-    function loadSlideImage(index) {
-        const slide = slides[index].parentNode;
-        const img = slides[index];
-
-        if (!img.src) {
-            img.src = img.getAttribute('data-src');
-            img.onload = () => {
-                img.classList.remove('opacity-0', 'scale-110');
-                heroTitle.classList.remove('translate-y-10', 'opacity-0');
-                heroDescription.classList.remove('translate-y-10', 'opacity-0');
-            };
-        } else {
-            img.classList.remove('opacity-0', 'scale-110');
-            heroTitle.classList.remove('translate-y-10', 'opacity-0');
-            heroDescription.classList.remove('translate-y-10', 'opacity-0');
-        }
-    }
 
     function showSlide(index) {
         if (isTransitioning) return;
         isTransitioning = true;
 
-        const previousSlide = slides[currentSlide];
-        previousSlide.classList.add('opacity-0', 'scale-110');
+        const currentSlide = slides[currentSlide];
+        const nextSlide = slides[index];
 
-        currentSlide = index;
-        slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-        
-        loadSlideImage(currentSlide);
-        updateIndicators();
+        currentSlide.style.opacity = 0;
+        currentSlide.classList.remove('active');
+        nextSlide.style.opacity = 1;
+        nextSlide.classList.add('active');
 
-        heroTitle.classList.add('translate-y-10', 'opacity-0');
-        heroDescription.classList.add('translate-y-10', 'opacity-0');
+        updateIndicators(index);
 
         setTimeout(() => {
-            heroTitle.classList.remove('translate-y-10', 'opacity-0');
-            setTimeout(() => {
-                heroDescription.classList.remove('translate-y-10', 'opacity-0');
-            }, 200);
             isTransitioning = false;
         }, 500);
+
+        currentSlide = index;
     }
 
-    function updateIndicators() {
+    function updateIndicators(activeIndex) {
         indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('bg-red-600', index === currentSlide);
-            indicator.classList.toggle('w-8', index === currentSlide);
-            indicator.classList.toggle('w-2', index !== currentSlide);
+            indicator.classList.toggle('active', index === activeIndex);
         });
     }
 
@@ -131,17 +171,6 @@ export default function Hero() {
     setInterval(() => {
         showSlide((currentSlide + 1) % images.length);
     }, 5000);
-
-    // Añadir efecto de parallax al hacer scroll
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.pageYOffset;
-        slides.forEach((slide) => {
-            slide.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-        });
-    });
-
-    // Iniciar con la primera imagen
-    loadSlideImage(0);
 
     // Añadir interactividad al botón
     const exploreButton = hero.querySelector('button');
