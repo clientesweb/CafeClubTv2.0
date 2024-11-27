@@ -32,8 +32,8 @@ export default async function Shorts() {
             return;
         }
 
-        // Selecciona los últimos 5 shorts
-        const latestShorts = shortsData.slice(-5);
+        // Selecciona los últimos 5 shorts e invierte su orden
+        const latestShorts = shortsData.slice(-5).reverse();
 
         shortsContainer.innerHTML = latestShorts.map(short => `
             <div class="flex-none w-56 aspect-[9/16] rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl duration-300">
