@@ -39,14 +39,15 @@ export default function ParrillaDeProgramas() {
     let endX = 0;
 
     parrilla.innerHTML = `
-        <div class="relative w-full h-0 pb-[56.25%] overflow-hidden">
+        <div class="relative w-full h-0 pb-[56.25%] overflow-hidden" style="margin-bottom: 0;">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="program-container">
                 ${programas.map((programa, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
                         <img 
                             data-src="${programa.image}" 
                             alt="Programa ${index + 1}" 
-                            class="w-full h-full object-cover absolute top-0 left-0 lazy-load opacity-0 transition-all duration-1000 transform scale-110"
+                            class="w-full h-full object-cover absolute top-0 left-0 lazy-load opacity-0 transition-all duration-1000 transform scale-110" 
+                            style="margin-bottom: 0;"
                         >
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black opacity-75"></div>
                         <div class="absolute bottom-4 left-0 right-0 text-white text-center px-4 z-10">
