@@ -7,6 +7,7 @@ import Counters from './components/Counters.js';
 import Footer from './components/Footer.js';
 import WhatsAppFloat from './components/WhatsAppFloat.js';
 import BottomNav from './components/BottomNav.js';
+import Parrilla from './components/Parrilla.js';  // Importar el componente de Parrilla
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializar los componentes
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Footer();
     WhatsAppFloat();
     BottomNav();
+    Parrilla();  // Llamar a la función que inicializa la Parrilla de Programas
 
     // Manejo del preloader
     const preloader = document.getElementById('preloader');
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         preloader.style.display = 'none';
     }, 2000); // Ajusta el tiempo según tus necesidades
 });
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js')
@@ -39,6 +42,7 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
 if ('windowControlsOverlay' in navigator) {
     const overlayHeight = navigator.windowControlsOverlay.getTitlebarAreaRect().height;
     document.documentElement.style.setProperty('--window-controls-overlay-height', `${overlayHeight}px`);
