@@ -31,9 +31,6 @@ export default function Hero() {
 
     hero.innerHTML = `
         <div class="relative w-full h-[60vh] overflow-hidden">
-            <!-- Decoración navideña -->
-            <div id="snowflakes"></div>
-            <div class="christmas-border"></div>
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="slide-container">
                 ${images.map((src, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
