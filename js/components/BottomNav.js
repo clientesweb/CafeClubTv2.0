@@ -4,11 +4,11 @@ export default function BottomNav() {
     // Verificar si el elemento existe antes de proceder
     if (bottomNav) {
         const navItems = [
-            { id: 'playlists', icon: 'home', label: 'Inicio', notificationColor: 'red' },
-            { id: 'features', icon: 'calendar', label: 'Eventos' },
-            { id: 'shorts-section', icon: 'tag', label: 'Ofertas', notificationColor: 'green' },
-            { id: 'sponsors-section', icon: 'users', label: 'Patrocinadores' },
-            { id: 'cta', icon: 'mail', label: 'Contacto', notificationColor: 'blue' }
+            { id: 'playlists', icon: 'fa-solid fa-list', label: 'Playlists', notificationColor: 'red' },
+            { id: 'shorts', icon: 'fa-solid fa-video', label: 'Shorts', notificationColor: 'blue' },
+            { id: 'sponsors', icon: 'fa-solid fa-handshake', label: 'Sponsors' },
+            { id: 'channel', icon: 'fa-solid fa-tv', label: 'Canal' },
+            { id: 'contact', icon: 'fa-solid fa-envelope', label: 'Contacto' }
         ];
 
         bottomNav.innerHTML = `
@@ -19,7 +19,7 @@ export default function BottomNav() {
                             <li>
                                 <a href="#${item.id}" class="group flex flex-col items-center p-2 text-gray-600 hover:text-red-600 transition-all duration-300">
                                     <span class="relative">
-                                        <i data-feather="${item.icon}" class="h-6 w-6 mb-1 transition-transform duration-300 group-hover:scale-110"></i>
+                                        <i class="${item.icon} h-6 w-6 mb-1 transition-transform duration-300 group-hover:scale-110"></i>
                                         ${item.notificationColor ? `
                                             <span class="absolute -top-1 -right-1 h-3 w-3 bg-${item.notificationColor}-500 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                         ` : ''}
@@ -32,11 +32,6 @@ export default function BottomNav() {
                 </div>
             </nav>
         `;
-
-        // Inicializar los iconos de Feather
-        if (typeof feather !== 'undefined') {
-            feather.replace();
-        }
 
         // Añadir efecto de desplazamiento suave
         const links = bottomNav.querySelectorAll('a');
@@ -76,16 +71,30 @@ export default function BottomNav() {
             });
         });
 
-        // Añadir efecto de ocultamiento al desplazar hacia abajo
+        // Añadir efecto de ocultamiento al desplazar hacia abajo y reaparición al desplazar hacia arriba
         let lastScrollTop = 0;
+        let scrollTimer = null;
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
             if (scrollTop > lastScrollTop) {
+                // Scrolling down
                 bottomNav.style.transform = 'translateY(100%)';
             } else {
+                // Scrolling up
                 bottomNav.style.transform = 'translateY(0)';
             }
+            
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+            // Clear the existing timer
+            clearTimeout(scrollTimer);
+
+            // Set a new timer
+            scrollTimer = setTimeout(() => {
+                // Show the nav bar after scrolling stops
+                bottomNav.style.transform = 'translateY(0)';
+            }, 150); // Ajusta este valor para cambiar cuánto tiempo después de que se detenga el scroll reaparece el nav
         }, false);
     }
 }
