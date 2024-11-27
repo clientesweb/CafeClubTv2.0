@@ -27,6 +27,13 @@ export default function Hero() {
                     </div>
                 `).join('')}
             </div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 z-10">
+                <h1 class="text-4xl font-bold mb-4">Bienvenidos a Nuestro Sitio</h1>
+                <p class="text-lg mb-6">Descubre contenido asombroso y mucho más</p>
+                <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+                    Explorar Más
+                </button>
+            </div>
             <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
                 ${images.map((_, index) => `
                     <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
