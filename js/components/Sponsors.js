@@ -13,10 +13,10 @@ export default function Sponsors() {
         <section class="sponsors-section my-12 px-4 md:px-6 lg:px-8 py-6 rounded-lg shadow-lg bg-[#8B0000]">
             <h2 class="text-2xl font-bold mb-6 text-white text-center">Nuestros Patrocinadores</h2>
             <div class="overflow-hidden relative">
-                <div class="flex gap-8 transition-transform duration-300 ease-in-out transform" id="sponsorSlider">
+                <div class="flex gap-6 transition-transform duration-300 ease-in-out transform" id="sponsorSlider">
                     ${sponsorsData.map(sponsor => `
-                        <div class="sponsor-card w-[180px] h-32 bg-red-600 rounded-lg shadow-xl flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105 transform hover:shadow-2xl">
-                            <img src="${sponsor.logo}" alt="${sponsor.name}" class="max-w-full max-h-full object-contain">
+                        <div class="sponsor-card flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105 transform hover:shadow-2xl">
+                            <img src="${sponsor.logo}" alt="${sponsor.name}" class="max-w-[160px] max-h-[80px] object-contain">
                         </div>
                     `).join('')}
                 </div>
@@ -26,7 +26,7 @@ export default function Sponsors() {
 
     const sponsorSlider = document.getElementById('sponsorSlider');
     let currentPosition = 0;
-    const slideWidth = 180 + 24; // Ancho de los logos + espacio entre ellos
+    const slideWidth = 160 + 24; // Ancho del logo más el espacio entre ellos
     const intervalTime = 3000; // Cambiar cada 3 segundos
 
     // Deslizar a la siguiente posición
