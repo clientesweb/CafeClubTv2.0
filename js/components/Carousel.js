@@ -8,6 +8,22 @@ export default function Hero() {
         'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1080&h=1920&q=80',
     ];
 
+    const titles = [
+        "Bienvenidos Cafeteros",
+        "Explora Playlists Increíbles",
+        "Shorts, Noticias y Mucho Más",
+        "Obtén Tu Propio Programa",
+        "Consulta Propuestas Comierciales"
+    ];
+
+    const buttons = [
+        "Explorar",
+        "Ver Más",
+        "Descubre Ahora",
+        "Solicitar",
+        "Contáctanos"
+    ];
+
     let currentSlide = 0;
     let isTransitioning = false;
     let startX = 0;
@@ -27,11 +43,10 @@ export default function Hero() {
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 z-10">
-                <h1 class="text-4xl font-bold mb-4">Bienvenidos a Nuestro Sitio</h1>
-                <p class="text-lg mb-6">Descubre contenido asombroso y mucho más</p>
+            <div class="absolute bottom-4 left-0 right-0 flex flex-col items-center text-white text-center px-4 z-10" id="hero-text">
+                <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[0]}</h1>
                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
-                    Explorar Más
+                    ${buttons[0]}
                 </button>
             </div>
             <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
@@ -45,6 +60,7 @@ export default function Hero() {
     const slideContainer = hero.querySelector('#slide-container');
     const slides = hero.querySelectorAll('.lazy-load');
     const indicators = hero.querySelectorAll('.indicator');
+    const heroText = hero.querySelector('#hero-text');
 
     function loadSlideImage(index) {
         const img = slides[index];
@@ -60,6 +76,7 @@ export default function Hero() {
         currentSlide = index;
         slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
         updateIndicators();
+        updateText();
         loadSlideImage(currentSlide);
         setTimeout(() => (isTransitioning = false), 500);
     }
@@ -70,6 +87,15 @@ export default function Hero() {
             indicator.classList.toggle('w-8', index === currentSlide);
             indicator.classList.toggle('w-2', index !== currentSlide);
         });
+    }
+
+    function updateText() {
+        heroText.innerHTML = `
+            <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[currentSlide]}</h1>
+            <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+                ${buttons[currentSlide]}
+            </button>
+        `;
     }
 
     // Eventos táctiles
@@ -84,10 +110,8 @@ export default function Hero() {
     slideContainer.addEventListener('touchend', () => {
         const diffX = startX - endX;
         if (diffX > 50) {
-            // Desliza a la izquierda
             showSlide((currentSlide + 1) % images.length);
         } else if (diffX < -50) {
-            // Desliza a la derecha
             showSlide((currentSlide - 1 + images.length) % images.length);
         }
     });
