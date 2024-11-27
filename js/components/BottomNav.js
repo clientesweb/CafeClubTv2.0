@@ -1,30 +1,28 @@
 export default function BottomNav() {
     const bottomNav = document.getElementById('bottom-nav');
 
-    // Verificar si el elemento existe antes de proceder
     if (bottomNav) {
         const navItems = [
-            { id: 'playlists', icon: 'fa-solid fa-list', label: 'Playlists', notificationColor: 'red' },
-            { id: 'shorts', icon: 'fa-solid fa-video', label: 'Shorts', notificationColor: 'blue' },
-            { id: 'sponsors', icon: 'fa-solid fa-handshake', label: 'Sponsors' },
-            { id: 'channel', icon: 'fa-solid fa-tv', label: 'Canal' },
-            { id: 'contact', icon: 'fa-solid fa-envelope', label: 'Contacto' }
+            { id: 'playlists', icon: 'fa-solid fa-list', label: 'Playlists', color: 'red' },
+            { id: 'shorts', icon: 'fa-solid fa-video', label: 'Shorts', color: 'blue' },
+            { id: 'sponsors', icon: 'fa-solid fa-handshake', label: 'Sponsors', color: 'purple' },
+            { id: 'channel', icon: 'fa-solid fa-tv', label: 'Canal', color: 'orange' },
+            { id: 'contact', icon: 'fa-solid fa-envelope', label: 'Contacto', color: 'pink' }
         ];
 
         bottomNav.innerHTML = `
-            <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40 transition-all duration-300 ease-in-out">
+            <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
                 <div class="max-w-screen-xl mx-auto px-4">
                     <ul class="flex justify-around items-center py-2">
                         ${navItems.map(item => `
-                            <li>
-                                <a href="#${item.id}" class="group flex flex-col items-center p-2 text-gray-600 hover:text-red-600 transition-all duration-300">
-                                    <span class="relative">
-                                        <i class="${item.icon} h-6 w-6 mb-1 transition-transform duration-300 group-hover:scale-110"></i>
-                                        ${item.notificationColor ? `
-                                            <span class="absolute -top-1 -right-1 h-3 w-3 bg-${item.notificationColor}-500 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
-                                        ` : ''}
+                            <li class="relative group">
+                                <a href="#${item.id}" class="flex flex-col items-center p-2 transition-all duration-300">
+                                    <span class="relative z-10">
+                                        <i class="${item.icon} text-2xl mb-1 transition-transform duration-300 group-hover:scale-125"></i>
+                                        <span class="absolute -top-1 -right-1 h-3 w-3 bg-${item.color}-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                                     </span>
-                                    <span class="text-xs font-medium">${item.label}</span>
+                                    <span class="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">${item.label}</span>
+                                    <span class="absolute inset-0 bg-${item.color}-100 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 z-0"></span>
                                 </a>
                             </li>
                         `).join('')}
@@ -33,8 +31,9 @@ export default function BottomNav() {
             </nav>
         `;
 
-        // Añadir efecto de desplazamiento suave
         const links = bottomNav.querySelectorAll('a');
+        let activeLink = null;
+
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -46,55 +45,66 @@ export default function BottomNav() {
                         block: 'start'
                     });
                 }
+
+                if (activeLink) {
+                    activeLink.classList.remove('active');
+                }
+                link.classList.add('active');
+                activeLink = link;
             });
         });
 
-        // Añadir efecto de resaltado activo
         const sections = navItems.map(item => item.id);
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top <= 150 && rect.bottom >= 150) {
-                        current = section;
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.7
+        };
+
+        const observerCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    if (activeLink) {
+                        activeLink.classList.remove('active');
+                    }
+                    const newActiveLink = bottomNav.querySelector(`a[href="#${id}"]`);
+                    if (newActiveLink) {
+                        newActiveLink.classList.add('active');
+                        activeLink = newActiveLink;
                     }
                 }
             });
+        };
 
-            links.forEach(link => {
-                link.classList.remove('text-red-600');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('text-red-600');
-                }
-            });
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        sections.forEach(sectionId => {
+            const element = document.getElementById(sectionId);
+            if (element) observer.observe(element);
         });
 
-        // Añadir efecto de ocultamiento al desplazar hacia abajo y reaparición al desplazar hacia arriba
-        let lastScrollTop = 0;
-        let scrollTimer = null;
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > lastScrollTop) {
-                // Scrolling down
-                bottomNav.style.transform = 'translateY(100%)';
-            } else {
-                // Scrolling up
-                bottomNav.style.transform = 'translateY(0)';
+        // Añadir estilos dinámicos
+        const style = document.createElement('style');
+        style.textContent = `
+            #bottom-nav a.active i {
+                transform: translateY(-8px) scale(1.25);
             }
-            
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-
-            // Clear the existing timer
-            clearTimeout(scrollTimer);
-
-            // Set a new timer
-            scrollTimer = setTimeout(() => {
-                // Show the nav bar after scrolling stops
-                bottomNav.style.transform = 'translateY(0)';
-            }, 150); // Ajusta este valor para cambiar cuánto tiempo después de que se detenga el scroll reaparece el nav
-        }, false);
+            #bottom-nav a.active .text-xs {
+                opacity: 1;
+            }
+            #bottom-nav a.active span.absolute {
+                transform: scale(1);
+            }
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            #bottom-nav a.active i {
+                animation: pulse 2s infinite;
+            }
+        `;
+        document.head.appendChild(style);
     }
 }
