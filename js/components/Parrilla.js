@@ -39,7 +39,7 @@ export default function ParrillaDeProgramas() {
     let endX = 0;
 
     parrilla.innerHTML = `
-        <div class="relative w-full h-[60vh] overflow-hidden">
+        <div class="relative w-full h-[45vh] lg:h-[60vh] overflow-hidden">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="program-container">
                 ${programas.map((programa, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
