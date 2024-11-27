@@ -15,7 +15,7 @@ export default function Hero() {
     hero.innerHTML = `
         <style>
             .hero-container {
-                width: 100vw;
+                width: 100%;
                 height: 100vh;
                 position: relative;
                 overflow: hidden;
@@ -26,17 +26,17 @@ export default function Hero() {
                 position: absolute;
                 top: 0;
                 left: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            }
+            .hero-slide.active {
+                opacity: 1;
             }
             .hero-image {
                 width: 100%;
                 height: 100%;
-                object-fit: contain;
-                position: absolute;
-                top: 0;
-                left: 0;
+                object-fit: cover;
+                object-position: center;
             }
             .hero-content {
                 position: absolute;
@@ -47,6 +47,13 @@ export default function Hero() {
                 background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
                 color: white;
                 text-align: center;
+                transform: translateY(20px);
+                opacity: 0;
+                transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            }
+            .hero-slide.active .hero-content {
+                transform: translateY(0);
+                opacity: 1;
             }
             .hero-indicators {
                 position: absolute;
@@ -58,7 +65,7 @@ export default function Hero() {
                 gap: 0.5rem;
             }
             .indicator {
-                width: 2rem;
+                width: calc(20% - 0.4rem);
                 height: 0.25rem;
                 background-color: rgba(255,255,255,0.5);
                 border: none;
@@ -68,38 +75,32 @@ export default function Hero() {
             .indicator.active {
                 background-color: #ef4444;
             }
-            @media (max-aspect-ratio: 9/16) {
-                .hero-image {
-                    width: 100%;
-                    height: auto;
-                }
-            }
             @media (min-aspect-ratio: 9/16) {
                 .hero-image {
                     width: auto;
                     height: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
                 }
             }
         </style>
         <div class="hero-container">
-            <div class="hero-slides">
-                ${images.map((src, index) => `
-                    <div class="hero-slide ${index === 0 ? 'active' : ''}" style="opacity: ${index === 0 ? 1 : 0}">
-                        <img 
-                            src="${src}" 
-                            alt="Hero Image ${index + 1}" 
-                            class="hero-image"
-                        >
+            ${images.map((src, index) => `
+                <div class="hero-slide ${index === 0 ? 'active' : ''}">
+                    <img 
+                        src="${src}" 
+                        alt="Hero Image ${index + 1}" 
+                        class="hero-image"
+                    >
+                    <div class="hero-content">
+                        <h1 class="text-4xl md:text-6xl font-bold mb-4">Descubre el Mundo del Café</h1>
+                        <p class="text-lg md:text-xl mb-8">Explora historias, sabores y experiencias únicas en Café Club TV</p>
+                        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                            Comienza tu Viaje
+                        </button>
                     </div>
-                `).join('')}
-            </div>
-            <div class="hero-content">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Descubre el Mundo del Café</h1>
-                <p class="text-lg md:text-xl mb-8">Explora historias, sabores y experiencias únicas en Café Club TV</p>
-                <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                    Comienza tu Viaje
-                </button>
-            </div>
+                </div>
+            `).join('')}
             <div class="hero-indicators">
                 ${images.map((_, index) => `
                     <button class="indicator ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
@@ -118,9 +119,7 @@ export default function Hero() {
         const currentSlide = slides[currentSlide];
         const nextSlide = slides[index];
 
-        currentSlide.style.opacity = 0;
         currentSlide.classList.remove('active');
-        nextSlide.style.opacity = 1;
         nextSlide.classList.add('active');
 
         updateIndicators(index);
@@ -172,12 +171,23 @@ export default function Hero() {
         showSlide((currentSlide + 1) % images.length);
     }, 5000);
 
-    // Añadir interactividad al botón
-    const exploreButton = hero.querySelector('button');
-    exploreButton.addEventListener('mouseenter', () => {
-        exploreButton.classList.add('animate-pulse');
+    // Añadir efecto de parallax al hacer scroll
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.pageYOffset;
+        slides.forEach((slide) => {
+            const image = slide.querySelector('.hero-image');
+            image.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+        });
     });
-    exploreButton.addEventListener('mouseleave', () => {
-        exploreButton.classList.remove('animate-pulse');
+
+    // Añadir interactividad al botón
+    const exploreButtons = hero.querySelectorAll('button:not(.indicator)');
+    exploreButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            button.classList.add('animate-pulse');
+        });
+        button.addEventListener('mouseleave', () => {
+            button.classList.remove('animate-pulse');
+        });
     });
 }
