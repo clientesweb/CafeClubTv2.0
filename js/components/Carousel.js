@@ -57,11 +57,32 @@ export default function Hero() {
                 img.classList.remove('opacity-0', 'scale-110');
                 heroTitle.classList.remove('translate-y-10', 'opacity-0');
                 heroDescription.classList.remove('translate-y-10', 'opacity-0');
+                adjustImageSize(img);
             };
         } else {
             img.classList.remove('opacity-0', 'scale-110');
             heroTitle.classList.remove('translate-y-10', 'opacity-0');
             heroDescription.classList.remove('translate-y-10', 'opacity-0');
+            adjustImageSize(img);
+        }
+    }
+
+    function adjustImageSize(img) {
+        const containerAspectRatio = hero.offsetWidth / hero.offsetHeight;
+        const imageAspectRatio = 1080 / 1920; // Aspect ratio of the original image
+
+        if (containerAspectRatio > imageAspectRatio) {
+            img.style.width = '100%';
+            img.style.height = 'auto';
+            img.style.top = '50%';
+            img.style.left = '0';
+            img.style.transform = 'translateY(-50%)';
+        } else {
+            img.style.width = 'auto';
+            img.style.height = '100%';
+            img.style.top = '0';
+            img.style.left = '50%';
+            img.style.transform = 'translateX(-50%)';
         }
     }
 
@@ -151,4 +172,12 @@ export default function Hero() {
     exploreButton.addEventListener('mouseleave', () => {
         exploreButton.classList.remove('animate-pulse');
     });
+
+    // Ajustar tamaño de imagen al cambiar el tamaño de la ventana
+    window.addEventListener('resize', () => {
+        slides.forEach((slide, index) => {
+            adjustImageSize(slide);
+        });
+    });
 }
+
