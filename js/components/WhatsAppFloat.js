@@ -3,11 +3,17 @@ export default function WhatsAppFloat() {
 
     if (whatsappFloat) {
         whatsappFloat.innerHTML = `
-            <div class="fixed bottom-20 right-6 z-50">
+            <div class="fixed bottom-20 right-6 z-50 flex flex-col space-y-4">
+                <!-- Botón personalizado con redirección -->
+                <button id="custom-logo-button" class="bg-blue-500 text-white rounded-full p-4 shadow-lg hover:bg-blue-600 transition-colors">
+                    <img src="ruta-a-tu-logo.svg" alt="Logo Personalizado" class="w-8 h-8">
+                </button>
+                <!-- Botón de WhatsApp -->
                 <button id="open-whatsapp-modal" class="bg-green-500 text-white rounded-full p-4 shadow-lg hover:bg-green-600 transition-colors">
-                    <i class="fab fa-whatsapp text-2xl"></i>
+                    <img src="ruta-a-tu-logo-whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
                 </button>
             </div>
+            <!-- Modal de WhatsApp -->
             <div id="whatsapp-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
                 <div id="whatsapp-modal-content" class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
                     <h2 class="text-2xl font-bold mb-4 text-green-600">Chatea con CaféClubTV en WhatsApp</h2>
@@ -24,12 +30,18 @@ export default function WhatsAppFloat() {
             </div>
         `;
 
+        const customLogoButton = document.getElementById('custom-logo-button');
         const openModalButton = document.getElementById('open-whatsapp-modal');
         const closeModalButton = document.getElementById('close-whatsapp-modal');
         const sendMessageButton = document.getElementById('send-whatsapp-message');
         const modal = document.getElementById('whatsapp-modal');
         const modalContent = document.getElementById('whatsapp-modal-content');
         const messageTextarea = document.getElementById('whatsapp-message');
+
+        // Redirección del botón personalizado
+        customLogoButton.addEventListener('click', () => {
+            window.location.href = 'https://tu-otra-pagina.com';
+        });
 
         // Abrir el modal
         openModalButton.addEventListener('click', () => {
