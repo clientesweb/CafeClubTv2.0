@@ -10,20 +10,20 @@ export default function Sponsors() {
     ];
 
     sponsors.innerHTML = `
-        <section class="my-12 bg-gradient-to-r from-red-800 via-gray-300 to-white p-6 rounded-lg shadow-xl">
+        <section class="sponsors-section my-12 p-6 rounded-lg shadow-lg bg-[#8B0000]">
             <h2 class="text-2xl font-bold mb-6 text-white text-center">Nuestros Patrocinadores</h2>
             <div class="overflow-hidden relative">
-                <div class="flex items-center justify-start space-x-6 transition-transform duration-300 ease-in-out transform" id="sponsorSlider">
+                <div class="flex items-center justify-start space-x-8 transition-transform duration-300 ease-in-out transform" id="sponsorSlider">
                     ${sponsorsData.map(sponsor => `
-                        <div class="min-w-[150px] sm:min-w-[180px] md:min-w-[200px] lg:min-w-[250px] h-24 bg-white rounded-lg shadow-md flex items-center justify-center p-4 transition-transform duration-300 hover:scale-110 transform">
+                        <div class="sponsor-card min-w-[180px] h-32 bg-white rounded-lg shadow-md flex items-center justify-center p-4 transition-transform duration-300 hover:scale-110 transform">
                             <img src="${sponsor.logo}" alt="${sponsor.name}" class="max-w-full max-h-full object-contain">
                         </div>
                     `).join('')}
                 </div>
-                <button id="prevButton" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                <button id="prevButton" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-[#8B0000] p-2 rounded-full hover:bg-[#8B0000] hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
                     &lt;
                 </button>
-                <button id="nextButton" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                <button id="nextButton" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-[#8B0000] p-2 rounded-full hover:bg-[#8B0000] hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
                     &gt;
                 </button>
             </div>
@@ -32,7 +32,7 @@ export default function Sponsors() {
 
     const sponsorSlider = document.getElementById('sponsorSlider');
     let currentPosition = 0;
-    const slideWidth = 150 + 24; // Ancho de los logos + espacio entre ellos
+    const slideWidth = 180 + 24; // Ancho de los logos + espacio entre ellos
     const intervalTime = 3000; // Cambiar cada 3 segundos
 
     // Deslizar a la siguiente posición
