@@ -38,3 +38,17 @@ html {
     cursor: pointer;
     font-size: 18px;
 }
+#parrilla .lazy-load {
+    object-fit: cover;
+}
+
+#parrilla {
+    width: 100%;
+    height: 45vh; /* Ajuste para pantallas pequeñas */
+}
+
+@media (min-width: 1024px) {
+    #parrilla {
+        height: 60vh; /* Ajuste para pantallas grandes */
+    }
+}
