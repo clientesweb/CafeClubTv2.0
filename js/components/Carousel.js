@@ -13,7 +13,7 @@ export default function Hero() {
         "Explora Playlists Increíbles",
         "Shorts, Noticias y Mucho Más",
         "Obtén Tu Propio Programa",
-        "Consulta Propuestas Comierciales"
+        "Consulta Propuestas Comerciales"
     ];
 
     const buttons = [
@@ -43,7 +43,7 @@ export default function Hero() {
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute bottom-4 left-0 right-0 flex flex-col items-center text-white text-center px-4 z-10" id="hero-text">
+            <div class="absolute bottom-20 left-4 right-4 flex flex-col items-start text-white text-left px-4 z-10" id="hero-text">
                 <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[0]}</h1>
                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
                     ${buttons[0]}
@@ -54,6 +54,10 @@ export default function Hero() {
                     <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
                 `).join('')}
             </div>
+        </div>
+        <!-- Banner Publicitario -->
+        <div class="w-full h-[60px] bg-gray-800 text-center text-white flex items-center justify-center">
+            <span>¡Patrocinado! Visita nuestras ofertas</span>
         </div>
     `;
 
