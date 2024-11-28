@@ -135,6 +135,7 @@ section {
 #hero {
     position: relative;
     width: 100%;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
     overflow: hidden;
 }
 
@@ -147,14 +148,33 @@ section {
 
 #slide-container img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
+    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+    max-height: 100%; /* Garantiza que no sobrepase la altura del contenedor */
+    object-fit: cover; /* Cubre el espacio sin deformarse */
+    position: relative; /* Cambiado de absolute para evitar conflictos */
+    transition: opacity 1s ease-in-out;
+}
+
+.lazy-load {
+    opacity: 0;
     transition: opacity 1s ease-in-out;
 }
 
 .lazy-load.opacity-100 {
     opacity: 1;
+}
+
+/* Adaptación a pantallas anchas y altas */
+@media (min-aspect-ratio: 16/9) {
+    #slide-container img {
+        height: auto;
+        width: 100%;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    #slide-container img {
+        width: auto;
+        height: 100%;
+    }
 }
