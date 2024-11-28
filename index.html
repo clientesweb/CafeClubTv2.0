@@ -89,11 +89,11 @@
         <section id="featured-programs" class="py-16 bg-gray-100">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold mb-8">Parrilla de Programas</h2>
-                <div class="program-scroll-container overflow-x-auto whitespace-nowrap">
-                    <div class="inline-block mr-4">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden w-64">
-                            <img src="program-1.jpg" alt="Programa 1" class="w-full h-40 object-cover">
-                            <div class="p-4">
+                <div class="program-scroll-container overflow-x-auto">
+                    <div class="flex space-x-4">
+                        <div class="flex-shrink-0 w-[512px]">
+                            <img src="program-1.jpg" alt="Programa 1" class="w-full h-[252px] object-cover rounded-lg">
+                            <div class="mt-4">
                                 <h3 class="font-bold text-xl mb-2">Café del Mundo</h3>
                                 <p class="text-gray-700">Lunes 20:00</p>
                                 <button class="mt-4 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
@@ -101,11 +101,9 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="inline-block mr-4">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden w-64">
-                            <img src="program-2.jpg" alt="Programa 2" class="w-full h-40 object-cover">
-                            <div class="p-4">
+                        <div class="flex-shrink-0 w-[512px]">
+                            <img src="program-2.jpg" alt="Programa 2" class="w-full h-[252px] object-cover rounded-lg">
+                            <div class="mt-4">
                                 <h3 class="font-bold text-xl mb-2">Barista Master</h3>
                                 <p class="text-gray-700">Martes 19:30</p>
                                 <button class="mt-4 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
@@ -113,11 +111,9 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="inline-block mr-4">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden w-64">
-                            <img src="program-3.jpg" alt="Programa 3" class="w-full h-40 object-cover">
-                            <div class="p-4">
+                        <div class="flex-shrink-0 w-[512px]">
+                            <img src="program-3.jpg" alt="Programa 3" class="w-full h-[252px] object-cover rounded-lg">
+                            <div class="mt-4">
                                 <h3 class="font-bold text-xl mb-2">Café y Salud</h3>
                                 <p class="text-gray-700">Miércoles 21:00</p>
                                 <button class="mt-4 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
@@ -125,11 +121,9 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="inline-block mr-4">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden w-64">
-                            <img src="program-4.jpg" alt="Programa 4" class="w-full h-40 object-cover">
-                            <div class="p-4">
+                        <div class="flex-shrink-0 w-[512px]">
+                            <img src="program-4.jpg" alt="Programa 4" class="w-full h-[252px] object-cover rounded-lg">
+                            <div class="mt-4">
                                 <h3 class="font-bold text-xl mb-2">Tostado en Vivo</h3>
                                 <p class="text-gray-700">Jueves 18:00</p>
                                 <button class="mt-4 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
@@ -145,11 +139,22 @@
         <section id="live-stream" class="py-16 bg-[#8B0000] text-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold mb-8 text-center">Transmisión en Vivo</h2>
-                <div id="main-video" class="aspect-video max-w-3xl mx-auto bg-black mb-8">
-                    <!-- El video principal se cargará aquí -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div id="main-video" class="lg:col-span-2 aspect-video bg-black">
+                        <!-- El video principal se cargará aquí -->
+                    </div>
+                    <div id="video-playlist" class="lg:col-span-1 overflow-y-auto max-h-[600px] space-y-4">
+                        <!-- Los videos de la playlist se cargarán aquí -->
+                    </div>
                 </div>
-                <div id="video-playlist" class="overflow-x-auto whitespace-nowrap">
-                    <!-- Los videos de la playlist se cargarán aquí -->
+            </div>
+        </section>
+
+        <section id="shorts" class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-8">Shorts</h2>
+                <div id="shorts-container" class="overflow-x-auto whitespace-nowrap">
+                    <!-- Los shorts se cargarán aquí -->
                 </div>
             </div>
         </section>
