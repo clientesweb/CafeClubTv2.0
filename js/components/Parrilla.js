@@ -39,22 +39,21 @@ export default function ParrillaDeProgramas() {
     let endX = 0;
 
     parrilla.innerHTML = `
-        <div class="relative w-full h-0 pb-[56.25%] overflow-hidden" style="margin-bottom: 0;">
+        <div class="relative w-full h-full overflow-hidden">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="program-container">
                 ${programas.map((programa, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
                         <img 
                             data-src="${programa.image}" 
                             alt="Programa ${index + 1}" 
-                            class="w-full h-full object-cover absolute top-0 left-0 lazy-load opacity-0 transition-all duration-1000 transform scale-110" 
-                            style="margin-bottom: 0;"
+                            class="w-full h-full object-cover absolute top-0 left-0 lazy-load opacity-0 transition-all duration-1000 transform scale-110"
                         >
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black opacity-75"></div>
                         <div class="absolute bottom-4 left-0 right-0 text-white text-center px-4 z-10">
-                            <h1 class="text-xl sm:text-2xl font-bold mb-4">${programa.title}</h1>
-                            <p class="text-sm sm:text-lg mb-6">${programa.time}</p>
-                            <a href="${programa.link}">
-                                <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+                            <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-4">${programa.title}</h2>
+                            <p class="text-sm sm:text-lg md:text-xl mb-4 sm:mb-6">${programa.time}</p>
+                            <a href="${programa.link}" class="inline-block">
+                                <button class="px-4 py-2 sm:px-6 sm:py-3 bg-red-600 text-white text-sm sm:text-base md:text-lg rounded-lg shadow-lg hover:bg-red-700 transition">
                                     Ver Programa
                                 </button>
                             </a>
@@ -62,7 +61,7 @@ export default function ParrillaDeProgramas() {
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
                 ${programas.map((_, index) => `
                     <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
                 `).join('')}
@@ -130,4 +129,13 @@ export default function ParrillaDeProgramas() {
     }, 5000);
 
     loadProgramImage(0);
+
+    // Ajuste de altura para adaptarse al espacio disponible
+    function adjustHeight() {
+        const availableHeight = window.innerHeight - parrilla.offsetTop;
+        parrilla.style.height = `${availableHeight}px`;
+    }
+
+    window.addEventListener('resize', adjustHeight);
+    adjustHeight();
 }
