@@ -30,7 +30,7 @@ export default function Hero() {
     let endX = 0;
 
     hero.innerHTML = `
-        <div class="relative w-full h-[60vh] overflow-hidden">
+        <div class="relative w-full h-[calc(100vh-8rem)] overflow-hidden">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="slide-container">
                 ${images.map((src, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
@@ -44,23 +44,23 @@ export default function Hero() {
                 `).join('')}
             </div>
             <div class="absolute top-1/2 left-0 transform -translate-y-1/2 pl-4 z-10 flex flex-col items-start text-white text-left" id="hero-text">
-                <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[0]}</h1>
-                <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+                <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">${titles[0]}</h1>
+                <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition text-lg md:text-xl">
                     ${buttons[0]}
                 </button>
             </div>
-            <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
                 ${images.map((_, index) => `
                     <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
                 `).join('')}
             </div>
         </div>
 
-        <!-- Banner Promocional con altura más baja -->
-        <div class="relative w-full h-[20vh] md:h-[25vh] lg:h-[20vh] xl:h-[20vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
+        <!-- Banner Promocional con altura ajustable -->
+        <div class="relative w-full h-[20vh] md:h-[25vh] lg:h-[30vh] xl:h-[35vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
             <div class="absolute inset-0 bg-black/50 flex justify-center items-center">
-                <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
-                    JUEGA
+                <button class="px-8 py-4 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition text-xl md:text-2xl font-bold">
+                    JUEGA AHORA
                 </button>
             </div>
         </div>
@@ -100,8 +100,8 @@ export default function Hero() {
 
     function updateText() {
         heroText.innerHTML = `
-            <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[currentSlide]}</h1>
-            <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+            <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">${titles[currentSlide]}</h1>
+            <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition text-lg md:text-xl">
                 ${buttons[currentSlide]}
             </button>
         `;
@@ -137,4 +137,13 @@ export default function Hero() {
     }, 5000);
 
     loadSlideImage(0);
+
+    // Ajuste de altura para dispositivos móviles
+    function adjustHeight() {
+        const headerHeight = document.getElementById('header').offsetHeight;
+        hero.style.marginTop = `${headerHeight}px`;
+    }
+
+    window.addEventListener('resize', adjustHeight);
+    adjustHeight();
 }
