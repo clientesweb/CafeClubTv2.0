@@ -11,8 +11,8 @@
 <body class="min-h-screen flex flex-col">
     <div id="top-banner" class="bg-[#8B0000] text-white text-center py-2 px-4">
         <p class="text-sm">
-            ¡Premia tu fidelidad, gana dinero en nuestra Ruleta!
-            <a href="#" class="underline hover:text-gray-200">Saber más</a>
+            ¿Te sientes con suerte? ¡Premiamos tu fidelidad con nuestra Ruleta!
+            <a href="#" class="underline hover:text-gray-200 ml-2 inline-block bg-yellow-500 text-black px-3 py-1 rounded">Gira Gratis</a>
         </p>
     </div>
 
@@ -83,6 +83,15 @@
                 <button class="hero-dot w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-white opacity-50"></button>
                 <button class="hero-dot w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-white opacity-50"></button>
                 <button class="hero-dot w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-white opacity-50"></button>
+            </div>
+        </section>
+
+        <section id="ad-banner" class="relative h-64 sm:h-96 overflow-hidden">
+            <img src="/placeholder.svg?height=1152&width=2048" alt="Banner publicitario" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-3 px-6 rounded text-lg sm:text-xl">
+                    Juega
+                </button>
             </div>
         </section>
 
@@ -180,44 +189,45 @@
         </section>
     </main>
 
-    <footer class="bg-gray-900 text-white py-8 sm:py-12">
+    <footer class="bg-[#8B0000] text-white py-8 sm:py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <h3 class="text-lg sm:text-xl font-bold mb-4">Acerca de CafeClub TV</h3>
-                    <p class="text-gray-400 text-sm sm:text-base">
+                    <p class="text-gray-200 text-sm sm:text-base">
                         CafeClub TV es tu destino para todo lo relacionado con el café. Descubre, aprende y disfruta del mundo del café con nosotros.
                     </p>
                 </div>
                 <div>
                     <h3 class="text-lg sm:text-xl font-bold mb-4">Enlaces Rápidos</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Inicio</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Programas</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">En Vivo</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm sm:text-base">Contacto</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white text-sm sm:text-base">Inicio</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white text-sm sm:text-base">Programas</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white text-sm sm:text-base">En Vivo</a></li>
+                        <li><a href="#" class="text-gray-200 hover:text-white text-sm sm:text-base">Contacto</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg sm:text-xl font-bold mb-4">Síguenos</h3>
                     <div class="flex space-x-4">
-                        <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-white">
+                        <a href="#" aria-label="Facebook" class="text-gray-200 hover:text-white">
                             <i class="fab fa-facebook-f text-lg sm:text-xl"></i>
                         </a>
-                        <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white">
+                        <a href="#" aria-label="Instagram" class="text-gray-200 hover:text-white">
                             <i class="fab fa-instagram text-lg sm:text-xl"></i>
                         </a>
-                        <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white">
+                        <a href="#" aria-label="Twitter" class="text-gray-200 hover:text-white">
                             <i class="fab fa-twitter text-lg sm:text-xl"></i>
                         </a>
-                        <a href="#" aria-label="Youtube" class="text-gray-400 hover:text-white">
+                        <a href="#" aria-label="Youtube" class="text-gray-200 hover:text-white">
                             <i class="fab fa-youtube text-lg sm:text-xl"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+            <div class="mt-8 pt-8 border-t border-[#A50000] text-center text-gray-200">
                 <p class="text-sm sm:text-base">&copy; 2023 CafeClub TV. Todos los derechos reservados.</p>
+                <p class="text-sm sm:text-base mt-2">Powered by Duality Domain</p>
             </div>
         </div>
     </footer>
@@ -225,21 +235,21 @@
     <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t py-2">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center">
-                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
-                    <i class="fas fa-music text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Playlists</span>
-                </a>
-                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
-                    <i class="fas fa-trophy text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Sports</span>
-                </a>
-                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
-                    <i class="fas fa-users text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Sponsors</span>
-                </a>
-                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                <a href="#featured-programs" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
                     <i class="fas fa-tv text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Canal</span>
+                    <span class="text-xs sm:text-sm">Programas</span>
+                </a>
+                <a href="#live-stream" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-broadcast-tower text-lg sm:text-xl"></i>
+                    <span class="text-xs sm:text-sm">En Vivo</span>
+                </a>
+                <a href="#shorts" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-film text-lg sm:text-xl"></i>
+                    <span class="text-xs sm:text-sm">Shorts</span>
+                </a>
+                <a href="#sponsors" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-handshake text-lg sm:text-xl"></i>
+                    <span class="text-xs sm:text-sm">Sponsors</span>
                 </a>
                 <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
                     <i class="fas fa-envelope text-lg sm:text-xl"></i>
@@ -250,12 +260,12 @@
     </nav>
 
     <div id="floating-chat" class="fixed right-4 bottom-24 flex flex-col gap-2">
-        <button class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-2 sm:p-3">
-            <i class="fab fa-facebook-messenger text-lg sm:text-xl"></i>
-            <span class="sr-only">Chat en Facebook</span>
+        <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white rounded-full p-2 sm:p-3">
+            <img src="logo.png" alt="CafeClub TV Logo" class="w-6 h-6 sm:w-8 sm:h-8">
+            <span class="sr-only">Chat con CafeClub TV</span>
         </button>
-        <button class="bg-green-500 hover:bg-green-600 text-white rounded-full p-2 sm:p-3">
-            <i class="fab fa-whatsapp text-lg sm:text-xl"></i>
+        <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white rounded-full p-2 sm:p-3">
+            <img src="logo.png" alt="CafeClub TV Logo" class="w-6 h-6 sm:w-8 sm:h-8">
             <span class="sr-only">Chat en WhatsApp</span>
         </button>
     </div>
