@@ -76,11 +76,11 @@ body {
     line-height: 1.25rem;
 }
 
-/* Estilos para la sección de shorts */
+/* Estilos actualizados para la sección de shorts */
 .shorts-carousel-container {
     position: relative;
     width: 100%;
-    max-width: 315px;
+    max-width: 100%;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -88,11 +88,14 @@ body {
 #shorts-container {
     display: flex;
     transition: transform 0.3s ease;
+    width: 100%;
 }
 
 .short-video {
     flex: 0 0 100%;
     width: 100%;
+    max-width: 315px;
+    margin: 0 auto;
 }
 
 .short-wrapper {
@@ -135,14 +138,31 @@ body {
     right: 10px;
 }
 
-@media (max-width: 640px) {
+@media (min-width: 640px) {
     .shorts-carousel-container {
-        max-width: 100%;
+        max-width: calc(315px * 3); /* Mostrar 3 shorts en pantallas más grandes */
     }
 
     #shorts-container {
-        height: calc(100vw * (16/9));
-        max-height: 560px;
+        width: 300%; /* 3 veces el ancho para mostrar 3 shorts */
+    }
+
+    .short-video {
+        flex: 0 0 33.333%;
+    }
+}
+
+@media (max-width: 639px) {
+    .shorts-carousel-container {
+        max-width: 315px;
+    }
+
+    #shorts-container {
+        width: 100%;
+    }
+
+    .short-video {
+        flex: 0 0 100%;
     }
 }
 
