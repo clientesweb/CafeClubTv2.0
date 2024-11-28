@@ -54,15 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(nextSlide, 5000);
 
     // YouTube API integration
-    const playlistId = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL'; // Reemplaza con el ID de tu playlist
+    const livePlaylistId = 'YOUR_LIVE_PLAYLIST_ID';
+    const shortsPlaylistId = 'YOUR_SHORTS_PLAYLIST_ID';
     let player;
 
     function onYouTubeIframeAPIReady() {
         loadPlaylist();
+        loadShorts();
     }
 
     function loadPlaylist() {
-        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${playlistId}&key=AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0`)
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${livePlaylistId}&key=YOUR_API_KEY`)
             .then(response => response.json())
             .then(data => {
                 const mainVideoContainer = document.getElementById('main-video');
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // Cargar la lista de reproducción
+                playlistContainer.innerHTML = ''; // Limpiar el contenedor
                 data.items.forEach((item, index) => {
                     const videoId = item.snippet.resourceId.videoId;
                     const thumbnailUrl = item.snippet.thumbnails.medium.url;
@@ -93,6 +96,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
 
                     playlistContainer.appendChild(videoElement);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function loadShorts() {
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${shortsPlaylistId}&key=YOUR_API_KEY`)
+            .then(response => response.json())
+            .then(data => {
+                const shortsContainer = document.getElementById('shorts-container');
+
+                shortsContainer.innerHTML = ''; // Limpiar el contenedor
+                data.items.forEach((item) => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const thumbnailUrl = item.snippet.thumbnails.medium.url;
+                    const title = item.snippet.title;
+
+                    const shortElement = document.createElement('div');
+                    shortElement.classList.add('short-video');
+                    shortElement.innerHTML = `
+                        <img src="${thumbnailUrl}" alt="${title}">
+                        <p>${title}</p>
+                    `;
+                    shortElement.addEventListener('click', () => {
+                        window.open(`https://www.youtube.com/shorts/${videoId}`, '_blank');
+                    });
+
+                    shortsContainer.appendChild(shortElement);
                 });
             })
             .catch(error => console.error('Error:', error));
@@ -128,3 +159,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
