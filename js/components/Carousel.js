@@ -26,38 +26,35 @@ export default function Hero() {
 
     let currentSlide = 0;
     let isTransitioning = false;
-    let startX = 0;
-    let endX = 0;
 
     hero.innerHTML = `
-        <div class="relative w-full h-[60vh] overflow-hidden">
-            <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="slide-container">
+        <div class="relative w-full h-screen overflow-hidden">
+            <div class="flex transition-transform duration-1000 ease-in-out" id="slide-container">
                 ${images.map((src, index) => `
-                    <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
+                    <div class="w-full h-screen flex-shrink-0 relative">
                         <img 
                             data-src="${src}" 
                             alt="Hero Image ${index + 1}" 
-                            class="w-full h-full object-cover absolute top-0 left-0 lazy-load opacity-0 transition-all duration-1000 transform scale-110"
+                            class="lazy-load opacity-0 w-full h-full object-cover"
                         >
-                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black opacity-75"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
                     </div>
                 `).join('')}
             </div>
-            <div class="absolute top-1/2 left-0 transform -translate-y-1/2 pl-4 z-10 flex flex-col items-start text-white text-left" id="hero-text">
-                <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[0]}</h1>
-                <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center text-white">
+                <h1 class="text-4xl font-bold mb-4">${titles[0]}</h1>
+                <button class="px-6 py-3 bg-red-600 rounded-lg shadow-lg hover:bg-red-700 transition">
                     ${buttons[0]}
                 </button>
             </div>
-            <div class="absolute top-4 left-0 right-0 flex justify-center space-x-2">
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
                 ${images.map((_, index) => `
-                    <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full focus:outline-none hover:bg-opacity-100 transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
+                    <button class="indicator w-2 h-2 bg-white bg-opacity-50 rounded-full transition-all ${index === 0 ? 'bg-red-600 w-8' : ''}" data-index="${index}"></button>
                 `).join('')}
             </div>
         </div>
 
-        <!-- Banner Promocional con altura más baja -->
-        <div class="relative w-full h-[20vh] md:h-[25vh] lg:h-[20vh] xl:h-[20vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
+        <div class="relative w-full h-[20vh] md:h-[25vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
             <div class="absolute inset-0 bg-black/50 flex justify-center items-center">
                 <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
                     JUEGA
@@ -69,13 +66,12 @@ export default function Hero() {
     const slideContainer = hero.querySelector('#slide-container');
     const slides = hero.querySelectorAll('.lazy-load');
     const indicators = hero.querySelectorAll('.indicator');
-    const heroText = hero.querySelector('#hero-text');
 
     function loadSlideImage(index) {
         const img = slides[index];
         if (!img.src) {
             img.src = img.getAttribute('data-src');
-            img.onload = () => img.classList.remove('opacity-0', 'scale-110');
+            img.onload = () => img.classList.add('opacity-100');
         }
     }
 
@@ -84,50 +80,17 @@ export default function Hero() {
         isTransitioning = true;
         currentSlide = index;
         slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-        updateIndicators();
-        updateText();
-        loadSlideImage(currentSlide);
-        setTimeout(() => (isTransitioning = false), 500);
-    }
-
-    function updateIndicators() {
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('bg-red-600', index === currentSlide);
-            indicator.classList.toggle('w-8', index === currentSlide);
-            indicator.classList.toggle('w-2', index !== currentSlide);
+        indicators.forEach((indicator, i) => {
+            indicator.classList.toggle('bg-red-600', i === currentSlide);
+            indicator.classList.toggle('w-8', i === currentSlide);
         });
+        loadSlideImage(currentSlide);
+        setTimeout(() => isTransitioning = false, 1000);
     }
-
-    function updateText() {
-        heroText.innerHTML = `
-            <h1 class="text-2xl sm:text-4xl font-bold mb-4">${titles[currentSlide]}</h1>
-            <button class="px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
-                ${buttons[currentSlide]}
-            </button>
-        `;
-    }
-
-    // Eventos táctiles
-    slideContainer.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    });
-
-    slideContainer.addEventListener('touchmove', (e) => {
-        endX = e.touches[0].clientX;
-    });
-
-    slideContainer.addEventListener('touchend', () => {
-        const diffX = startX - endX;
-        if (diffX > 50) {
-            showSlide((currentSlide + 1) % images.length);
-        } else if (diffX < -50) {
-            showSlide((currentSlide - 1 + images.length) % images.length);
-        }
-    });
 
     indicators.forEach(indicator => {
         indicator.addEventListener('click', () => {
-            const index = parseInt(indicator.getAttribute('data-index'));
+            const index = Number(indicator.getAttribute('data-index'));
             showSlide(index);
         });
     });
