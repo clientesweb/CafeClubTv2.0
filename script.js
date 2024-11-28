@@ -110,26 +110,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadShorts() {
-        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${shortsPlaylistId}&key=${apiKey}`)
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${shortsPlaylistId}&key=${apiKey}&order=date`)
             .then(response => response.json())
             .then(data => {
                 const shortsContainer = document.getElementById('shorts-container');
-
                 shortsContainer.innerHTML = ''; // Limpiar el contenedor
+
                 data.items.forEach((item) => {
                     const videoId = item.snippet.resourceId.videoId;
-                    const thumbnailUrl = item.snippet.thumbnails.medium.url;
                     const title = item.snippet.title;
 
                     const shortElement = document.createElement('div');
                     shortElement.classList.add('short-video');
+                    
+                    // Crear el iframe para el reproductor de YouTube
                     shortElement.innerHTML = `
-                        <img src="${thumbnailUrl}" alt="${title}">
-                        <p>${title}</p>
+                        <div class="short-player-container">
+                            <iframe
+                                src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1"
+                                title="${title}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                                class="short-player"
+                            ></iframe>
+                        </div>
+                        <p class="short-title">${title}</p>
                     `;
-                    shortElement.addEventListener('click', () => {
-                        window.open(`https://www.youtube.com/shorts/${videoId}`, '_blank');
-                    });
 
                     shortsContainer.appendChild(shortElement);
                 });
