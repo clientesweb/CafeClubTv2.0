@@ -30,7 +30,7 @@ export default function Hero() {
     let endX = 0;
 
     hero.innerHTML = `
-        <div class="relative w-full h-[calc(100vh-8rem)] overflow-hidden">
+        <div class="relative w-full h-screen overflow-hidden" id="hero-container">
             <div class="absolute inset-0 flex transition-all duration-1000 ease-in-out" id="slide-container">
                 ${images.map((src, index) => `
                     <div class="w-full h-full flex-shrink-0 relative overflow-hidden">
@@ -56,8 +56,8 @@ export default function Hero() {
             </div>
         </div>
 
-        <!-- Banner Promocional con altura ajustable -->
-        <div class="relative w-full h-[20vh] md:h-[25vh] lg:h-[30vh] xl:h-[35vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
+        <!-- Banner Promocional con altura fija -->
+        <div class="relative w-full h-40 md:h-48 lg:h-56 xl:h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1601573112024-1c4c0f0112d9');">
             <div class="absolute inset-0 bg-black/50 flex justify-center items-center">
                 <button class="px-8 py-4 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700 transition text-xl md:text-2xl font-bold">
                     JUEGA AHORA
@@ -66,6 +66,7 @@ export default function Hero() {
         </div>
     `;
 
+    const heroContainer = hero.querySelector('#hero-container');
     const slideContainer = hero.querySelector('#slide-container');
     const slides = hero.querySelectorAll('.lazy-load');
     const indicators = hero.querySelectorAll('.indicator');
@@ -138,9 +139,12 @@ export default function Hero() {
 
     loadSlideImage(0);
 
-    // Ajuste de altura para dispositivos móviles
+    // Ajuste de altura para que el hero ocupe todo el espacio disponible
     function adjustHeight() {
         const headerHeight = document.getElementById('header').offsetHeight;
+        const windowHeight = window.innerHeight;
+        const heroHeight = windowHeight - headerHeight;
+        heroContainer.style.height = `${heroHeight}px`;
         hero.style.marginTop = `${headerHeight}px`;
     }
 
