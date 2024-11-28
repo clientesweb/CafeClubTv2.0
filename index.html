@@ -6,7 +6,7 @@
     <title>CafeClub TV 2.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body class="min-h-screen flex flex-col">
     <div id="top-banner" class="bg-[#8B0000] text-white text-center py-2 px-4">
@@ -160,18 +160,20 @@
         <section id="sponsors" class="py-8 sm:py-12 md:py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Nuestros Patrocinadores</h2>
-                <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8">
-                    <div class="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex items-center justify-center">
-                        <img src="sponsor1.png" alt="Sponsor 1" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex items-center justify-center">
-                        <img src="sponsor2.png" alt="Sponsor 2" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex items-center justify-center">
-                        <img src="sponsor3.png" alt="Sponsor 3" class="max-w-full max-h-full object-contain">
-                    </div>
-                    <div class="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex items-center justify-center">
-                        <img src="sponsor4.png" alt="Sponsor 4" class="max-w-full max-h-full object-contain">
+                <div id="sponsors-slider" class="overflow-hidden">
+                    <div class="flex transition-transform duration-500 ease-in-out">
+                        <div class="w-1/4 flex-shrink-0 px-2">
+                            <img src="sponsor1.png" alt="Sponsor 1" class="max-w-full h-auto mx-auto">
+                        </div>
+                        <div class="w-1/4 flex-shrink-0 px-2">
+                            <img src="sponsor2.png" alt="Sponsor 2" class="max-w-full h-auto mx-auto">
+                        </div>
+                        <div class="w-1/4 flex-shrink-0 px-2">
+                            <img src="sponsor3.png" alt="Sponsor 3" class="max-w-full h-auto mx-auto">
+                        </div>
+                        <div class="w-1/4 flex-shrink-0 px-2">
+                            <img src="sponsor4.png" alt="Sponsor 4" class="max-w-full h-auto mx-auto">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -259,6 +261,6 @@
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
