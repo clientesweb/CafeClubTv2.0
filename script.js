@@ -165,14 +165,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sponsors slider
     const sponsorsSlider = document.querySelector('#sponsors-slider .flex');
+    const prevSponsorBtn = document.getElementById('prev-sponsor');
+    const nextSponsorBtn = document.getElementById('next-sponsor');
     let sponsorIndex = 0;
 
-    function moveSponsors() {
-        sponsorIndex = (sponsorIndex + 1) % 4; // 4 es el número total de patrocinadores
-        sponsorsSlider.style.transform = `translateX(-${sponsorIndex * 25}%)`;
+    function moveSponsors(direction) {
+        const slideWidth = sponsorsSlider.children[0].offsetWidth;
+        const maxIndex = sponsorsSlider.children.length - 1;
+        
+        if (direction === 'next') {
+            sponsorIndex = (sponsorIndex + 1) % (maxIndex + 1);
+        } else {
+            sponsorIndex = (sponsorIndex - 1 + maxIndex + 1) % (maxIndex + 1);
+        }
+
+        sponsorsSlider.style.transform = `translateX(-${sponsorIndex * slideWidth}px)`;
     }
 
-    setInterval(moveSponsors, 3000); // Cambia cada 3 segundos
+    prevSponsorBtn.addEventListener('click', () => moveSponsors('prev'));
+    nextSponsorBtn.addEventListener('click', () => moveSponsors('next'));
+
+    // Auto-advance sponsors
+    setInterval(() => moveSponsors('next'), 5000);
 
     // Fade-in animation on scroll
     const fadeElements = document.querySelectorAll('.fade-in');
@@ -202,3 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+
