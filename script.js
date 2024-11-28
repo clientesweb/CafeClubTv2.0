@@ -110,32 +110,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadShorts() {
-        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${shortsPlaylistId}&key=${apiKey}`)
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${shortsPlaylistId}&key=${apiKey}`)
             .then(response => response.json())
             .then(data => {
                 const shortsContainer = document.getElementById('shorts-container');
+                
+                // Ordenar los items por fecha de publicación (más reciente primero)
+                const sortedItems = data.items.sort((a, b) => {
+                    return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
+                });
+
+                // Tomar solo los 5 más recientes
+                const recentShorts = sortedItems.slice(0, 5);
 
                 shortsContainer.innerHTML = ''; // Limpiar el contenedor
-                data.items.forEach((item) => {
+                recentShorts.forEach((item) => {
                     const videoId = item.snippet.resourceId.videoId;
 
                     const shortElement = document.createElement('div');
                     shortElement.classList.add('short-video');
                     shortElement.innerHTML = `
-                        <iframe 
-                            width="100%" 
-                            height="100%" 
-                            src="https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1&mute=1" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen
-                        ></iframe>
+                        <div class="short-wrapper">
+                            <iframe 
+                                src="https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1&mute=1&loop=1&playlist=${videoId}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                            ></iframe>
+                        </div>
                     `;
 
                     shortsContainer.appendChild(shortElement);
                 });
+
+                // Inicializar el carrusel de Shorts
+                initShortsCarousel();
             })
             .catch(error => console.error('Error:', error));
+    }
+
+    function initShortsCarousel() {
+        const shortsContainer = document.getElementById('shorts-container');
+        const shorts = shortsContainer.querySelectorAll('.short-video');
+        let currentShortIndex = 0;
+
+        function showShort(index) {
+            shorts.forEach((short, i) => {
+                short.style.transform = `translateX(${100 * (i - index)}%)`;
+            });
+        }
+
+        function nextShort() {
+            currentShortIndex = (currentShortIndex + 1) % shorts.length;
+            showShort(currentShortIndex);
+        }
+
+        function prevShort() {
+            currentShortIndex = (currentShortIndex - 1 + shorts.length) % shorts.length;
+            showShort(currentShortIndex);
+        }
+
+        // Navegación con botones
+        document.getElementById('prev-short').addEventListener('click', prevShort);
+        document.getElementById('next-short').addEventListener('click', nextShort);
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevShort();
+            if (e.key === 'ArrowRight') nextShort();
+        });
+
+        // Mostrar el primer short
+        showShort(currentShortIndex);
     }
 
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
