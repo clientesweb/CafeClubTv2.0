@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(nextSlide, 5000);
 
     // YouTube API integration
-    const playlistId = 'YOUR_PLAYLIST_ID'; // Reemplaza con el ID de tu playlist
+    const playlistId = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL'; // Reemplaza con el ID de tu playlist
     let player;
 
     function onYouTubeIframeAPIReady() {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadPlaylist() {
-        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${playlistId}&key=YOUR_API_KEY`)
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${playlistId}&key=AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0`)
             .then(response => response.json())
             .then(data => {
                 const mainVideoContainer = document.getElementById('main-video');
