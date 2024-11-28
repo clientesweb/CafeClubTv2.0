@@ -87,15 +87,22 @@ body {
 
 #shorts-container {
     display: flex;
-    transition: transform 0.3s ease;
-    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#shorts-container::-webkit-scrollbar {
+    display: none;
 }
 
 .short-video {
-    flex: 0 0 100%;
-    width: 100%;
-    max-width: 315px;
-    margin: 0 auto;
+    flex: 0 0 auto;
+    width: 315px;
+    margin-right: 16px;
+    scroll-snap-align: start;
 }
 
 .short-wrapper {
@@ -139,30 +146,14 @@ body {
 }
 
 @media (min-width: 640px) {
-    .shorts-carousel-container {
-        max-width: calc(315px * 3); /* Mostrar 3 shorts en pantallas más grandes */
-    }
-
     #shorts-container {
-        width: 300%; /* 3 veces el ancho para mostrar 3 shorts */
-    }
-
-    .short-video {
-        flex: 0 0 33.333%;
+        overflow-x: auto;
     }
 }
 
 @media (max-width: 639px) {
     .shorts-carousel-container {
         max-width: 315px;
-    }
-
-    #shorts-container {
-        width: 100%;
-    }
-
-    .short-video {
-        flex: 0 0 100%;
     }
 }
 
