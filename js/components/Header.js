@@ -12,7 +12,6 @@ export default function Header() {
     banner.className = 'bg-[#8B0000] text-white py-2 px-6';
     banner.innerHTML = `
       <div class="container mx-auto flex justify-center items-center">
-        <!-- Mensaje y botón saber más centrados -->
         <div class="text-center">
           <p class="text-sm font-medium">¡Premia tu fidelidad, gana dinero en nuestra Ruleta!</p>
           <button class="bg-transparent text-white border border-white hover:bg-white/20 hover:text-white rounded py-1 px-4 text-xs transition-all">
@@ -36,24 +35,24 @@ export default function Header() {
 
     // Crear el contenido del header
     header.innerHTML = `
-      <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <div class="container mx-auto flex items-center justify-between py-4">
+      <div class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-md">
+        <div class="container mx-auto flex items-center justify-between py-4 px-4">
           <!-- Botón Instalar App alineado a la izquierda -->
           ${isInstallable ? `
-            <div class="flex justify-start w-1/4 pl-6">
+            <div class="flex justify-start w-1/4">
               <button id="install-button" class="flex items-center bg-[#8B0000] text-white rounded-full px-4 py-2 text-sm transition-all duration-300 hover:bg-[#700000]">
                 <i class="fas fa-download mr-2"></i> Instalar
               </button>
             </div>
-          ` : ''}
+          ` : '<div class="w-1/4"></div>'}
 
           <!-- Logo centrado al medio -->
           <div class="flex justify-center w-1/2">
-            <img src="https://www.cafeclubtv.com/images/logi.svg" alt="Logo de Cafe Club TV" class="h-20 w-20 transition-transform duration-300 hover:scale-110">
+            <img src="https://www.cafeclubtv.com/images/logi.svg" alt="Logo de Cafe Club TV" class="h-16 w-16 transition-transform duration-300 hover:scale-110">
           </div>
 
           <!-- Iconos de redes sociales alineados a la derecha -->
-          <div class="flex gap-6 text-gray-600 w-1/4 justify-end pr-6">
+          <div class="flex gap-6 text-gray-600 w-1/4 justify-end">
             <a href="#" class="hover:text-[#8B0000]" aria-label="Síguenos en Facebook">
               <i class="fab fa-facebook-f"></i>
             </a>
@@ -68,7 +67,7 @@ export default function Header() {
             </a>
           </div>
         </div>
-      </header>
+      </div>
     `;
   }
 
