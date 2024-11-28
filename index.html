@@ -3,14 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CafeClub TV 2.0</title>
+    <title>CafeClubTV - Tu lugar para disfrutar de los mejores videos y playlists</title>
+    <meta name="description" content="Bienvenido a CafeClubTV, tu destino para disfrutar de los mejores videos, playlists y entretenimiento de calidad.">
+    <meta name="keywords" content="CafeClubTV, videos, playlists, entretenimiento, contenido exclusivo">
+    <link rel="icon" href="images/Icon512x512.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="images/Icon512x512.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.cafeclubtv.com/">
+    <meta property="og:title" content="CafeClubTV - Tu lugar para disfrutar de los mejores videos y playlists">
+    <meta property="og:description" content="Bienvenido a CafeClubTV, tu destino para disfrutar de los mejores videos, playlists y entretenimiento de calidad.">
+    <meta property="og:image" content="https://www.cafeclubtv.com/images/Icon512x512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.cafeclubtv.com/">
+    <meta property="twitter:title" content="CafeClubTV - Tu lugar para disfrutar de los mejores videos y playlists">
+    <meta property="twitter:description" content="Bienvenido a CafeClubTV, tu destino para disfrutar de los mejores videos, playlists y entretenimiento de calidad.">
+    <meta property="twitter:image" content="https://www.cafeclubtv.com/images/Icon512x512.png">
+
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #6B0000;
+            --text-color: #333333;
+            --background-color: #FFFFFF;
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <div id="top-banner" class="bg-[#8B0000] text-white text-center py-2 px-4">
+    <div id="top-banner" class="bg-[var(--primary-color)] text-white text-center py-2 px-4">
         <p class="text-sm">
             ¿Te sientes con suerte? ¡Premiamos tu fidelidad con nuestra Ruleta!
             <a href="#" class="underline hover:text-gray-200 ml-2 inline-block bg-yellow-500 text-black px-3 py-1 rounded">Gira Gratis</a>
@@ -18,24 +45,24 @@
     </div>
 
     <header class="container mx-auto px-4 py-4 flex justify-between items-center">
-        <button id="installButton" class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded text-sm sm:text-base flex items-center">
+        <button id="installButton" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded text-sm sm:text-base flex items-center">
             <i class="fas fa-download mr-2"></i>
             Instalar
         </button>
         
-        <img src="logo.png" alt="CafeClub TV Logo" class="w-10 h-10 sm:w-12 sm:h-12 mx-auto">
+        <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-10 h-10 sm:w-12 sm:h-12 mx-auto">
         
         <div class="flex gap-2 sm:gap-4 items-center">
-            <a href="#" aria-label="Facebook" class="text-gray-600 hover:text-[#8B0000]">
+            <a href="#" aria-label="Facebook" class="text-gray-600 hover:text-[var(--primary-color)]">
                 <i class="fab fa-facebook-f text-sm sm:text-base"></i>
             </a>
-            <a href="#" aria-label="Instagram" class="text-gray-600 hover:text-[#8B0000]">
+            <a href="#" aria-label="Instagram" class="text-gray-600 hover:text-[var(--primary-color)]">
                 <i class="fab fa-instagram text-sm sm:text-base"></i>
             </a>
-            <a href="#" aria-label="Twitter" class="text-gray-600 hover:text-[#8B0000]">
+            <a href="#" aria-label="Twitter" class="text-gray-600 hover:text-[var(--primary-color)]">
                 <i class="fab fa-twitter text-sm sm:text-base"></i>
             </a>
-            <a href="#" aria-label="Youtube" class="text-gray-600 hover:text-[#8B0000]">
+            <a href="#" aria-label="Youtube" class="text-gray-600 hover:text-[var(--primary-color)]">
                 <i class="fab fa-youtube text-sm sm:text-base"></i>
             </a>
         </div>
@@ -45,36 +72,36 @@
         <section id="hero" class="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[90vh] max-h-[1920px] overflow-hidden">
             <div id="hero-carousel" class="h-full">
                 <div class="hero-slide relative h-full">
-                    <img src="hero-1.jpg" alt="Hero image 1" class="absolute inset-0 w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Café y tecnología" class="absolute inset-0 w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div class="text-center text-white px-4">
                             <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-4">Descubre el Mundo del Café</h2>
                             <p class="text-base sm:text-lg md:text-xl mb-4 sm:mb-6">Explora nuestros programas y sumérgete en la cultura cafetera</p>
-                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
+                            <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
                                 Ver Programas
                             </button>
                         </div>
                     </div>
                 </div>
                 <div class="hero-slide relative h-full">
-                    <img src="hero-2.jpg" alt="Hero image 2" class="absolute inset-0 w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Barista preparando café" class="absolute inset-0 w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div class="text-center text-white px-4">
                             <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-4">Aprende con Expertos</h2>
                             <p class="text-base sm:text-lg md:text-xl mb-4 sm:mb-6">Únete a nuestros talleres y masterclasses de café</p>
-                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
+                            <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
                                 Inscríbete Ahora
                             </button>
                         </div>
                     </div>
                 </div>
                 <div class="hero-slide relative h-full">
-                    <img src="hero-3.jpg" alt="Hero image 3" class="absolute inset-0 w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1978&q=80" alt="Tostado de café en vivo" class="absolute inset-0 w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div class="text-center text-white px-4">
                             <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-4">En Vivo: Tostado de Café</h2>
                             <p class="text-base sm:text-lg md:text-xl mb-4 sm:mb-6">No te pierdas nuestra transmisión en vivo todos los jueves</p>
-                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
+                            <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded text-sm sm:text-base">
                                 Ver Ahora
                             </button>
                         </div>
@@ -89,9 +116,9 @@
         </section>
 
         <section id="ad-banner" class="relative h-64 sm:h-96 overflow-hidden">
-            <img src="/placeholder.svg?height=1152&width=2048" alt="Banner publicitario" class="absolute inset-0 w-full h-full object-cover">
+            <img src="https://images.unsplash.com/photo-1514066558159-fc8c737ef259?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Banner publicitario" class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-3 px-6 rounded text-lg sm:text-xl">
+                <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-3 px-6 rounded text-lg sm:text-xl">
                     Juega
                 </button>
             </div>
@@ -99,55 +126,44 @@
 
         <section id="featured-programs" class="py-8 sm:py-12 md:py-16 bg-gray-100">
             <div class="container mx-auto px-4">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Parrilla de Programas</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Parrilla de Programas</h2>
                 <div class="program-scroll-container overflow-x-auto">
                     <div class="flex space-x-4">
                         <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                            <img src="program-1.jpg" alt="Programa 1" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
+                            <img src="https://images.unsplash.com/photo-1518057111178-44a106bad636?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80" alt="Café del Mundo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Café del Mundo</h3>
                                 <p class="text-gray-700 text-sm sm:text-base">Lunes 20:00</p>
-                                <button class="mt-2 sm:mt-3 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                <button class="mt-2 sm:mt-3 bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver Detalles
                                 </button>
                             </div>
                         </div>
                         <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                            <img src="program-2.jpg" alt="Programa 2" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
+                            <img src="https://images.unsplash.com/photo-1507133750040-4a8f57021571?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Barista Master" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Barista Master</h3>
                                 <p class="text-gray-700 text-sm sm:text-base">Martes 19:30</p>
-                                <button class="mt-2 sm:mt-3 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                <button class="mt-2 sm:mt-3 bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver Detalles
                                 </button>
                             </div>
                         </div>
                         <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                            <img src="program-3.jpg" alt="Programa 3" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
-                            <div class="mt-2 sm:mt-3">
-                                <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Café y Salud</h3>
-                                <p class="text-gray-700 text-sm sm:text-base">Miércoles 21:00</p>
-                                <button class="mt-2 sm:mt-3 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                                    Ver Detalles
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                            <img src="program-4.jpg" alt="Programa 4" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
+                            <img src="https://images.unsplash.com/photo-1501747315-124a0eaca060?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Tostado en Vivo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Tostado en Vivo</h3>
                                 <p class="text-gray-700 text-sm sm:text-base">Jueves 18:00</p>
-                                <button class="mt-2 sm:mt-3 bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                <button class="mt-2 sm:mt-3 bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver Detalles
                                 </button>
-                            </div>
-                        </div>
+                            div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="live-stream" class="py-8 sm:py-12 md:py-16 bg-[#8B0000] text-white">
+        <section id="live-stream" class="py-8 sm:py-12 md:py-16 bg-[var(--primary-color)] text-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Transmisión en Vivo</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
@@ -161,7 +177,7 @@
 
         <section id="shorts" class="py-8 sm:py-12 md:py-16 bg-gray-100">
             <div class="container mx-auto px-4">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Shorts</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Shorts</h2>
                 <div id="shorts-container" class="overflow-x-auto whitespace-nowrap">
                     <!-- Los shorts se cargarán aquí -->
                 </div>
@@ -174,16 +190,16 @@
                 <div id="sponsors-slider" class="overflow-hidden">
                     <div class="flex transition-transform duration-500 ease-in-out">
                         <div class="w-1/4 flex-shrink-0 px-2">
-                            <img src="sponsor1.png" alt="Sponsor 1" class="max-w-full h-auto mx-auto">
+                            <img src="https://via.placeholder.com/200x100.png?text=Sponsor+1" alt="Sponsor 1" class="max-w-full h-auto mx-auto">
                         </div>
                         <div class="w-1/4 flex-shrink-0 px-2">
-                            <img src="sponsor2.png" alt="Sponsor 2" class="max-w-full h-auto mx-auto">
+                            <img src="https://via.placeholder.com/200x100.png?text=Sponsor+2" alt="Sponsor 2" class="max-w-full h-auto mx-auto">
                         </div>
                         <div class="w-1/4 flex-shrink-0 px-2">
-                            <img src="sponsor3.png" alt="Sponsor 3" class="max-w-full h-auto mx-auto">
+                            <img src="https://via.placeholder.com/200x100.png?text=Sponsor+3" alt="Sponsor 3" class="max-w-full h-auto mx-auto">
                         </div>
                         <div class="w-1/4 flex-shrink-0 px-2">
-                            <img src="sponsor4.png" alt="Sponsor 4" class="max-w-full h-auto mx-auto">
+                            <img src="https://via.placeholder.com/200x100.png?text=Sponsor+4" alt="Sponsor 4" class="max-w-full h-auto mx-auto">
                         </div>
                     </div>
                 </div>
@@ -196,13 +212,13 @@
                     <h2 class="text-3xl font-bold mb-4">Descarga Nuestra Aplicación</h2>
                     <p class="text-gray-600 mb-6 max-w-2xl">Lleva CafeClub TV contigo a donde vayas. Descarga nuestra aplicación y disfruta de contenido exclusivo, notificaciones de transmisiones en vivo y mucho más.</p>
                     <div class="flex flex-col sm:flex-row justify-center items-center mb-8">
-                        <img src="/placeholder.svg?height=600&width=300" alt="Mockup de la aplicación CafeClub TV" class="max-w-full h-auto mb-6 sm:mb-0 sm:mr-8">
+                        <img src="https://via.placeholder.com/300x600.png?text=App+Mockup" alt="Mockup de la aplicación CafeClub TV" class="max-w-full h-auto mb-6 sm:mb-0 sm:mr-8">
                         <div class="flex flex-col space-y-4">
                             <a href="#" class="inline-block">
-                                <img src="/placeholder.svg?height=40&width=135" alt="Descargar en Google Play" class="h-12">
+                                <img src="https://via.placeholder.com/135x40.png?text=Google+Play" alt="Descargar en Google Play" class="h-12">
                             </a>
                             <a href="#" class="inline-block">
-                                <img src="/placeholder.svg?height=40&width=135" alt="Descargar en App Store" class="h-12">
+                                <img src="https://via.placeholder.com/135x40.png?text=App+Store" alt="Descargar en App Store" class="h-12">
                             </a>
                         </div>
                     </div>
@@ -211,12 +227,12 @@
         </section>
     </main>
 
-    <footer class="bg-[#8B0000] text-white py-8 sm:py-12">
+    <footer class="bg-[var(--primary-color)] text-white py-8 sm:py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
                     <h3 class="text-lg sm:text-xl font-bold mb-4">Acerca de CafeClub TV</h3>
-                    <img src="logo.png" alt="CafeClub TV Logo" class="w-24 h-24 mb-4">
+                    <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-24 h-24 mb-4">
                     <p class="text-gray-200 text-sm sm:text-base">
                         CafeClub TV es tu destino para todo lo relacionado con el café. Descubre, aprende y disfruta del mundo del café con nosotros.
                     </p>
@@ -258,23 +274,23 @@
     <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t py-2">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center">
-                <a href="#featured-programs" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                <a href="#featured-programs" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
                     <i class="fas fa-tv text-lg sm:text-xl"></i>
                     <span class="text-xs sm:text-sm">Programas</span>
                 </a>
-                <a href="#live-stream" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                <a href="#live-stream" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
                     <i class="fas fa-broadcast-tower text-lg sm:text-xl"></i>
                     <span class="text-xs sm:text-sm">En Vivo</span>
                 </a>
-                <a href="#shorts" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                <a href="#shorts" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
                     <i class="fas fa-film text-lg sm:text-xl"></i>
                     <span class="text-xs sm:text-sm">Shorts</span>
                 </a>
-                <a href="#sponsors" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                <a href="#sponsors" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
                     <i class="fas fa-handshake text-lg sm:text-xl"></i>
                     <span class="text-xs sm:text-sm">Sponsors</span>
                 </a>
-                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
                     <i class="fas fa-envelope text-lg sm:text-xl"></i>
                     <span class="text-xs sm:text-sm">Contacto</span>
                 </a>
@@ -283,12 +299,12 @@
     </nav>
 
     <div id="floating-chat" class="fixed right-4 bottom-24 flex flex-col gap-2">
-        <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white rounded-full p-2 sm:p-3">
-            <img src="logo.png" alt="CafeClub TV Logo" class="w-6 h-6 sm:w-8 sm:h-8">
+        <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white rounded-full p-2 sm:p-3">
+            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-6 h-6 sm:w-8 sm:h-8">
             <span class="sr-only">Chat con CafeClub TV</span>
         </button>
-        <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white rounded-full p-2 sm:p-3">
-            <img src="logo.png" alt="CafeClub TV Logo" class="w-6 h-6 sm:w-8 sm:h-8">
+        <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white rounded-full p-2 sm:p-3">
+            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-6 h-6 sm:w-8 sm:h-8">
             <span class="sr-only">Chat en WhatsApp</span>
         </button>
     </div>
