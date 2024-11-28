@@ -92,6 +92,7 @@ body {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding-bottom: 10px; /* Añade un poco de espacio para el scroll en móviles */
 }
 
 #shorts-container::-webkit-scrollbar {
@@ -100,9 +101,10 @@ body {
 
 .short-video {
     flex: 0 0 auto;
-    width: 315px;
+    width: 80%; /* Ajusta el ancho para móviles */
+    max-width: 315px;
     margin-right: 16px;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
 }
 
 .short-wrapper {
@@ -146,14 +148,18 @@ body {
 }
 
 @media (min-width: 640px) {
-    #shorts-container {
-        overflow-x: auto;
+    .short-video {
+        width: 315px; /* Ancho fijo para pantallas más grandes */
     }
 }
 
 @media (max-width: 639px) {
     .shorts-carousel-container {
-        max-width: 315px;
+        max-width: 100%; /* Permite que ocupe todo el ancho en móviles */
+    }
+    
+    #shorts-container {
+        padding-left: 10%; /* Añade un poco de espacio al inicio para centrar mejor */
     }
 }
 
@@ -165,3 +171,4 @@ body {
 #sponsors-slider .flex {
     transition: transform 0.5s ease-in-out;
 }
+
