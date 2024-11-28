@@ -142,70 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     shortsContainer.appendChild(shortElement);
                 });
-
-                // Inicializar el carrusel de Shorts
-                initShortsCarousel();
             })
             .catch(error => console.error('Error:', error));
-    }
-
-    function initShortsCarousel() {
-        const shortsContainer = document.getElementById('shorts-container');
-        const shorts = shortsContainer.querySelectorAll('.short-video');
-        let currentShortIndex = 0;
-        let startX, moveX;
-        let isSwiping = false;
-
-        function showShort(index) {
-            shortsContainer.style.transform = `translateX(-${index * 100}%)`;
-        }
-
-        function nextShort() {
-            currentShortIndex = (currentShortIndex + 1) % shorts.length;
-            showShort(currentShortIndex);
-        }
-
-        function prevShort() {
-            currentShortIndex = (currentShortIndex - 1 + shorts.length) % shorts.length;
-            showShort(currentShortIndex);
-        }
-
-        // Navegación con botones
-        document.getElementById('prev-short').addEventListener('click', prevShort);
-        document.getElementById('next-short').addEventListener('click', nextShort);
-
-        // Navegación con teclado
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') prevShort();
-            if (e.key === 'ArrowRight') nextShort();
-        });
-
-        // Navegación con deslizamiento táctil
-        shortsContainer.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            isSwiping = true;
-        });
-
-        shortsContainer.addEventListener('touchmove', (e) => {
-            if (!isSwiping) return;
-            moveX = e.touches[0].clientX;
-            const diff = startX - moveX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) {
-                    nextShort();
-                } else {
-                    prevShort();
-                }
-                isSwiping = false;
-            }
-        });
-
-        shortsContainer.addEventListener('touchend', () => {
-            isSwiping = false;
-        });
-
-        // Mostrar el primer short
-        showShort(currentShortIndex);
     }
 
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
