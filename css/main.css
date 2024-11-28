@@ -8,27 +8,71 @@
 @import 'components/whatsapp-float.css';
 @import 'components/bottom-nav.css';
 
-/* Estilos globales adicionales si son necesarios */
-html {
+/* Estilos globales */
+:root {
+    --theme_color: #ff0000;
     --window-controls-overlay-height: env(titlebar-area-height, 0px);
+}
+
+html {
+    height: 100%;
     padding-top: var(--window-controls-overlay-height);
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom right, white, #e5e7eb);
+    color: #1f2937;
+    font-family: sans-serif;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Estilos para las secciones */
+section {
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+#hero, #playlists, #sponsors {
+    background-color: #f3f4f6;
+}
+
+#parrilla, #shorts, #counters {
+    background-color: white;
+}
+
+/* Estilos para la barra de título */
 #titlebar {
     height: var(--window-controls-overlay-height);
     background-color: var(--theme_color);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
+    padding: 0 1rem;
     box-sizing: border-box;
     color: white;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 #titlebar .window-controls {
     display: flex;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 #titlebar .window-controls button {
@@ -36,19 +80,56 @@ html {
     border: none;
     color: white;
     cursor: pointer;
-    font-size: 18px;
-}
-#parrilla .lazy-load {
-    object-fit: cover;
+    font-size: 1.125rem;
 }
 
+/* Estilos para la parrilla */
 #parrilla {
     width: 100%;
-    height: 45vh; /* Ajuste para pantallas pequeñas */
+    height: 45vh;
+}
+
+#parrilla .lazy-load {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Media queries */
+@media (min-width: 640px) {
+    .container {
+        padding: 2rem;
+    }
 }
 
 @media (min-width: 1024px) {
     #parrilla {
-        height: 60vh; /* Ajuste para pantallas grandes */
+        height: 60vh;
     }
 }
+
+/* Estilos para el preloader */
+#preloader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    z-index: 9999;
+}
+
+.loader {
+    width: 4rem;
+    height: 4rem;
+    border: 0.5rem solid #e5e7eb;
+    border-top: 0.5rem solid var(--theme_color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
