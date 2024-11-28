@@ -1,54 +1,75 @@
-import Header from './components/Header.js';
-import Carousel from './components/Carousel.js';
-import Playlists from './components/Playlists.js';
-import Shorts from './components/Shorts.js';
-import Sponsors from './components/Sponsors.js';
-import Counters from './components/Counters.js';
-import Footer from './components/Footer.js';
-import WhatsAppFloat from './components/WhatsAppFloat.js';
-import BottomNav from './components/BottomNav.js';
-import Parrilla from './components/Parrilla.js';  // Importar el componente de Parrilla
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicializar los componentes
-    Header();
-    Carousel();
-    Playlists();
-    Shorts();
-    Sponsors();
-    Counters();
-    Footer();
-    WhatsAppFloat();
-    BottomNav();
-    Parrilla();  // Llamar a la función que inicializa la Parrilla de Programas
+    // Hero carousel
+    const heroCarousel = document.getElementById('hero-carousel');
+    const heroImages = heroCarousel.querySelectorAll('img');
+    let currentHeroImage = 0;
 
-    // Manejo del preloader
-    const preloader = document.getElementById('preloader');
+    function showNextHeroImage() {
+        heroImages[currentHeroImage].style.opacity = '0';
+        currentHeroImage = (currentHeroImage + 1) % heroImages.length;
+        heroImages[currentHeroImage].style.opacity = '1';
+    }
 
-    // Simula la carga (puedes reemplazar esto con tu lógica de carga)
-    setTimeout(() => {
-        // Oculta el preloader una vez que el contenido está cargado
-        preloader.style.display = 'none';
-    }, 2000); // Ajusta el tiempo según tus necesidades
-});
+    setInterval(showNextHeroImage, 5000);
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then((registration) => {
-                console.log('Service Worker registrado con éxito:', registration.scope);
-            }).catch((error) => {
-                console.log('Fallo en el registro del Service Worker:', error);
+    // Fade-in animation on scroll
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    const fadeInObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                fadeInObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    fadeElements.forEach(element => {
+        fadeInObserver.observe(element);
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
+        });
     });
-}
 
-if ('windowControlsOverlay' in navigator) {
-    const overlayHeight = navigator.windowControlsOverlay.getTitlebarAreaRect().height;
-    document.documentElement.style.setProperty('--window-controls-overlay-height', `${overlayHeight}px`);
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    navigator.windowControlsOverlay.addEventListener('geometrychange', () => {
-        const newOverlayHeight = navigator.windowControlsOverlay.getTitlebarAreaRect().height;
-        document.documentElement.style.setProperty('--window-controls-overlay-height', `${newOverlayHeight}px`);
-    });
-}
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    // Live stream countdown timer (example)
+    const countdownElement = document.getElementById('live-stream-countdown');
+    if (countdownElement) {
+        const countDownDate = new Date("2023-12-31T23:59:59").getTime();
+
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                countdownElement.innerHTML = "¡La transmisión ha comenzado!";
+            }
+        }, 1000);
+    }
+});
