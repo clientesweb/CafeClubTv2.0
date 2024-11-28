@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadShorts() {
-        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${shortsPlaylistId}&key=${apiKey}`)
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${shortsPlaylistId}&key=${apiKey}`)
             .then(response => response.json())
             .then(data => {
                 const shortsContainer = document.getElementById('shorts-container');
@@ -124,17 +124,60 @@ document.addEventListener('DOMContentLoaded', () => {
                     const shortElement = document.createElement('div');
                     shortElement.classList.add('short-video');
                     shortElement.innerHTML = `
-                        <img src="${thumbnailUrl}" alt="${title}">
+                        <div class="short-thumbnail">
+                            <img src="${thumbnailUrl}" alt="${title}">
+                            <button class="play-button" data-video-id="${videoId}">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
                         <p>${title}</p>
                     `;
-                    shortElement.addEventListener('click', () => {
-                        window.open(`https://www.youtube.com/shorts/${videoId}`, '_blank');
-                    });
 
                     shortsContainer.appendChild(shortElement);
                 });
+
+                // Agregar event listeners para reproducir los shorts
+                const playButtons = document.querySelectorAll('.play-button');
+                playButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const videoId = e.currentTarget.getAttribute('data-video-id');
+                        openShortModal(videoId);
+                    });
+                });
             })
             .catch(error => console.error('Error:', error));
+    }
+
+    function openShortModal(videoId) {
+        const modal = document.createElement('div');
+        modal.classList.add('short-modal');
+        modal.innerHTML = `
+            <div class="short-modal-content">
+                <button class="close-modal">&times;</button>
+                <div class="short-player-container">
+                    <div id="short-player"></div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        new YT.Player('short-player', {
+            height: '100%',
+            width: '100%',
+            videoId: videoId,
+            playerVars: {
+                autoplay: 1,
+                controls: 1,
+                modestbranding: 1,
+                rel: 0,
+                showinfo: 0
+            }
+        });
+
+        const closeButton = modal.querySelector('.close-modal');
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
     }
 
     window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
