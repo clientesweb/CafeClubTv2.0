@@ -81,8 +81,8 @@
 
     <main class="flex-grow">
         <section id="hero" class="relative h-screen max-h-[1080px] overflow-hidden">
-    <div id="hero-carousel" class="h-full">
-        <div class="hero-slide relative h-full">
+    <div id="hero-carousel" class="h-full flex">
+        <div class="hero-slide relative h-full w-full flex-shrink-0">
             <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Café y tecnología" class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-70"></div>
             <div class="absolute inset-0 flex items-center justify-start px-4 sm:px-8 md:px-16 lg:px-24">
@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <div class="hero-slide relative h-full">
+        <div class="hero-slide relative h-full w-full flex-shrink-0">
             <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Barista preparando café" class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-70"></div>
             <div class="absolute inset-0 flex items-center justify-start px-4 sm:px-8 md:px-16 lg:px-24">
@@ -108,7 +108,7 @@
                 </div>
             </div>
         </div>
-        <div class="hero-slide relative h-full">
+        <div class="hero-slide relative h-full w-full flex-shrink-0">
             <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1978&q=80" alt="Tostado de café en vivo" class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-70"></div>
             <div class="absolute inset-0 flex items-center justify-start px-4 sm:px-8 md:px-16 lg:px-24">
@@ -127,16 +127,6 @@
         <button class="hero-dot w-3 h-3 rounded-full bg-white opacity-50 transition duration-300 ease-in-out hover:opacity-100"></button>
         <button class="hero-dot w-3 h-3 rounded-full bg-white opacity-50 transition duration-300 ease-in-out hover:opacity-100"></button>
     </div>
-    <button id="prev-slide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 text-white rounded-full p-2 transition duration-300 ease-in-out">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-    </button>
-    <button id="next-slide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 text-white rounded-full p-2 transition duration-300 ease-in-out">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-    </button>
 </section>
 
         <section id="ad-banner" class="relative h-64 sm:h-96 overflow-hidden">
