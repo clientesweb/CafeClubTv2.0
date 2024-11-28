@@ -110,21 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadShorts() {
-        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${shortsPlaylistId}&key=${apiKey}`)
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${shortsPlaylistId}&key=${apiKey}&order=date`)
             .then(response => response.json())
             .then(data => {
                 const shortsContainer = document.getElementById('shorts-container');
                 
-                // Ordenar los items por fecha de publicación (más reciente primero)
-                const sortedItems = data.items.sort((a, b) => {
-                    return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
-                });
-
-                // Tomar solo los 5 más recientes
-                const recentShorts = sortedItems.slice(0, 5);
-
                 shortsContainer.innerHTML = ''; // Limpiar el contenedor
-                recentShorts.forEach((item) => {
+                data.items.forEach((item, index) => {
                     const videoId = item.snippet.resourceId.videoId;
 
                     const shortElement = document.createElement('div');
@@ -153,6 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const shortsContainer = document.getElementById('shorts-container');
         const shorts = shortsContainer.querySelectorAll('.short-video');
         let currentShortIndex = 0;
+        let startX, moveX;
+        let isSwiping = false;
 
         function showShort(index) {
             shorts.forEach((short, i) => {
@@ -178,6 +172,30 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') prevShort();
             if (e.key === 'ArrowRight') nextShort();
+        });
+
+        // Navegación con deslizamiento táctil
+        shortsContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isSwiping = true;
+        });
+
+        shortsContainer.addEventListener('touchmove', (e) => {
+            if (!isSwiping) return;
+            moveX = e.touches[0].clientX;
+            const diff = startX - moveX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextShort();
+                } else {
+                    prevShort();
+                }
+                isSwiping = false;
+            }
+        });
+
+        shortsContainer.addEventListener('touchend', () => {
+            isSwiping = false;
         });
 
         // Mostrar el primer short
