@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // YouTube API integration
     const livePlaylistId = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL';
-    const shortsPlaylistId = 'PLZ_v3bWMqpjFa0xI11mahmOCxPk_1TK2s';
+    const shortsPlaylistId = PLZ_v3bWMqpjFa0xI11mahmOCxPk_1TK2s';
     let player;
 
     function onYouTubeIframeAPIReady() {
@@ -73,9 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Cargar el video principal
                 const mainVideoId = data.items[0].snippet.resourceId.videoId;
                 player = new YT.Player('main-video', {
-                    height: '360',
-                    width: '640',
+                    height: '100%',
+                    width: '100%',
                     videoId: mainVideoId,
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 1,
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0
+                    }
                 });
 
                 // Cargar la lista de reproducción
@@ -159,4 +166,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
