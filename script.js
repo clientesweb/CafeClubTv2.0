@@ -110,13 +110,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadShorts() {
-        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${shortsPlaylistId}&key=${apiKey}&order=date`)
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${shortsPlaylistId}&key=${apiKey}&order=date`)
             .then(response => response.json())
             .then(data => {
                 const shortsContainer = document.getElementById('shorts-container');
                 
+                // Ordenar los items por fecha de publicación (más reciente primero)
+                const sortedItems = data.items.sort((a, b) => {
+                    return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
+                });
+
+                // Tomar solo los 5 más recientes
+                const recentShorts = sortedItems.slice(0, 5);
+
                 shortsContainer.innerHTML = ''; // Limpiar el contenedor
-                data.items.forEach((item, index) => {
+                recentShorts.forEach((item, index) => {
                     const videoId = item.snippet.resourceId.videoId;
 
                     const shortElement = document.createElement('div');
@@ -149,9 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isSwiping = false;
 
         function showShort(index) {
-            shorts.forEach((short, i) => {
-                short.style.transform = `translateX(${100 * (i - index)}%)`;
-            });
+            shortsContainer.style.transform = `translateX(-${index * 100}%)`;
         }
 
         function nextShort() {
