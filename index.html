@@ -1,101 +1,219 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CafeClubTV - Tu lugar para disfrutar de los mejores videos y playlists</title>
-    <meta name="description" content="Bienvenido a CafeClubTV, tu destino para disfrutar de los mejores videos, playlists y entretenimiento de calidad.">
-    <meta name="keywords" content="CafeClubTV, videos, playlists, entretenimiento, contenido exclusivo">
-    <link rel="icon" href="images/Icon512x512.png" sizes="32x32" type="image/png">
-    <link rel="apple-touch-icon" href="images/Icon512x512.png">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="css/main.css">
+    <title>CafeClub TV 2.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    minHeight: {
-                        'screen-without-header-footer': 'calc(100vh - 8rem)' // Ajusta este valor según la altura de tu header y footer
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.cafeclubtv.com/">
-    <meta property="og:title" content="CafeClubTV - Tu lugar para disfrutar de los mejores videos y playlists">
-    <meta property="og:description" content="Bienvenido a CafeClubTV, tu destino para disfrutar de los mejores videos, playlists y entretenimiento de calidad.">
-    <meta property="og:image" content="https://www.cafeclubtv.com/images/Icon512x512.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.cafeclubtv.com/">
-    <meta property="twitter:title" content="CafeClubTV - Tu lugar para disfrutar de los mejores videos y playlists">
-    <meta property="twitter:description" content="Bienvenido a CafeClubTV, tu destino para disfrutar de los mejores videos, playlists y entretenimiento de calidad.">
-    <meta property="twitter:image" content="https://www.cafeclubtv.com/images/Icon512x512.png">
-
-    <!-- Preconnect to external resources -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-
-    <!-- Theme color for browser -->
-    <meta name="theme-color" content="#ff0000">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
-<body class="flex flex-col min-h-screen bg-gradient-to-br from-white to-gray-300 text-gray-800 font-sans">
-    <div id="preloader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
-        <div class="loader w-16 h-16 border-8 border-gray-200 border-t-8 border-t-red-600 rounded-full animate-spin"></div>
+<body class="min-h-screen flex flex-col">
+    <div id="top-banner" class="bg-[#8B0000] text-white text-center py-2 px-4">
+        <p class="text-sm">
+            ¡Premia tu fidelidad, gana dinero en nuestra Ruleta!
+            <a href="#" class="underline hover:text-gray-200">Saber más</a>
+        </p>
     </div>
 
-   <header id="header" class="bg-white shadow-md"></header>
+    <header class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
+            Instalar
+        </button>
+        
+        <img src="logo.png" alt="CafeClub TV Logo" class="w-12 h-12 mx-auto">
+        
+        <div class="flex gap-4 items-center">
+            <a href="#" aria-label="Facebook" class="text-gray-600 hover:text-[#8B0000]">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" aria-label="Instagram" class="text-gray-600 hover:text-[#8B0000]">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="Twitter" class="text-gray-600 hover:text-[#8B0000]">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" aria-label="Youtube" class="text-gray-600 hover:text-[#8B0000]">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </header>
 
-<main class="flex-grow">
-    <div class="container mx-auto px-4 py-0 flex flex-col min-h-screen-without-header-footer">
-        <section id="hero" class="bg-gray-100 rounded-lg shadow-lg">
-            <!-- Contenido del hero -->
+    <main class="flex-grow">
+        <section id="hero" class="relative flex-1 min-h-[60vh] flex items-center justify-center">
+            <div id="hero-carousel" class="absolute inset-0">
+                <img src="hero-1.jpg" alt="Hero image 1" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000">
+                <img src="hero-2.jpg" alt="Hero image 2" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+                <img src="hero-3.jpg" alt="Hero image 3" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+            </div>
+            <div class="relative text-center text-white z-10">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">Bienvenidos Cafeteros</h1>
+                <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
+                    Explorar
+                </button>
+            </div>
         </section>
 
-            <section id="parrilla" class="flex-grow mb-8 bg-white rounded-lg shadow-lg p-8">
-                <!-- Contenido de Parrilla -->
-            </section>
+        <section id="featured-content" class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-8 text-center">Contenido Destacado</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4">
+                            <h3 class="font-bold text-xl mb-2">Episodio 1</h3>
+                            <p class="text-gray-700 text-base">La historia del café</p>
+                        </div>
+                        <img src="episode-1.jpg" alt="Episodio 1" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
+                                Ver ahora
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4">
+                            <h3 class="font-bold text-xl mb-2">Episodio 2</h3>
+                            <p class="text-gray-700 text-base">Métodos de preparación</p>
+                        </div>
+                        <img src="episode-2.jpg" alt="Episodio 2" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
+                                Ver ahora
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4">
+                            <h3 class="font-bold text-xl mb-2">Episodio 3</h3>
+                            <p class="text-gray-700 text-base">Variedades de café</p>
+                        </div>
+                        <img src="episode-3.jpg" alt="Episodio 3" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded">
+                                Ver ahora
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <section id="playlists" class="flex-grow mb-8 bg-gray-100 rounded-lg shadow-lg p-8">
-                <!-- Contenido de Playlists -->
-            </section>
+        <section id="live-stream" class="py-16 bg-[#8B0000] text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold mb-4">Transmisión en Vivo</h2>
+                <p class="mb-8">¡Únete a nuestra transmisión en vivo y disfruta del mejor contenido sobre café!</p>
+                <div class="aspect-video max-w-3xl mx-auto bg-black mb-8">
+                    <div class="flex items-center justify-center h-full">
+                        <p>Reproductor de video en vivo</p>
+                    </div>
+                </div>
+                <button class="bg-white text-[#8B0000] hover:bg-gray-200 font-bold py-2 px-4 rounded">
+                    Iniciar transmisión
+                </button>
+            </div>
+        </section>
 
-            <section id="shorts" class="flex-grow mb-8 bg-white rounded-lg shadow-lg p-8">
-                <!-- Contenido de Shorts -->
-            </section>
-
-            <section id="sponsors" class="flex-grow mb-8 bg-gray-100 rounded-lg shadow-lg p-8">
-                <!-- Contenido de Sponsors -->
-            </section>
-
-            <section id="counters" class="flex-grow mb-8 bg-white rounded-lg shadow-lg p-8">
-                <!-- Contenido de Counters -->
-            </section>
-        </div>
+        <section id="sponsors" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-8 text-center">Nuestros Patrocinadores</h2>
+                <div class="flex flex-wrap justify-center items-center gap-8">
+                    <div class="w-40 h-40 flex items-center justify-center">
+                        <img src="sponsor1.png" alt="Sponsor 1" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="w-40 h-40 flex items-center justify-center">
+                        <img src="sponsor2.png" alt="Sponsor 2" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="w-40 h-40 flex items-center justify-center">
+                        <img src="sponsor3.png" alt="Sponsor 3" class="max-w-full max-h-full object-contain">
+                    </div>
+                    <div class="w-40 h-40 flex items-center justify-center">
+                        <img src="sponsor4.png" alt="Sponsor 4" class="max-w-full max-h-full object-contain">
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer id="footer" class="bg-gray-800 text-white"></footer>
-    <div id="whatsapp-float" class="fixed bottom-20 right-4 z-50"></div>
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg"></nav>
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Acerca de CafeClub TV</h3>
+                    <p class="text-gray-400">
+                        CafeClub TV es tu destino para todo lo relacionado con el café. Descubre, aprende y disfruta del mundo del café con nosotros.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Inicio</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Programas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">En Vivo</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Síguenos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" aria-label="Youtube" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <p>&copy; 2023 CafeClub TV. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" defer>
-    <script src="js/main.js" type="module" defer></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
-    </script>
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t py-2">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-music"></i>
+                    <span class="text-xs">Playlists</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-trophy"></i>
+                    <span class="text-xs">Sports</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-users"></i>
+                    <span class="text-xs">Sponsors</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-tv"></i>
+                    <span class="text-xs">Canal</span>
+                </a>
+                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-envelope"></i>
+                    <span class="text-xs">Contacto</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="floating-chat" class="fixed right-4 bottom-24 flex flex-col gap-2">
+        <button class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3">
+            <i class="fab fa-facebook-messenger"></i>
+            <span class="sr-only">Chat en Facebook</span>
+        </button>
+        <button class="bg-green-500 hover:bg-green-600 text-white rounded-full p-3">
+            <i class="fab fa-whatsapp"></i>
+            <span class="sr-only">Chat en WhatsApp</span>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
