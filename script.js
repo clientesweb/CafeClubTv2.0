@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroCarousel = document.getElementById('hero-carousel');
     const heroSlides = heroCarousel.querySelectorAll('.hero-slide');
     const heroDots = document.querySelectorAll('.hero-dot');
-    const prevButton = document.getElementById('prev-slide');
-    const nextButton = document.getElementById('next-slide');
     let currentSlide = 0;
     let isAnimating = false;
 
@@ -36,16 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide((currentSlide + 1) % heroSlides.length);
     }
 
-    function prevSlide() {
-        showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
-    }
-
     heroDots.forEach((dot, index) => {
         dot.addEventListener('click', () => showSlide(index));
     });
-
-    prevButton.addEventListener('click', prevSlide);
-    nextButton.addEventListener('click', nextSlide);
 
     // Auto-advance slides
     setInterval(nextSlide, 5000);
@@ -67,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (diff > 0) {
                 nextSlide();
             } else {
-                prevSlide();
+                showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
             }
             isDragging = false;
         }
