@@ -1,16 +1,13 @@
 const CACHE_NAME = 'cafeclubtv-v1';
 const urlsToCache = [
     'index.html',
-    'css/main.css',
-    'js/main.js',
-    'images/logi.svg',
+    'styles.css',
+    'script.js',
     'images/Icon512x512.png',
     'images/Icon192x192.png',
-    'offline.html', // Puedes incluir una página de "offline"
-    // Añade aquí otras rutas que quieras cachear
+    'offline.html',
 ];
 
-// Instalar el Service Worker y cachear los archivos
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -20,7 +17,6 @@ self.addEventListener('install', (event) => {
     );
 });
 
-// Activar el Service Worker y eliminar cachés viejos
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -35,23 +31,48 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Manejar las solicitudes de recursos
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
-                // Devuelve el recurso del caché si existe, o busca en la red si no
-                return response || fetch(event.request).then((networkResponse) => {
-                    // Actualiza la caché con el nuevo recurso de la red
-                    return caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
-                    });
+                if (response) {
+                    return response;
+                }
+                return fetch(event.request).then((networkResponse) => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        let responseToCache = networkResponse.clone();
+                        caches.open(CACHE_NAME).then((cache) => {
+                            cache.put(event.request, responseToCache);
+                        });
+                    }
+                    return networkResponse;
                 });
             })
             .catch(() => {
-                // Devuelve una página de "offline" si falla la solicitud y no está en caché
                 return caches.match('offline.html');
             })
     );
 });
+
+self.addEventListener('push', function(event) {
+    if (event.data) {
+        const data = event.data.json();
+        const options = {
+            body: data.body,
+            icon: data.icon || '/images/Icon512x512.png',
+            badge: '/images/Icon192x192.png',
+            vibrate: [100, 50, 100],
+            data: {
+                dateOfArrival: Date.now(),
+                primaryKey: '2',
+            },
+        };
+        event.waitUntil(self.registration.showNotification(data.title, options));
+    }
+});
+
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close();
+    event.waitUntil(clients.openWindow('https://www.cafeclubtv.com'));
+});
+
