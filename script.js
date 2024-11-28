@@ -3,17 +3,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroCarousel = document.getElementById('hero-carousel');
     const heroSlides = heroCarousel.querySelectorAll('.hero-slide');
     const heroDots = document.querySelectorAll('.hero-dot');
+    const prevButton = document.getElementById('prev-slide');
+    const nextButton = document.getElementById('next-slide');
     let currentSlide = 0;
-    let startX;
-    let isDragging = false;
+    let isAnimating = false;
 
     function showSlide(index) {
+        if (isAnimating) return;
+        isAnimating = true;
+
         heroCarousel.style.transform = `translateX(-${index * 100}%)`;
         heroDots.forEach((dot, i) => {
-            dot.classList.toggle('opacity-100', i === index);
+            dot.classList.toggle('active', i === index);
             dot.classList.toggle('opacity-50', i !== index);
         });
+
+        // Reset animations
+        const animatedElements = heroSlides[index].querySelectorAll('.animate-fade-in-up');
+        animatedElements.forEach(el => {
+            el.style.animation = 'none';
+            el.offsetHeight; // Trigger reflow
+            el.style.animation = null;
+        });
+
         currentSlide = index;
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
     }
 
     function nextSlide() {
@@ -27,6 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
     heroDots.forEach((dot, index) => {
         dot.addEventListener('click', () => showSlide(index));
     });
+
+    prevButton.addEventListener('click', prevSlide);
+    nextButton.addEventListener('click', nextSlide);
+
+    // Auto-advance slides
+    setInterval(nextSlide, 5000);
+
+    // Touch events for mobile swiping
+    let startX;
+    let isDragging = false;
 
     heroCarousel.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
@@ -50,8 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
     heroCarousel.addEventListener('touchend', () => {
         isDragging = false;
     });
-
-    setInterval(nextSlide, 5000);
 
     // YouTube API integration
     const livePlaylistId = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL';
