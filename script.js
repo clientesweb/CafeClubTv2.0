@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         dot.addEventListener('click', () => showSlide(index));
     });
 
-    // Touch events for mobile
     heroCarousel.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
         isDragging = true;
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Auto advance slides
-    setInterval(nextSlide, 5000);
+    const slideInterval = setInterval(nextSlide, 5000);
 
     // YouTube API integration
     const livePlaylistId = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL';
@@ -73,11 +72,24 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function loadPlaylist() {
+        const mainVideoContainer = document.getElementById('main-video');
+        const playlistContainer = document.getElementById('video-playlist');
+        
+        // Mostrar estado de carga
+        playlistContainer.innerHTML = '<div class="text-white text-center py-4">Cargando playlist...</div>';
+
         fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${livePlaylistId}&key=${apiKey}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta de la API');
+                }
+                return response.json();
+            })
             .then(data => {
-                const mainVideoContainer = document.getElementById('main-video');
-                const playlistContainer = document.getElementById('video-playlist');
+                if (!data.items || data.items.length === 0) {
+                    playlistContainer.innerHTML = '<div class="text-white text-center py-4">No hay videos disponibles</div>';
+                    return;
+                }
 
                 // Cargar el video principal
                 const mainVideoId = data.items[0].snippet.resourceId.videoId;
@@ -94,7 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     events: {
                         'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
+                        'onStateChange': onPlayerStateChange,
+                        'onError': onPlayerError
                     }
                 });
 
@@ -106,18 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     const title = item.snippet.title;
 
                     const videoElement = document.createElement('div');
-                    videoElement.classList.add('playlist-video', 'cursor-pointer', 'hover:opacity-75', 'transition-opacity');
+                    videoElement.className = 'playlist-video group cursor-pointer p-2 rounded hover:bg-white/10 transition-colors';
                     videoElement.innerHTML = `
-                        <div class="relative">
-                            <img src="${thumbnailUrl}" alt="${title}" class="w-full rounded-lg">
-                            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity">
-                                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                        <div class="flex gap-3">
+                            <div class="relative flex-shrink-0">
+                                <img src="${thumbnailUrl}" alt="${title}" class="w-32 rounded-lg">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-sm font-medium line-clamp-2 text-white">${title}</h3>
                             </div>
                         </div>
-                        <p class="mt-2 text-sm font-medium line-clamp-2">${title}</p>
                     `;
                     videoElement.addEventListener('click', () => {
                         player.loadVideoById(videoId);
@@ -126,103 +142,150 @@ document.addEventListener('DOMContentLoaded', () => {
                     playlistContainer.appendChild(videoElement);
                 });
             })
-            .catch(error => console.error('Error loading playlist:', error));
+            .catch(error => {
+                console.error('Error loading playlist:', error);
+                playlistContainer.innerHTML = `
+                    <div class="text-red-500 text-center py-4">
+                        Error al cargar la playlist. Por favor, intenta de nuevo más tarde.
+                    </div>
+                `;
+            });
     }
 
     function loadShorts() {
+        const shortsContainer = document.getElementById('shorts-container');
+        
+        // Mostrar estado de carga
+        shortsContainer.innerHTML = '<div class="col-span-full text-center py-4">Cargando shorts...</div>';
+        
         fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${shortsPlaylistId}&key=${apiKey}&order=date`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta de la API');
+                }
+                return response.json();
+            })
             .then(data => {
-                const shortsContainer = document.getElementById('shorts-container');
-                shortsContainer.innerHTML = '';
+                if (!data.items || data.items.length === 0) {
+                    shortsContainer.innerHTML = '<div class="col-span-full text-center py-4">No hay shorts disponibles</div>';
+                    return;
+                }
 
-                // Crear contenedor para el carrusel de shorts
-                const shortsWrapper = document.createElement('div');
-                shortsWrapper.classList.add('shorts-wrapper', 'flex', 'gap-4', 'overflow-x-auto', 'pb-4');
+                shortsContainer.innerHTML = '';
                 
                 data.items.forEach((item) => {
                     const videoId = item.snippet.resourceId.videoId;
-                    const thumbnailUrl = item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium.url;
+                    const thumbnailUrl = item.snippet.thumbnails.maxres?.url || 
+                                       item.snippet.thumbnails.standard?.url || 
+                                       item.snippet.thumbnails.high?.url || 
+                                       item.snippet.thumbnails.medium.url;
                     const title = item.snippet.title;
 
                     const shortElement = document.createElement('div');
-                    shortElement.classList.add('short-video', 'flex-shrink-0', 'w-[200px]');
+                    shortElement.className = 'short-video relative aspect-[9/16] rounded-xl overflow-hidden group cursor-pointer hover:scale-105 transition-transform duration-300';
                     shortElement.innerHTML = `
-                        <div class="relative aspect-[9/16] rounded-xl overflow-hidden group cursor-pointer">
-                            <img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M8 5v14l11-7z"/>
-                                    </svg>
-                                </div>
+                        <img 
+                            src="${thumbnailUrl}" 
+                            alt="${title}" 
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
+                            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                <svg class="w-12 h-12 text-white mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
                             </div>
+                            <h3 class="text-white text-sm font-medium line-clamp-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                ${title}
+                            </h3>
                         </div>
-                        <p class="mt-2 text-sm font-medium line-clamp-2">${title}</p>
                     `;
 
                     shortElement.addEventListener('click', () => {
-                        openShortInModal(videoId);
+                        const modal = document.getElementById('shorts-modal');
+                        const playerContainer = document.getElementById('shorts-player-container');
+                        
+                        playerContainer.innerHTML = `
+                            <iframe
+                                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
+                                class="w-full h-full rounded-xl"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                            ></iframe>
+                        `;
+                        
+                        modal.classList.remove('hidden');
+                        modal.classList.add('flex');
+                        document.body.style.overflow = 'hidden';
                     });
 
-                    shortsWrapper.appendChild(shortElement);
+                    shortsContainer.appendChild(shortElement);
                 });
-
-                shortsContainer.appendChild(shortsWrapper);
             })
-            .catch(error => console.error('Error loading shorts:', error));
-    }
-
-    // Modal para reproducir shorts
-    function openShortInModal(videoId) {
-        const modal = document.createElement('div');
-        modal.classList.add('fixed', 'inset-0', 'z-50', 'flex', 'items-center', 'justify-center', 'bg-black', 'bg-opacity-75');
-        
-        modal.innerHTML = `
-            <div class="relative w-full max-w-md mx-4 aspect-[9/16]">
-                <div class="absolute top-4 right-4 z-10">
-                    <button class="text-white hover:text-gray-300" id="close-modal">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                <iframe
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
-                    class="w-full h-full rounded-xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
-            </div>
-        `;
-
-        document.body.appendChild(modal);
-        document.body.style.overflow = 'hidden';
-
-        modal.querySelector('#close-modal').addEventListener('click', () => {
-            document.body.removeChild(modal);
-            document.body.style.overflow = '';
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                document.body.removeChild(modal);
-                document.body.style.overflow = '';
-            }
-        });
+            .catch(error => {
+                console.error('Error loading shorts:', error);
+                shortsContainer.innerHTML = `
+                    <div class="col-span-full text-center py-4 text-red-600">
+                        Error al cargar los shorts. Por favor, intenta de nuevo más tarde.
+                    </div>
+                `;
+                addReloadButton();
+            });
     }
 
     // Player events
     function onPlayerReady(event) {
-        // El reproductor está listo
         console.log('Player ready');
     }
 
     function onPlayerStateChange(event) {
-        // Manejar cambios de estado del reproductor
         if (event.data === YT.PlayerState.ENDED) {
-            // El video ha terminado
             console.log('Video ended');
+            // Opcional: reproducir siguiente video
+            const nextVideo = document.querySelector('.playlist-video:nth-child(2)');
+            if (nextVideo) {
+                nextVideo.click();
+            }
+        }
+    }
+
+    function onPlayerError(event) {
+        console.error('Player error:', event.data);
+        const mainVideoContainer = document.getElementById('main-video');
+        mainVideoContainer.innerHTML = `
+            <div class="flex items-center justify-center h-full bg-black text-white">
+                <p>Error al cargar el video. Por favor, intenta con otro video.</p>
+            </div>
+        `;
+    }
+
+    // Modal events
+    const modal = document.getElementById('shorts-modal');
+    const closeButton = document.getElementById('close-modal');
+    
+    if (closeButton) {
+        closeButton.addEventListener('click', closeModal);
+    }
+
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('shorts-modal');
+        const playerContainer = document.getElementById('shorts-player-container');
+        if (playerContainer) {
+            playerContainer.innerHTML = '';
+        }
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
         }
     }
 
@@ -231,15 +294,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let sponsorIndex = 0;
 
     function moveSponsors() {
-        sponsorIndex = (sponsorIndex + 1) % 4;
-        sponsorsSlider.style.transform = `translateX(-${sponsorIndex * 25}%)`;
+        if (sponsorsSlider) {
+            sponsorIndex = (sponsorIndex + 1) % 4;
+            sponsorsSlider.style.transform = `translateX(-${sponsorIndex * 25}%)`;
+        }
     }
 
-    setInterval(moveSponsors, 3000);
+    const sponsorsInterval = setInterval(moveSponsors, 3000);
 
     // Fade-in animation on scroll
     const fadeElements = document.querySelectorAll('.fade-in');
-
+    
     const fadeInObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -259,9 +324,31 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     });
+
+    // Función auxiliar para recargar shorts
+    function addReloadButton() {
+        const shortsContainer = document.getElementById('shorts-container');
+        const reloadButton = document.createElement('button');
+        reloadButton.className = 'col-span-full mx-auto mt-4 bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded';
+        reloadButton.textContent = 'Recargar Shorts';
+        reloadButton.onclick = loadShorts;
+        shortsContainer.appendChild(reloadButton);
+    }
+
+    // Cleanup function
+    return () => {
+        clearInterval(slideInterval);
+        clearInterval(sponsorsInterval);
+        if (player && player.destroy) {
+            player.destroy();
+        }
+    };
 });
