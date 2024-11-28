@@ -1,16 +1,104 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Hero carousel
     const heroCarousel = document.getElementById('hero-carousel');
-    const heroImages = heroCarousel.querySelectorAll('img');
-    let currentHeroImage = 0;
+    const heroSlides = heroCarousel.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    let currentSlide = 0;
+    let startX;
+    let isDragging = false;
 
-    function showNextHeroImage() {
-        heroImages[currentHeroImage].style.opacity = '0';
-        currentHeroImage = (currentHeroImage + 1) % heroImages.length;
-        heroImages[currentHeroImage].style.opacity = '1';
+    function showSlide(index) {
+        heroCarousel.style.transform = `translateX(-${index * 100}%)`;
+        heroDots.forEach((dot, i) => {
+            dot.classList.toggle('opacity-100', i === index);
+            dot.classList.toggle('opacity-50', i !== index);
+        });
+        currentSlide = index;
     }
 
-    setInterval(showNextHeroImage, 5000);
+    function nextSlide() {
+        showSlide((currentSlide + 1) % heroSlides.length);
+    }
+
+    function prevSlide() {
+        showSlide((currentSlide - 1 + heroSlides.length) % heroSlides.length);
+    }
+
+    heroDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+    });
+
+    heroCarousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+
+    heroCarousel.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const currentX = e.touches[0].clientX;
+        const diff = startX - currentX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+            isDragging = false;
+        }
+    });
+
+    heroCarousel.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+
+    setInterval(nextSlide, 5000);
+
+    // YouTube API integration
+    const playlistId = 'YOUR_PLAYLIST_ID'; // Reemplaza con el ID de tu playlist
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+        loadPlaylist();
+    }
+
+    function loadPlaylist() {
+        fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${playlistId}&key=YOUR_API_KEY`)
+            .then(response => response.json())
+            .then(data => {
+                const mainVideoContainer = document.getElementById('main-video');
+                const playlistContainer = document.getElementById('video-playlist');
+
+                // Cargar el video principal
+                const mainVideoId = data.items[0].snippet.resourceId.videoId;
+                player = new YT.Player('main-video', {
+                    height: '360',
+                    width: '640',
+                    videoId: mainVideoId,
+                });
+
+                // Cargar la lista de reproducción
+                data.items.forEach((item, index) => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const thumbnailUrl = item.snippet.thumbnails.medium.url;
+                    const title = item.snippet.title;
+
+                    const videoElement = document.createElement('div');
+                    videoElement.classList.add('playlist-video');
+                    videoElement.innerHTML = `
+                        <img src="${thumbnailUrl}" alt="${title}">
+                        <p>${title}</p>
+                    `;
+                    videoElement.addEventListener('click', () => {
+                        player.loadVideoById(videoId);
+                    });
+
+                    playlistContainer.appendChild(videoElement);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
     // Fade-in animation on scroll
     const fadeElements = document.querySelectorAll('.fade-in');
@@ -39,37 +127,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-
-    // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
-
-    // Live stream countdown timer (example)
-    const countdownElement = document.getElementById('live-stream-countdown');
-    if (countdownElement) {
-        const countDownDate = new Date("2023-12-31T23:59:59").getTime();
-
-        const countdownTimer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-            if (distance < 0) {
-                clearInterval(countdownTimer);
-                countdownElement.innerHTML = "¡La transmisión ha comenzado!";
-            }
-        }, 1000);
-    }
 });
