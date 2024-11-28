@@ -76,57 +76,59 @@ body {
     line-height: 1.25rem;
 }
 
-#shorts-container {
-    display: flex;
-    gap: 0.5rem;
-    padding-bottom: 1rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+/* Estilos para la sección de shorts */
+.shorts-carousel-container {
+    max-width: 315px;
+    margin: 0 auto;
+    position: relative;
 }
 
-#shorts-container::-webkit-scrollbar {
-    display: none;
+#shorts-container {
+    width: 100%;
+    height: 560px;
+    position: relative;
+    overflow: hidden;
 }
 
 .short-video {
-    flex: 0 0 auto;
-    width: 150px;
-    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
 }
 
-.short-video img {
-    width: 150px;
-    height: 266px;
-    object-fit: cover;
-    border-radius: 0.25rem;
-}
-
-.short-video p {
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    white-space: normal;
+.short-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@media (min-width: 640px) {
-    .short-video {
-        width: 180px;
+.short-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#prev-short,
+#next-short {
+    transition: opacity 0.3s ease;
+}
+
+#prev-short:hover,
+#next-short:hover {
+    opacity: 1;
+}
+
+@media (max-width: 640px) {
+    .shorts-carousel-container {
+        max-width: 100%;
     }
 
-    .short-video img {
-        width: 180px;
-        height: 320px;
-    }
-
-    .short-video p {
-        font-size: 0.875rem;
-        line-height: 1.25rem;
+    #shorts-container {
+        height: calc(100vw * (16/9));
+        max-height: 560px;
     }
 }
 
