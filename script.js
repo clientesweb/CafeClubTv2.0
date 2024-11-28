@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     shortElement.innerHTML = `
                         <div class="short-wrapper">
                             <iframe 
-                                src="https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1&mute=1&loop=1&playlist=${videoId}" 
+                                src="https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1&mute=0&loop=1&playlist=${videoId}" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen
