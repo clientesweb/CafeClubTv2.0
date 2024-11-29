@@ -46,21 +46,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const sponsorsSlider = document.getElementById('sponsors-slider');
+    const sponsorsContainer = sponsorsSlider.querySelector('.flex');
     const prevSponsor = document.getElementById('prev-sponsor');
     const nextSponsor = document.getElementById('next-sponsor');
     let sponsorIndex = 0;
 
     function showSponsor(index) {
-        sponsorsSlider.style.transform = `translateX(-${index * 100}%)`;
+        const slideWidth = sponsorsContainer.clientWidth;
+        sponsorsContainer.style.transform = `translateX(-${index * slideWidth}px)`;
     }
 
     prevSponsor.addEventListener('click', () => {
-        sponsorIndex = (sponsorIndex - 1 + 4) % 4;
+        sponsorIndex = Math.max(sponsorIndex - 1, 0);
         showSponsor(sponsorIndex);
     });
 
     nextSponsor.addEventListener('click', () => {
-        sponsorIndex = (sponsorIndex + 1) % 4;
+        const maxIndex = Math.ceil(sponsorsContainer.children.length / 4) - 1;
+        sponsorIndex = Math.min(sponsorIndex + 1, maxIndex);
+        showSponsor(sponsorIndex);
+    });
+
+    // Ajustar el carrusel de sponsors cuando cambie el tamaño de la ventana
+    window.addEventListener('resize', () => {
         showSponsor(sponsorIndex);
     });
 
