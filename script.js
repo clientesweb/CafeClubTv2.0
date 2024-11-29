@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Preloader
+    const preloader = document.getElementById('preloader');
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+        }, 2000);
+    });
+
     // Hero carousel
     const heroCarousel = document.getElementById('hero-carousel');
     const heroSlides = heroCarousel.querySelectorAll('.hero-slide');
@@ -277,4 +285,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', handleScroll);
 });
-
