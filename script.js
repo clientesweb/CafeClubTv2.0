@@ -67,12 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let player;
     const mainVideo = document.getElementById('main-video');
     const videoPlaylist = document.getElementById('video-playlist');
+    const API_KEY = 'AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0';
+    const PLAYLIST_ID = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL';
+    const SHORTS_PLAYLIST_ID = 'PLZ_v3bWMqpjFa0xI11mahmOCxPk_1TK2s';
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('main-video', {
             height: '360',
             width: '640',
-            videoId: 'VIDEO_ID',
+            playerVars: {
+                listType: 'playlist',
+                list: PLAYLIST_ID
+            },
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -92,19 +98,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadPlaylist() {
         try {
-            const response = await fetch('URL_TO_YOUR_PLAYLIST_API');
-            const videos = await response.json();
-            renderPlaylist(videos);
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
+            const data = await response.json();
+            renderPlaylist(data.items);
         } catch (error) {
             console.error('Error loading playlist:', error);
         }
     }
 
     function renderPlaylist(videos) {
-        videoPlaylist.innerHTML = videos.map((video, index) => `
-            <div class="video-item cursor-pointer p-2 hover:bg-gray-700" data-video-id="${video.id}">
-                <img src="${video.thumbnail}" alt="${video.title}" class="w-full h-auto mb-2">
-                <p class="text-sm">${video.title}</p>
+        videoPlaylist.innerHTML = videos.map((item, index) => `
+            <div class="video-item cursor-pointer p-2 hover:bg-gray-700" data-video-id="${item.snippet.resourceId.videoId}">
+                <img src="${item.snippet.thumbnails.medium.url}" alt="${item.snippet.title}" class="w-full h-auto mb-2">
+                <p class="text-sm">${item.snippet.title}</p>
             </div>
         `).join('');
 
@@ -134,35 +140,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadShorts() {
         try {
-            const response = await fetch('URL_TO_YOUR_SHORTS_API');
-            const shorts = await response.json();
-            renderShorts(shorts);
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${SHORTS_PLAYLIST_ID}&key=${API_KEY}`);
+            const data = await response.json();
+            renderShorts(data.items);
         } catch (error) {
             console.error('Error loading shorts:', error);
         }
     }
 
     function renderShorts(shorts) {
-        shortsContainer.innerHTML = shorts.map(short => `
+        shortsContainer.innerHTML = shorts.map(item => `
             <div class="short-item flex-shrink-0 w-64 h-96 bg-black relative overflow-hidden snap-start">
-                <video src="${short.videoUrl}" class="w-full h-full object-cover" loop muted></video>
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/${item.snippet.resourceId.videoId}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                ></iframe>
                 <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                    <p class="text-white text-sm">${short.title}</p>
+                    <p class="text-white text-sm">${item.snippet.title}</p>
                 </div>
             </div>
         `).join('');
-
-        shortsContainer.addEventListener('click', (e) => {
-            const shortItem = e.target.closest('.short-item');
-            if (shortItem) {
-                const video = shortItem.querySelector('video');
-                if (video.paused) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            }
-        });
     }
 
     loadShorts();
