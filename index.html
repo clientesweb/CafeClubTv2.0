@@ -9,13 +9,31 @@
     <link rel="icon" href="images/Icon512x512.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="images/Icon512x512.png">
     <link rel="manifest" href="manifest.json">
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      /* CSS crítico aquí */
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      /* Añade más estilos críticos según sea necesario */
+    </style>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <script src="https://cdn.tailwindcss.com" defer></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
     
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.cafeclubtv.com/">
@@ -34,6 +52,21 @@
     <meta name="theme-color" content="#8B0000">
     <meta name="msapplication-navbutton-color" content="#8B0000">
     <meta name="apple-mobile-web-app-status-bar-style" content="#8B0000">
+
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #6B0000;
+            --text-color: #333333;
+            --background-color: #FFFFFF;
+        }
+        body {
+            padding-bottom: 60px;
+        }
+        footer {
+            padding-bottom: 80px;
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <div id="top-banner" class="bg-[var(--primary-color)] text-white text-center py-2 px-4">
@@ -137,8 +170,8 @@
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Café del Mundo</h3>
                                 <p class="text-gray-700 text-sm sm:text-base">Lunes 20:00</p>
                                 <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                                    Ver programa
-                                </a>
+    Ver programa
+</a>
                             </div>
                         </div>
                         <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
@@ -146,7 +179,7 @@
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Barista Master</h3>
                                 <p class="text-gray-700 text-sm sm:text-base">Martes 19:30</p>
-                                <a href="ht" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver programa
                                 </a>
                             </div>
@@ -156,7 +189,7 @@
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Tostado en Vivo</h3>
                                 <p class="text-gray-700 text-sm sm:text-base">Jueves 18:00</p>
-                                <a href="ht" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver programa
                                 </a>
                             </div>
@@ -311,7 +344,8 @@
                     <span class="text-xs sm:text-sm">Sponsors</span>
                 </a>
                 <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-envelope text-lg sm:text-xl"text-sm">Contacto</span>
+                    <i class="fas fa-envelope text-lg sm:text-xl"></i>
+                    <span class="text-xs sm:text-sm">Contacto</span>
                 </a>
             </div>
         </div>
@@ -332,3 +366,4 @@
     <script src="script.js" defer></script>
 </body>
 </html>
+
