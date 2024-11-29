@@ -17,13 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 dot.classList.toggle('opacity-50', i !== index);
             });
 
-            // Reset animations
-            heroSlides[index].querySelectorAll('.animate-fade-in-up').forEach(el => {
-                el.style.animation = 'none';
-                el.offsetHeight; // Trigger reflow
-                el.style.animation = null;
-            });
-
             currentSlide = index;
             setTimeout(() => {
                 isAnimating = false;
