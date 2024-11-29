@@ -113,17 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         videoPlaylist.innerHTML = videos.slice(1).map((item, index) => `
-            <div class="video-item cursor-pointer p-2 hover:bg-gray-700" data-video-id="${item.snippet.resourceId.videoId}">
-                <img src="${item.snippet.thumbnails.medium.url}" alt="${item.snippet.title}" class="w-full h-auto mb-2">
-                <p class="text-sm text-white">${item.snippet.title}</p>
-            </div>
-        `).join('');
+        <div class="video-item cursor-pointer flex items-center p-2 hover:bg-gray-700" data-video-id="${item.snippet.resourceId.videoId}">
+            <img src="${item.snippet.thumbnails.default.url}" alt="${item.snippet.title}" class="w-20 h-auto mr-2">
+            <p class="text-sm text-white flex-1">${item.snippet.title}</p>
+        </div>
+    `).join('');
 
         videoPlaylist.addEventListener('click', (e) => {
             const videoItem = e.target.closest('.video-item');
             if (videoItem) {
                 const videoId = videoItem.dataset.videoId;
                 player.loadVideoById(videoId);
+                document.querySelectorAll('.video-item').forEach(item => item.classList.remove('bg-gray-700'));
+                videoItem.classList.add('bg-gray-700');
             }
         });
     }
@@ -147,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${SHORTS_PLAYLIST_ID}&key=${API_KEY}`);
             const data = await response.json();
-            renderShorts(data.items.slice(-5));
+            renderShorts(data.items.slice(-5).reverse());
         } catch (error) {
             console.error('Error loading shorts:', error);
         }
@@ -155,20 +157,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderShorts(shorts) {
         shortsContainer.innerHTML = shorts.map(item => `
-            <div class="short-item flex-shrink-0 w-64 h-96 bg-black relative overflow-hidden snap-start">
-                <iframe 
-                    width="100%" 
-                    height="100%" 
-                    src="https://www.youtube.com/embed/${item.snippet.resourceId.videoId}" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen
-                ></iframe>
-                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                    <p class="text-white text-sm">${item.snippet.title}</p>
-                </div>
-            </div>
-        `).join('');
+        <div class="short-item flex-shrink-0 w-64 h-96 bg-black relative overflow-hidden snap-start">
+            <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/${item.snippet.resourceId.videoId}" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+            ></iframe>
+        </div>
+    `).join('');
     }
 
     loadShorts();
