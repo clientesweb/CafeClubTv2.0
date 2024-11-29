@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Preloader
     const preloader = document.getElementById('preloader');
     window.addEventListener('load', () => {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             preloader.classList.add('hidden');
-        }, 2000);
+        });
     });
 
     // Hero carousel
@@ -18,24 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isAnimating) return;
         isAnimating = true;
 
-        heroCarousel.style.transform = `translateX(-${index * 100}%)`;
-        heroDots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-            dot.classList.toggle('opacity-50', i !== index);
-        });
+        requestAnimationFrame(() => {
+            heroCarousel.style.transform = `translateX(-${index * 100}%)`;
+            heroDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                dot.classList.toggle('opacity-50', i !== index);
+            });
 
-        // Reset animations
-        const animatedElements = heroSlides[index].querySelectorAll('.animate-fade-in-up');
-        animatedElements.forEach(el => {
-            el.style.animation = 'none';
-            el.offsetHeight; // Trigger reflow
-            el.style.animation = null;
-        });
+            // Reset animations
+            heroSlides[index].querySelectorAll('.animate-fade-in-up').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // Trigger reflow
+                el.style.animation = null;
+            });
 
-        currentSlide = index;
-        setTimeout(() => {
-            isAnimating = false;
-        }, 500);
+            currentSlide = index;
+            setTimeout(() => {
+                isAnimating = false;
+            }, 500);
+        });
     };
 
     const nextSlide = () => showSlide((currentSlide + 1) % heroSlides.length);
@@ -48,18 +49,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Auto-advance slides
-    setInterval(nextSlide, 5000);
+    let slideInterval = setInterval(nextSlide, 5000);
 
     // Touch events for mobile swiping
     let startX;
     let isDragging = false;
 
-    heroCarousel.addEventListener('touchstart', (e) => {
+    const handleTouchStart = (e) => {
         startX = e.touches[0].clientX;
         isDragging = true;
-    }, { passive: true });
+    };
 
-    heroCarousel.addEventListener('touchmove', (e) => {
+    const handleTouchMove = (e) => {
         if (!isDragging) return;
         const currentX = e.touches[0].clientX;
         const diff = startX - currentX;
@@ -71,11 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             isDragging = false;
         }
-    }, { passive: true });
+    };
 
-    heroCarousel.addEventListener('touchend', () => {
+    const handleTouchEnd = () => {
         isDragging = false;
-    }, { passive: true });
+    };
+
+    heroCarousel.addEventListener('touchstart', handleTouchStart, { passive: true });
+    heroCarousel.addEventListener('touchmove', handleTouchMove, { passive: true });
+    heroCarousel.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     // YouTube API integration
     const livePlaylistId = 'PLZ_v3bWMqpjEYZDAFLI-0GuAH4BpA5PiL';
@@ -122,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Load playlist
-            playlistContainer.innerHTML = '';
+            const fragment = document.createDocumentFragment();
             data.items.forEach((item) => {
                 const videoId = item.snippet.resourceId.videoId;
                 const thumbnailUrl = item.snippet.thumbnails.medium.url;
@@ -131,15 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const videoElement = document.createElement('div');
                 videoElement.classList.add('playlist-video');
                 videoElement.innerHTML = `
-                    <img src="${thumbnailUrl}" alt="${title}">
+                    <img src="${thumbnailUrl}" alt="${title}" loading="lazy">
                     <p>${title}</p>
                 `;
                 videoElement.addEventListener('click', () => {
                     player.loadVideoById(videoId);
                 });
 
-                playlistContainer.appendChild(videoElement);
+                fragment.appendChild(videoElement);
             });
+            playlistContainer.appendChild(fragment);
         } catch (error) {
             console.error('Error loading playlist:', error);
         }
@@ -154,14 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const shortsContainer = document.getElementById('shorts-container');
             
             // Sort items by publish date (most recent first)
-            const sortedItems = data.items.sort((a, b) => {
-                return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
-            });
+            const sortedItems = data.items.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
 
             // Take only the 5 most recent
             const recentShorts = sortedItems.slice(0, 5);
 
-            shortsContainer.innerHTML = '';
+            const fragment = document.createDocumentFragment();
             recentShorts.forEach((item) => {
                 const videoId = item.snippet.resourceId.videoId;
 
@@ -174,12 +178,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen
+                            loading="lazy"
                         ></iframe>
                     </div>
                 `;
 
-                shortsContainer.appendChild(shortElement);
+                fragment.appendChild(shortElement);
             });
+            shortsContainer.appendChild(fragment);
         } catch (error) {
             console.error('Error loading shorts:', error);
         }
@@ -200,11 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const slideWidth = sponsorsSlider.children[0].offsetWidth;
         const maxIndex = sponsorsSlider.children.length - 1;
         
-        if (direction === 'next') {
-            sponsorIndex = (sponsorIndex + 1) % (maxIndex + 1);
-        } else {
-            sponsorIndex = (sponsorIndex - 1 + maxIndex + 1) % (maxIndex + 1);
-        }
+        sponsorIndex = direction === 'next' 
+            ? (sponsorIndex + 1) % (maxIndex + 1)
+            : (sponsorIndex - 1 + maxIndex + 1) % (maxIndex + 1);
 
         requestAnimationFrame(() => {
             sponsorsSlider.style.transform = `translateX(-${sponsorIndex * slideWidth}px)`;
@@ -218,8 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => moveSponsors('next'), 5000);
 
     // Fade-in animation on scroll
-    const fadeElements = document.querySelectorAll('.fade-in');
-
     const fadeInObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -227,11 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 fadeInObserver.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1
-    });
+    }, { threshold: 0.1 });
 
-    fadeElements.forEach(element => {
+    document.querySelectorAll('.fade-in').forEach(element => {
         fadeInObserver.observe(element);
     });
 
@@ -255,10 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
         installButton.style.display = 'flex';
     });
 
-    installButton.addEventListener('click', async (e) => {
-        if (!deferredPrompt) {
-            return;
-        }
+    installButton.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         console.log(`User response to the install prompt: ${outcome}`);
@@ -283,5 +281,5 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add any scroll-based logic here
     }, 20);
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 });
