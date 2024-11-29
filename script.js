@@ -79,6 +79,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const shortsPlaylistId = 'PLZ_v3bWMqpjFa0xI11mahmOCxPk_1TK2s';
     const apiKey = 'AIzaSyB4HGg2WVC-Sq3Qyj9T9Z9aBBGbET1oGs0';
     let player;
+    let loadAttempts = 0;
+    const maxAttempts = 3;
+
+    // Función para mostrar un indicador de carga
+    const showLoading = (elementId) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.innerHTML = '<p>Cargando...</p>';
+        }
+    };
+
+    // Función para ocultar el indicador de carga
+    const hideLoading = (elementId) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.innerHTML = '';
+        }
+    };
 
     const cachedFetch = async (url, cacheKey, expirationMinutes = 60) => {
         const cached = localStorage.getItem(cacheKey);
@@ -95,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const loadPlaylist = async () => {
+        showLoading('video-playlist');
         try {
             const data = await cachedFetch(
                 `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId=${livePlaylistId}&key=${apiKey}`,
@@ -103,22 +122,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const mainVideoContainer = document.getElementById('main-video');
             const playlistContainer = document.getElementById('video-playlist');
 
+            if (!data || !data.items || data.items.length === 0) {
+                throw new Error('No se pudo cargar la playlist');
+            }
+
             // Load main video
             const mainVideoId = data.items[0].snippet.resourceId.videoId;
-            player = new YT.Player('main-video', {
-                height: '100%',
-                width: '100%',
-                videoId: mainVideoId,
-                playerVars: {
-                    autoplay: 0,
-                    controls: 1,
-                    modestbranding: 1,
-                    rel: 0,
-                    showinfo: 0
-                }
-            });
+            if (!player) {
+                player = new YT.Player('main-video', {
+                    height: '100%',
+                    width: '100%',
+                    videoId: mainVideoId,
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 1,
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0
+                    },
+                    events: {
+                        'onReady': onPlayerReady
+                    }
+                });
+            } else {
+                player.loadVideoById(mainVideoId);
+            }
 
             // Load playlist
+            playlistContainer.innerHTML = ''; // Clear existing content
             const fragment = document.createDocumentFragment();
             data.items.forEach((item) => {
                 const videoId = item.snippet.resourceId.videoId;
@@ -138,12 +169,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 fragment.appendChild(videoElement);
             });
             playlistContainer.appendChild(fragment);
+            hideLoading('video-playlist');
         } catch (error) {
             console.error('Error loading playlist:', error);
+            if (loadAttempts < maxAttempts) {
+                loadAttempts++;
+                console.log(`Reintentando cargar playlist (intento ${loadAttempts})...`);
+                setTimeout(loadPlaylist, 2000); // Reintenta después de 2 segundos
+            } else {
+                hideLoading('video-playlist');
+                document.getElementById('video-playlist').innerHTML = '<p>Error al cargar la playlist. Por favor, recarga la página.</p>';
+            }
         }
     };
 
     const loadShorts = async () => {
+        showLoading('shorts-container');
         try {
             const data = await cachedFetch(
                 `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${shortsPlaylistId}&key=${apiKey}&order=date`,
@@ -151,12 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             const shortsContainer = document.getElementById('shorts-container');
             
+            if (!data || !data.items || data.items.length === 0) {
+                throw new Error('No se pudieron cargar los shorts');
+            }
+
             // Sort items by publish date (most recent first)
             const sortedItems = data.items.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
 
             // Take only the 5 most recent
             const recentShorts = sortedItems.slice(0, 5);
 
+            shortsContainer.innerHTML = ''; // Clear existing content
             const fragment = document.createDocumentFragment();
             recentShorts.forEach((item) => {
                 const videoId = item.snippet.resourceId.videoId;
@@ -178,15 +224,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 fragment.appendChild(shortElement);
             });
             shortsContainer.appendChild(fragment);
+            hideLoading('shorts-container');
         } catch (error) {
             console.error('Error loading shorts:', error);
+            if (loadAttempts < maxAttempts) {
+                loadAttempts++;
+                console.log(`Reintentando cargar shorts (intento ${loadAttempts})...`);
+                setTimeout(loadShorts, 2000); // Reintenta después de 2 segundos
+            } else {
+                hideLoading('shorts-container');
+                document.getElementById('shorts-container').innerHTML = '<p>Error al cargar los shorts. Por favor, recarga la página.</p>';
+            }
         }
+    };
+
+    const onPlayerReady = (event) => {
+        console.log('YouTube player is ready');
+        // Aquí puedes agregar cualquier lógica adicional que necesites cuando el reproductor esté listo
+    };
+
+    const loadYouTubeAPI = () => {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     };
 
     window.onYouTubeIframeAPIReady = () => {
         loadPlaylist();
         loadShorts();
     };
+
+    // Cargar la API de YouTube
+    loadYouTubeAPI();
 
     // Sponsors slider
     const sponsorsSlider = document.querySelector('#sponsors-slider .flex');
