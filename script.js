@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Preloader
+    window.addEventListener('load', function() {
+        document.getElementById('preloader').style.display = 'none';
+        document.getElementById('main-content').classList.remove('hidden');
+    });
+
+    // PWA Installation
+    let deferredPrompt;
+    const installButton = document.getElementById('installButton');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installButton.style.display = 'flex';
+    });
+
+    installButton.addEventListener('click', (e) => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        }
+    });
+
     // Hero carousel
     const heroCarousel = document.getElementById('hero-carousel');
     const heroSlides = heroCarousel.querySelectorAll('.hero-slide');
@@ -86,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const mainVideoContainer = document.getElementById('main-video');
                 const playlistContainer = document.getElementById('video-playlist');
 
-                // Cargar el video principal
+                // Load the main video
                 const mainVideoId = data.items[0].snippet.resourceId.videoId;
                 player = new YT.Player('main-video', {
                     height: '100%',
@@ -101,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                // Cargar la lista de reproducción
-                playlistContainer.innerHTML = ''; // Limpiar el contenedor
+                // Load the playlist
+                playlistContainer.innerHTML = ''; // Clear the container
                 data.items.forEach((item, index) => {
                     const videoId = item.snippet.resourceId.videoId;
                     const thumbnailUrl = item.snippet.thumbnails.medium.url;
@@ -130,15 +160,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 const shortsContainer = document.getElementById('shorts-container');
                 
-                // Ordenar los items por fecha de publicación (más reciente primero)
+                // Sort items by publication date (most recent first)
                 const sortedItems = data.items.sort((a, b) => {
                     return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
                 });
 
-                // Tomar solo los 5 más recientes
+                // Take only the 5 most recent
                 const recentShorts = sortedItems.slice(0, 5);
 
-                shortsContainer.innerHTML = ''; // Limpiar el contenedor
+                shortsContainer.innerHTML = ''; // Clear the container
                 recentShorts.forEach((item, index) => {
                     const videoId = item.snippet.resourceId.videoId;
 
@@ -216,6 +246,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-
-
