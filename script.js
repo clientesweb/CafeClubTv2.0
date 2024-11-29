@@ -1,10 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Preloader
-    window.addEventListener('load', function() {
-        document.getElementById('preloader').style.display = 'none';
-        document.getElementById('main-content').classList.remove('hidden');
-    });
-
     // Hero carousel
     const heroCarousel = document.getElementById('hero-carousel');
     const heroSlides = heroCarousel.querySelectorAll('.hero-slide');
@@ -92,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const mainVideoContainer = document.getElementById('main-video');
                 const playlistContainer = document.getElementById('video-playlist');
 
-                // Load the main video
+                // Cargar el video principal
                 const mainVideoId = data.items[0].snippet.resourceId.videoId;
                 player = new YT.Player('main-video', {
                     height: '100%',
@@ -107,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                // Load the playlist
-                playlistContainer.innerHTML = ''; // Clear the container
+                // Cargar la lista de reproducción
+                playlistContainer.innerHTML = ''; // Limpiar el contenedor
                 data.items.forEach((item, index) => {
                     const videoId = item.snippet.resourceId.videoId;
                     const thumbnailUrl = item.snippet.thumbnails.medium.url;
@@ -136,15 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 const shortsContainer = document.getElementById('shorts-container');
                 
-                // Sort items by publication date (most recent first)
+                // Ordenar los items por fecha de publicación (más reciente primero)
                 const sortedItems = data.items.sort((a, b) => {
                     return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
                 });
 
-                // Take only the 5 most recent
+                // Tomar solo los 5 más recientes
                 const recentShorts = sortedItems.slice(0, 5);
 
-                shortsContainer.innerHTML = ''; // Clear the container
+                shortsContainer.innerHTML = ''; // Limpiar el contenedor
                 recentShorts.forEach((item, index) => {
                     const videoId = item.snippet.resourceId.videoId;
 
@@ -222,3 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+
