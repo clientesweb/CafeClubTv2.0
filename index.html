@@ -15,65 +15,90 @@
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
-    <style>
-      /* CSS crítico aquí */
-      :root {
-        --primary-color: #8B0000;
-        --secondary-color: #6B0000;
-        --text-color: #333333;
-        --background-color: #FFFFFF;
-      }
-      body {
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0 0 60px;
-        color: var(--text-color);
-        background-color: var(--background-color);
-      }
-      .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 15px;
-      }
-      #top-banner {
-        background-color: var(--primary-color);
-        color: #FFFFFF;
-        text-align: center;
-        padding: 0.5rem 1rem;
-      }
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-      }
-      #hero {
-        position: relative;
-        height: 100vh;
-        max-height: 1080px;
-        overflow: hidden;
-      }
-      .hero-slide {
-        position: relative;
-        height: 100%;
-        width: 100%;
-      }
-      .hero-slide img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .animate-fade-in-up {
-        animation: fadeInUp 0.5s ease-out;
-      }
-    </style>
+<style>
+  /* Estilos críticos */
+  :root {
+    --primary-color: #8B0000;
+    --secondary-color: #6B0000;
+    --text-color: #333333;
+    --background-color: #FFFFFF;
+  }
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  #top-banner {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    text-align: center;
+    padding: 0.5rem 1rem;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  #hero {
+    position: relative;
+    height: 100vh;
+    max-height: 1080px;
+    overflow: hidden;
+  }
+  .hero-slide {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  .hero-slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+  }
+  /* Estilos para ocultar barras de desplazamiento en móviles */
+  @media (max-width: 768px) {
+    .program-scroll-container,
+    #video-playlist,
+    #shorts-container {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .program-scroll-container::-webkit-scrollbar,
+    #video-playlist::-webkit-scrollbar,
+    #shorts-container::-webkit-scrollbar {
+      display: none;
+    }
+  }
+</style>
+    <script>
+  // Preload de imágenes críticas
+  const imagesToPreload = [
+    'images/Icon512x512.png',
+    'https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'
+  ];
+  imagesToPreload.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+</script>
     <script src="https://cdn.tailwindcss.com" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
     
@@ -198,44 +223,44 @@
         </section>
 
         <section id="featured-programs" class="py-8 sm:py-12 md:py-16 bg-gray-100">
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Parrilla de Programas</h2>
-        <div class="program-scroll-container overflow-x-auto">
-            <div class="flex space-x-4">
-                <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                    <img src="https://placeholder.com/2048x1152" alt="Café del Mundo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
-                    <div class="mt-2 sm:mt-3">
-                        <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Café del Mundo</h3>
-                        <p class="text-gray-700 text-sm sm:text-base">Lunes 20:00</p>
-                        <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                            Ver programa
-                        </a>
-                    </div>
-                </div>
-                <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                    <img src="https://placeholder.com/2048x1152" alt="Barista Master" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
-                    <div class="mt-2 sm:mt-3">
-                        <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Barista Master</h3>
-                        <p class="text-gray-700 text-sm sm:text-base">Martes 19:30</p>
-                        <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                            Ver programa
-                        </a>
-                    </div>
-                </div>
-                <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                    <img src="https://placeholder.com/2048x1152" alt="Tostado en Vivo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
-                    <div class="mt-2 sm:mt-3">
-                        <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Tostado en Vivo</h3>
-                        <p class="text-gray-700 text-sm sm:text-base">Jueves 18:00</p>
-                        <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                            Ver programa
-                        </a>
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Parrilla de Programas</h2>
+                <div class="program-scroll-container overflow-x-auto">
+                    <div class="flex space-x-4">
+                        <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
+                            <img src="https://placeholder.com/2048x1152" alt="Café del Mundo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
+                            <div class="mt-2 sm:mt-3">
+                                <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Café del Mundo</h3>
+                                <p class="text-gray-700 text-sm sm:text-base">Lunes 20:00</p>
+                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                    Ver programa
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
+                            <img src="https://placeholder.com/2048x1152" alt="Barista Master" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
+                            <div class="mt-2 sm:mt-3">
+                                <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Barista Master</h3>
+                                <p class="text-gray-700 text-sm sm:text-base">Martes 19:30</p>
+                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                    Ver programa
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
+                            <img src="https://placeholder.com/2048x1152" alt="Tostado en Vivo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
+                            <div class="mt-2 sm:mt-3">
+                                <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Tostado en Vivo</h3>
+                                <p class="text-gray-700 text-sm sm:text-base">Jueves 18:00</p>
+                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
+                                    Ver programa
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
         <section id="live-stream" class="py-8 sm:py-12 md:py-16 bg-[var(--primary-color)] text-white">
             <div class="container mx-auto px-4">
@@ -370,38 +395,107 @@
                     <span class="text-xs sm:text-sm">Programas</span>
                 </a>
                 <a href="#live-stream" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-broadcast-tower text-lg sm:text-xl" aria-hidden="true"></i>
-                    <span class="text-xs sm:text-sm">En Vivo</span>
-                </a>
-                <a href="#shorts" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-film text-lg sm:text-xl" aria-hidden="true"></i>
-                    <span class="text-xs sm:text-sm">Shorts</span>
-                </a>
-                <a href="#sponsors" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-handshake text-lg sm:text-xl" aria-hidden="true"></i>
-                    <span class="text-xs sm:text-sm">Sponsors</span>
-                </a>
-                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-envelope text-lg sm:text-xl" aria-hidden="true"></i>
-                    <span class="text-xs sm:text-sm">Contacto</span>
-                </a>
-            </div>
-        </div>
-    </nav>
+                    <i class="fas fa-broadcast-tower text-lg sm:text-xl" aria-hidden="true
 
-    <div id="floating-chat" class="fixed right-4 bottom-24 flex flex-col gap-2">
-        <a href="/otra-pagina" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white rounded-full p-2 sm:p-3 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14">
-            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" width="40" height="40" class="w-8 h-8 sm:w-10 sm:h-10">
-            <span class="sr-only">Ir a otra página</span>
-        </a>
-        <a href="https://wa.me/593978606269" target="_blank" rel="noopener noreferrer" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white rounded-full p-2 sm:p-3 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14">
-            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" width="40" height="40" class="w-8 h-8 sm:w-10 sm:h-10">
-            <span class="sr-only">Chat en WhatsApp</span>
-        </a>
-    </div>
 
-    <script src="https://www.youtube.com/iframe_api" defer></script>
-    <script src="script.js" defer></script>
+Ahora, actualizaré el CSS para mejorar la sección de sponsors:
+
+```css file="styles.css"
+[v0-no-op-code-block-prefix]<!DOCTYPE html>
+<html>
+<head>
+<title>Sponsors Slider</title>
+<style>
+#sponsors-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+#sponsors-slider .flex {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+#sponsors-slider .flex > div {
+  flex: 0 0 100%;
+}
+
+@media (min-width: 640px) {
+  #sponsors-slider .flex > div {
+    flex: 0 0 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  #sponsors-slider .flex > div {
+    flex: 0 0 25%;
+  }
+}
+
+#prev-sponsor,
+#next-sponsor {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#prev-sponsor:hover,
+#next-sponsor:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+#prev-sponsor {
+  left: 10px;
+}
+
+#next-sponsor {
+  right: 10px;
+}
+</style>
+</head>
+<body>
+
+<div id="sponsors-slider">
+  <div class="flex">
+    <div><img src="sponsor1.jpg" alt="Sponsor 1"></div>
+    <div><img src="sponsor2.jpg" alt="Sponsor 2"></div>
+    <div><img src="sponsor3.jpg" alt="Sponsor 3"></div>
+    <div><img src="sponsor4.jpg" alt="Sponsor 4"></div>
+  </div>
+</div>
+
+<button id="prev-sponsor">&#10094;</button>
+<button id="next-sponsor">&#10095;</button>
+
+<script>
+  const slider = document.getElementById('sponsors-slider');
+  const flexContainer = slider.querySelector('.flex');
+  const prevButton = document.getElementById('prev-sponsor');
+  const nextButton = document.getElementById('next-sponsor');
+  let currentPosition = 0;
+  const itemWidth = slider.querySelector('.flex > div').offsetWidth;
+
+  prevButton.addEventListener('click', () => {
+    currentPosition += itemWidth;
+    flexContainer.style.transform = `translateX(${currentPosition}px)`;
+  });
+
+  nextButton.addEventListener('click', () => {
+    currentPosition -= itemWidth;
+    flexContainer.style.transform = `translateX(${currentPosition}px)`;
+  });
+</script>
+
 </body>
 </html>
 
