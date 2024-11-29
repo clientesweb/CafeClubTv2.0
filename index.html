@@ -9,14 +9,46 @@
     <link rel="icon" href="images/Icon512x512.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="images/Icon512x512.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Estilos críticos inline para evitar FOUC -->
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #6B0000;
+            --text-color: #333333;
+            --background-color: #FFFFFF;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    
+    <!-- Carga de estilos no críticos -->
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    
     <script src="https://cdn.tailwindcss.com/3.3.3" defer></script>
     <script src="script.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.cafeclubtv.com/">
@@ -35,25 +67,10 @@
     <meta name="theme-color" content="#8B0000">
     <meta name="msapplication-navbutton-color" content="#8B0000">
     <meta name="apple-mobile-web-app-status-bar-style" content="#8B0000">
-
-    <style>
-        :root {
-            --primary-color: #8B0000;
-            --secondary-color: #6B0000;
-            --text-color: #333333;
-            --background-color: #FFFFFF;
-        }
-        body {
-            padding-bottom: 60px;
-        }
-        footer {
-            padding-bottom: 80px;
-        }
-    </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
+    <div id="preloader">
         <div class="text-center">
             <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-32 h-32 mx-auto mb-4 animate-pulse">
             <p class="text-gray-600">Powered by Duality Domain</p>
@@ -169,7 +186,7 @@
                             <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/programa2-BwkzGup5oFG8bl68MWwYsZatMDcrdS.png" alt="Hola Gutis!" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Hola Gutis!</h3>
-                                <p class="text-gray-700 text-sm sm:text-base">Miércoles 12:00 PM</p>
+                                 text-sm sm:text-base">Miércoles 12:00 PM</p>
                                 <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver programa
                                 </a>
@@ -179,7 +196,7 @@
                             <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/programa4-KfPY12swyLFMPLz0j5ih5zzVxqBDpX.png" alt="OM Talks" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">OM Talks</h3>
-                                <p class="text-gray-700 text-sm sm:text-base">Miércoles 22:00 PM</p>
+                                 text-sm sm:text-base">Miércoles 22:00 PM</p>
                                 <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver programa
                                 </a>
@@ -189,7 +206,7 @@
                             <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/programa3-Hy5Hy5Hy5Hy5Hy5Hy5Hy5Hy5Hy5Hy5.png" alt="Cafeteros" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg">
                             <div class="mt-2 sm:mt-3">
                                 <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Cafeteros</h3>
-                                <p class="text-gray-700 text-sm sm:text-base">Jueves 20:00 PM</p>
+                                 text-sm sm:text-base">Jueves 20:00 PM</p>
                                 <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
                                     Ver programa
                                 </a>
@@ -318,49 +335,52 @@
                     </div>
                 </div>
             </div>
-            <div class="border-t border-[#A50000] pt-8 text-center">
-                <p class="text-sm sm:text-base">&copy; 2023 CafeClub TV. Todos los derechos reservados.</p>
-                <p class="text-sm sm:text-base mt-2">Powered by Duality Domain</p>
+            <div class="border-t border-gray-700 pt-8">
+                <p class="text-center text-gray-300 text-sm">
+    © 2023 CafeClub TV. Todos los derechos reservados. Desarrollado por Duality Domain.
+</p>
             </div>
         </div>
     </footer>
 
     <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t py-2">
         <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center">
-                <a href="#featured-programs" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-tv text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Programas</span>
-                </a>
-                <a href="#live-stream" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-broadcast-tower text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">En Vivo</span>
-                </a>
-                <a href="#shorts" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-film text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Shorts</span>
-                </a>
-                <a href="#sponsors" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-handshake text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Sponsors</span>
-                </a>
-                <a href="#" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-envelope text-lg sm:text-xl"></i>
-                    <span class="text-xs sm:text-sm">Contacto</span>
-                </a>
-            </div>
+            <ul class="flex justify-around">
+                <li>
+                    <a href="#" class="flex flex-col items-center text-gray-600 hover:text-[var(--primary-color)]">
+                        <i class="fas fa-home text-xl mb-1"></i>
+                        <span class="text-xs">Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex flex-col items-center text-gray-600 hover:text-[var(--primary-color)]">
+                        <i class="fas fa-tv text-xl mb-1"></i>
+                        <span class="text-xs">Programas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex flex-col items-center text-gray-600 hover:text-[var(--primary-color)]">
+                        <i class="fas fa-video text-xl mb-1"></i>
+                        <span class="text-xs">En Vivo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex flex-col items-center text-gray-600 hover:text-[var(--primary-color)]">
+                        <i class="fas fa-user text-xl mb-1"></i>
+                        <span class="text-xs">Perfil</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <div id="floating-chat" class="fixed right-4 bottom-24 flex flex-col gap-2">
-        <a href="/otra-pagina" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white rounded-full p-2 sm:p-3 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14">
-            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" width="40" height="40" class="w-8 h-8 sm:w-10 sm:h-10">
-            <span class="sr-only">Ir a otra página</span>
-        </a>
-        <a href="https://wa.me/593978606269" target="_blank" rel="noopener noreferrer" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white rounded-full p-2 sm:p-3 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14">
-            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" width="40" height="40" class="w-8 h-8 sm:w-10 sm:h-10">
-            <span class="sr-only">Chat en WhatsApp</span>
-        </a>
+        <button id="whatsapp-button" class="bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-lg transition duration-300 ease-in-out">
+            <i class="fab fa-whatsapp text-2xl"></i>
+        </button>
+        <button id="messenger-button" class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 shadow-lg transition duration-300 ease-in-out">
+            <i class="fab fa-facebook-messenger text-2xl"></i>
+        </button>
     </div>
 
     <script src="https://www.youtube.com/iframe_api" defer></script>
