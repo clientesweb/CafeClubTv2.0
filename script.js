@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         player = new YT.Player('main-video', {
             height: '360',
             width: '640',
+            videoId: '',
             playerVars: {
                 listType: 'playlist',
                 list: PLAYLIST_ID
@@ -98,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadPlaylist() {
         try {
-            const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=6&playlistId=${PLAYLIST_ID}&key=${API_KEY}`);
             const data = await response.json();
             renderPlaylist(data.items);
         } catch (error) {
@@ -107,10 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderPlaylist(videos) {
-        videoPlaylist.innerHTML = videos.map((item, index) => `
+        if (videos.length > 0) {
+            player.loadVideoById(videos[0].snippet.resourceId.videoId);
+        }
+
+        videoPlaylist.innerHTML = videos.slice(1).map((item, index) => `
             <div class="video-item cursor-pointer p-2 hover:bg-gray-700" data-video-id="${item.snippet.resourceId.videoId}">
                 <img src="${item.snippet.thumbnails.medium.url}" alt="${item.snippet.title}" class="w-full h-auto mb-2">
-                <p class="text-sm">${item.snippet.title}</p>
+                <p class="text-sm text-white">${item.snippet.title}</p>
             </div>
         `).join('');
 
@@ -142,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${SHORTS_PLAYLIST_ID}&key=${API_KEY}`);
             const data = await response.json();
-            renderShorts(data.items);
+            renderShorts(data.items.slice(-5));
         } catch (error) {
             console.error('Error loading shorts:', error);
         }
