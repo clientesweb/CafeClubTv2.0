@@ -40,55 +40,44 @@
             --background-color: #FFFFFF;
         }
         body {
-            padding-bottom: 60px;
+            padding-bottom: 60px; /* Ajusta este valor según la altura de tu menú inferior */
         }
         footer {
-            padding-bottom: 80px;
+            padding-bottom: 80px; /* Ajusta este valor para que sea mayor que el padding-bottom del body */
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
-        <div class="text-center">
-            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-24 h-24 mx-auto animate-pulse">
-            <p class="mt-4 text-xl font-bold">Powered By Duality Domain</p>
-        </div>
+    <div id="top-banner" class="bg-[var(--primary-color)] text-white text-center py-2 px-4">
+        <p class="text-sm">
+            ¿Te sientes con suerte? ¡Premiamos tu fidelidad con nuestra Ruleta!
+            <a href="#" class="underline hover:text-gray-200 ml-2 inline-block bg-yellow-500 text-black px-3 py-1 rounded">Gira Gratis</a>
+        </p>
     </div>
 
-    <!-- Main Content (initially hidden) -->
-    <div id="main-content" class="hidden">
-        <div id="top-banner" class="bg-[var(--primary-color)] text-white text-center py-2 px-4">
-            <p class="text-sm">
-                ¿Te sientes con suerte? ¡Premiamos tu fidelidad con nuestra Ruleta!
-                <a href="#" class="underline hover:text-gray-200 ml-2 inline-block bg-yellow-500 text-black px-3 py-1 rounded">Gira Gratis</a>
-            </p>
+    <header class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <button id="installButton" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded text-sm sm:text-base flex items-center">
+            <i class="fas fa-download mr-2"></i>
+            Instalar
+        </button>
+        
+        <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-10 h-10 sm:w-12 sm:h-12 mx-auto">
+        
+        <div class="flex gap-2 sm:gap-4 items-center">
+            <a href="#" aria-label="Facebook" class="text-gray-600 hover:text-[var(--primary-color)]">
+                <i class="fab fa-facebook-f text-sm sm:text-base"></i>
+            </a>
+            <a href="#" aria-label="Instagram" class="text-gray-600 hover:text-[var(--primary-color)]">
+                <i class="fab fa-instagram text-sm sm:text-base"></i>
+            </a>
+            <a href="#" aria-label="Twitter" class="text-gray-600 hover:text-[var(--primary-color)]">
+                <i class="fab fa-twitter text-sm sm:text-base"></i>
+            </a>
+            <a href="#" aria-label="Youtube" class="text-gray-600 hover:text-[var(--primary-color)]">
+                <i class="fab fa-youtube text-sm sm:text-base"></i>
+            </a>
         </div>
-
-        <header class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <button id="installButton" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded text-sm sm:text-base flex items-center">
-                <i class="fas fa-download mr-2"></i>
-                Instalar
-            </button>
-            
-            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" class="w-10 h-10 sm:w-12 sm:h-12 mx-auto">
-            
-            <div class="flex gap-2 sm:gap-4 items-center">
-                <a href="https://www.facebook.com/CafeClubRadio/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fab fa-facebook-f text-sm sm:text-base"></i>
-                </a>
-                <a href="https://www.instagram.com/invites/contact/?i=1qricgcqleosj&utm_content=1imi4ep" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fab fa-instagram text-sm sm:text-base"></i>
-                </a>
-                <a href="https://twitter.com/CafeClub_Lat?s=08" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fab fa-twitter text-sm sm:text-base"></i>
-                </a>
-                <a href="https://youtube.com/c/CafeClubCanalTv" target="_blank" rel="noopener noreferrer" aria-label="Youtube" class="text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fab fa-youtube text-sm sm:text-base"></i>
-                </a>
-            </div>
-        </header>
-
+    </header>
 
     <main class="flex-grow">
         <section id="hero" class="relative h-screen max-h-[1080px] overflow-hidden">
@@ -353,5 +342,43 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // Install PWA functionality
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'flex';
+        });
+
+        installButton.addEventListener('click', (e) => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
+
+
