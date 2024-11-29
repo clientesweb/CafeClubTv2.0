@@ -15,90 +15,32 @@
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
-<style>
-  /* Estilos críticos */
-  :root {
-    --primary-color: #8B0000;
-    --secondary-color: #6B0000;
-    --text-color: #333333;
-    --background-color: #FFFFFF;
-  }
-  body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--text-color);
-    background-color: var(--background-color);
-  }
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
-  #top-banner {
-    background-color: var(--primary-color);
-    color: #FFFFFF;
-    text-align: center;
-    padding: 0.5rem 1rem;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-  }
-  #hero {
-    position: relative;
-    height: 100vh;
-    max-height: 1080px;
-    overflow: hidden;
-  }
-  .hero-slide {
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-  .hero-slide img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .animate-fade-in-up {
-    animation: fadeInUp 0.5s ease-out;
-  }
-  /* Estilos para ocultar barras de desplazamiento en móviles */
-  @media (max-width: 768px) {
-    .program-scroll-container,
-    #video-playlist,
-    #shorts-container {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .program-scroll-container::-webkit-scrollbar,
-    #video-playlist::-webkit-scrollbar,
-    #shorts-container::-webkit-scrollbar {
-      display: none;
-    }
-  }
-</style>
-    <script>
-  // Preload de imágenes críticas
-  const imagesToPreload = [
-    'images/Icon512x512.png',
-    'https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'
-  ];
-  imagesToPreload.forEach(src => {
-    const img = new Image();
-    img.src = src;
-  });
-</script>
+    <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #8B0000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
     <script src="https://cdn.tailwindcss.com" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
     
@@ -120,19 +62,14 @@
     <meta name="theme-color" content="#8B0000">
     <meta name="msapplication-navbutton-color" content="#8B0000">
     <meta name="apple-mobile-web-app-status-bar-style" content="#8B0000">
-
-    <style>
-        body {
-            padding-bottom: 60px;
-        }
-        footer {
-            padding-bottom: 80px;
-        }
-    </style>
 </head>
 <body class="min-h-screen flex flex-col">
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
     <a href="#main-content" class="sr-only focus:not-sr-only">Saltar al contenido principal</a>
-    <div id="top-banner" class="bg-[var(--primary-color)] text-white text-center py-2 px-4">
+    <div id="top-banner" class="bg-[#8B0000] text-white text-center py-2 px-4">
         <p class="text-sm">
             ¿Te sientes con suerte? ¡Premiamos tu fidelidad con nuestra Ruleta!
             <a href="#" class="underline hover:text-gray-200 ml-2 inline-block bg-yellow-500 text-black px-3 py-1 rounded">Gira Gratis</a>
@@ -140,7 +77,7 @@
     </div>
 
     <header class="container mx-auto px-4 py-4 flex justify-between items-center">
-        <button id="installButton" class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-2 px-4 rounded text-sm sm:text-base flex items-center">
+        <button id="installButton" class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-2 px-4 rounded text-sm sm:text-base flex items-center">
             <i class="fas fa-download mr-2" aria-hidden="true"></i>
             Instalar
         </button>
@@ -149,16 +86,16 @@
         
         <nav class="flex gap-2 sm:gap-4 items-center">
             <a href="https://www.facebook.com/CafeClubRadio/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <i class="fab fa-facebook-f text-sm sm:text-base text-gray-600 hover:text-[var(--primary-color)]" aria-hidden="true"></i>
+                <i class="fab fa-facebook-f text-sm sm:text-base text-gray-600 hover:text-[#8B0000]" aria-hidden="true"></i>
             </a>
             <a href="https://www.instagram.com/invites/contact/?i=1qricgcqleosj&utm_content=1imi4ep" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i class="fab fa-instagram text-sm sm:text-base text-gray-600 hover:text-[var(--primary-color)]" aria-hidden="true"></i>
+                <i class="fab fa-instagram text-sm sm:text-base text-gray-600 hover:text-[#8B0000]" aria-hidden="true"></i>
             </a>
             <a href="https://twitter.com/CafeClub_Lat?s=08" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <i class="fab fa-twitter text-sm sm:text-base text-gray-600 hover:text-[var(--primary-color)]" aria-hidden="true"></i>
+                <i class="fab fa-twitter text-sm sm:text-base text-gray-600 hover:text-[#8B0000]" aria-hidden="true"></i>
             </a>
             <a href="https://youtube.com/c/CafeClubCanalTv" target="_blank" rel="noopener noreferrer" aria-label="Youtube">
-                <i class="fab fa-youtube text-sm sm:text-base text-gray-600 hover:text-[var(--primary-color)]" aria-hidden="true"></i>
+                <i class="fab fa-youtube text-sm sm:text-base text-gray-600 hover:text-[#8B0000]" aria-hidden="true"></i>
             </a>
         </nav>
     </header>
@@ -173,7 +110,7 @@
                         <div class="text-left text-white max-w-2xl">
                             <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight animate-fade-in-up">Descubre el Mundo del Café</h1>
                             <p class="text-lg sm:text-xl md:text-2xl mb-6 animate-fade-in-up animation-delay-300">Explora nuestros programas y sumérgete en la cultura cafetera</p>
-                            <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up animation-delay-600">
+                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up animation-delay-600">
                                 Ver Programas
                             </button>
                         </div>
@@ -186,7 +123,7 @@
                         <div class="text-left text-white max-w-2xl">
                             <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight animate-fade-in-up">Aprende con Expertos</h2>
                             <p class="text-lg sm:text-xl md:text-2xl mb-6 animate-fade-in-up animation-delay-300">Únete a nuestros talleres y masterclasses de café</p>
-                            <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up animation-delay-600">
+                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up animation-delay-600">
                                 Inscríbete Ahora
                             </button>
                         </div>
@@ -199,7 +136,7 @@
                         <div class="text-left text-white max-w-2xl">
                             <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight animate-fade-in-up">En Vivo: Tostado de Café</h2>
                             <p class="text-lg sm:text-xl md:text-2xl mb-6 animate-fade-in-up animation-delay-300">No te pierdas nuestra transmisión en vivo todos los jueves</p>
-                            <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up animation-delay-600">
+                            <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up animation-delay-600">
                                 Ver Ahora
                             </button>
                         </div>
@@ -216,53 +153,13 @@
         <section id="ad-banner" class="relative h-64 sm:h-96 overflow-hidden">
             <img src="https://images.unsplash.com/photo-1514066558159-fc8c737ef259?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Banner publicitario" class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <button class="bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-3 px-6 rounded text-lg sm:text-xl">
+                <button class="bg-[#8B0000] hover:bg-[#6B0000] text-white font-bold py-3 px-6 rounded text-lg sm:text-xl">
                     Juega
                 </button>
             </div>
         </section>
 
         <section id="featured-programs" class="py-8 sm:py-12 md:py-16 bg-gray-100">
-            <div class="container mx-auto px-4">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Parrilla de Programas</h2>
-                <div class="program-scroll-container overflow-x-auto">
-                    <div class="flex space-x-4">
-                        <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                            <img src="https://placeholder.com/2048x1152" alt="Café del Mundo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
-                            <div class="mt-2 sm:mt-3">
-                                <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Café del Mundo</h3>
-                                <p class="text-gray-700 text-sm sm:text-base">Lunes 20:00</p>
-                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                                    Ver programa
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                            <img src="https://placeholder.com/2048x1152" alt="Barista Master" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
-                            <div class="mt-2 sm:mt-3">
-                                <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Barista Master</h3>
-                                <p class="text-gray-700 text-sm sm:text-base">Martes 19:30</p>
-                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                                    Ver programa
-                                </a>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 w-64 sm:w-80 md:w-96">
-                            <img src="https://placeholder.com/2048x1152" alt="Tostado en Vivo" class="w-full h-36 sm:h-44 md:h-52 object-cover rounded-lg" loading="lazy">
-                            <div class="mt-2 sm:mt-3">
-                                <h3 class="font-bold text-lg sm:text-xl mb-1 sm:mb-2">Tostado en Vivo</h3>
-                                <p class="text-gray-700 text-sm sm:text-base">Jueves 18:00</p>
-                                <a href="https://www.youtube.com/playlist?list=TU_PLAYLIST_ID" class="mt-2 sm:mt-3 inline-block bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] text-white font-bold py-1 sm:py-2 px-3 sm:px-4 rounded text-sm sm:text-base">
-                                    Ver programa
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="live-stream" class="py-8 sm:py-12 md:py-16 bg-[var(--primary-color)] text-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Transmisión en Vivo</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
@@ -275,8 +172,7 @@
         </section>
 
         <section id="shorts" class="py-8 sm:py-12 md:py-16 bg-gray-100">
-            <div class="container mx-auto px-4">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Shorts</h2>
+            <div class="containexl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Shorts</h2>
                 <div class="shorts-carousel-container relative">
                     <div id="shorts-container" class="flex overflow-x-auto snap-x snap-mandatory">
                         <!-- Los shorts se cargarán aquí -->
@@ -343,7 +239,7 @@
         </section>
     </main>
 
-    <footer class="bg-[var(--primary-color)] text-white py-8 sm:py-12">
+    <footer class="bg-[#8B0000] text-white py-8 sm:py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
@@ -390,112 +286,44 @@
     <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t py-2">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center">
-                <a href="#featured-programs" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-tv text-lg sm:text-xl" aria-hidden="true"></i>
-                    <span class="text-xs sm:text-sm">Programas</span>
+                <a href="#featured-programs" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[#8B0000]">
+                    <i class="fas fa-broadcast-tower text-lg sm:text-xl" aria-hidden="true"></i>
+                    <span class="text-xs sm:text-sm">En Vivo</span>
                 </a>
-                <a href="#live-stream" class="flex flex-col items-center gap-1 text-gray-600 hover:text-[var(--primary-color)]">
-                    <i class="fas fa-broadcast-tower text-lg sm:text-xl" aria-hidden="true
+                <a href="#shorts" class="flex flex-co0000]">
+                    <i class="fas fa-film text-lg sm:text-xl" aria-hidden="true"></i>
+                    <span class="text-xs sm:text-sm">Shorts</span>
+                </a>
+                <a href="#sponsors" class="flex flex-co0000]">
+                    <i class="fas fa-handshake text-lg sm:text-xl" aria-hidden="true"></i>
+                    <span class="text-xs sm:text-sm">Sponsors</span>
+                </a>
+                <a href="#" class="flex flex-co0000]">
+                    <i class="fas fa-envelope text-lg sm:text-xl" aria-hidden="true"></i>
+                    <span class="text-xs sm:text-sm">Contacto</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
+    <div id="floating-chat" class="fixed right-4 bottom-24 flex flex-col gap-2">
+        <a href="/otra-pagina" class="bg-[#8B0000] hover:bg-[#6B0000] text-white rounded-full p-2 sm:p-3 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14">
+            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" width="40" height="40" class="w-8 h-8 sm:w-10 sm:h-10">
+            <span class="sr-only">Ir a otra página</span>
+        </a>
+        <a href="https://wa.me/593978606269" target="_blank" rel="noopener noreferrer" class="bg-[#8B0000] hover:bg-[#6B0000] text-white rounded-full p-2 sm:p-3 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14">
+            <img src="images/Icon512x512.png" alt="CafeClub TV Logo" width="40" height="40" class="w-8 h-8 sm:w-10 sm:h-10">
+            <span class="sr-only">Chat en WhatsApp</span>
+        </a>
+    </div>
 
-Ahora, actualizaré el CSS para mejorar la sección de sponsors:
-
-```css file="styles.css"
-[v0-no-op-code-block-prefix]<!DOCTYPE html>
-<html>
-<head>
-<title>Sponsors Slider</title>
-<style>
-#sponsors-slider {
-  position: relative;
-  overflow: hidden;
-}
-
-#sponsors-slider .flex {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-#sponsors-slider .flex > div {
-  flex: 0 0 100%;
-}
-
-@media (min-width: 640px) {
-  #sponsors-slider .flex > div {
-    flex: 0 0 50%;
-  }
-}
-
-@media (min-width: 768px) {
-  #sponsors-slider .flex > div {
-    flex: 0 0 25%;
-  }
-}
-
-#prev-sponsor,
-#next-sponsor {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#prev-sponsor:hover,
-#next-sponsor:hover {
-  background-color: rgba(255, 255, 255, 0.75);
-}
-
-#prev-sponsor {
-  left: 10px;
-}
-
-#next-sponsor {
-  right: 10px;
-}
-</style>
-</head>
-<body>
-
-<div id="sponsors-slider">
-  <div class="flex">
-    <div><img src="sponsor1.jpg" alt="Sponsor 1"></div>
-    <div><img src="sponsor2.jpg" alt="Sponsor 2"></div>
-    <div><img src="sponsor3.jpg" alt="Sponsor 3"></div>
-    <div><img src="sponsor4.jpg" alt="Sponsor 4"></div>
-  </div>
-</div>
-
-<button id="prev-sponsor">&#10094;</button>
-<button id="next-sponsor">&#10095;</button>
-
-<script>
-  const slider = document.getElementById('sponsors-slider');
-  const flexContainer = slider.querySelector('.flex');
-  const prevButton = document.getElementById('prev-sponsor');
-  const nextButton = document.getElementById('next-sponsor');
-  let currentPosition = 0;
-  const itemWidth = slider.querySelector('.flex > div').offsetWidth;
-
-  prevButton.addEventListener('click', () => {
-    currentPosition += itemWidth;
-    flexContainer.style.transform = `translateX(${currentPosition}px)`;
-  });
-
-  nextButton.addEventListener('click', () => {
-    currentPosition -= itemWidth;
-    flexContainer.style.transform = `translateX(${currentPosition}px)`;
-  });
-</script>
-
+    <script src="https://www.youtube.com/iframe_api" defer></script>
+    <script src="script.js" defer></script>
+    <script>
+        window.addEventListener('load', function() {
+            document.getElementById('preloader').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
 
