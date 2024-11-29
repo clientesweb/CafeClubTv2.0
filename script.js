@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', () => {
         setTimeout(() => {
             preloader.classList.add('hidden');
-        }, 2000);
-    });
+        }, 500); // Changed from 2000 to 500 for a shorter duration
 
     // Hero carousel
     const heroCarousel = document.getElementById('hero-carousel');
@@ -285,3 +284,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', handleScroll);
 });
+
+console.log("JavaScript file updated: Preloader duration reduced to 500ms");
